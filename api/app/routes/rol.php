@@ -171,7 +171,6 @@
 	/*
 		5)
 		/rol/permiso/ id_Rol DELETE
-		Nota: los ids del permiso y del rol deben de ser validos, no se valida que ya se haya agregado anteriormente
 	*/
 	 	$app->delete('/permiso/:id', function ($id) use ($app) {
 	 		try{
@@ -194,18 +193,67 @@
 			 		$app->response->setBody(json_encode($response));
 
 	 		}catch (Exception $e){
-			 	$app->response->setStatus(201);
+			 	$app->response->setStatus(500);
 			 	$app->response->setBody(json_encode($e));	 			
 	 		}
 
 		});
 
 	 	/*Respuesta del post*/
-		$app->options('/permiso', function () use ($app){
+		$app->options('/permiso', function ($id) use ($app){
 			$app->response->setStatus(200);
 			$app->response->setBody(json_encode(array('message' => 'ok')));
 	 	});
 
+	/*
+		6)
+		/rol/id/ PUT id rol
+	*/
+	 	$app->put('/:id', function ($id) use ($app) {
+	 		try{
+			 	/*Eliminacion del registro*/
+		 		$rules=array(
+		 			'id' =>array(false, "integer", 1, 99),
+		 			'nombre' =>array(true, "string", 1, 99),
+		 			'descripcion' =>array(true, "string", 1, 99)	 			
+		 		);
+
+		 		$v = new Validator($app->request->getBody(), $rules);
+		 		$params = $v->validate();
+
+		 		if(count($v->getErrors()) > 0){
+		 			foreach ($v->getErrors() as $key => $value) {
+		 				$response = array("error" => array($key => "campo incorrecto"));
+		 				$app->response->setStatus($v->getCode());
+		 				$app->response->setBody(json_encode($response));
+		 				$app->stop();
+		 			}
+		 		}
+			 	/*Verificamos si se borro el registro*/
+			 		if($rol){
+				 		$response[] = array(
+				 			'mensaje'=>"se elimino el permiso al rol"
+				 		);
+			 		}else{
+				 		$response[] = array(
+				 			'mensaje'=>"no existe el permiso a eliminar"
+				 		);			 			
+			 		}
+			 		$app->response->setStatus(200);
+			 		$app->response->setBody(json_encode($response));
+
+	 		}catch (Exception $e){
+			 	$app->response->setStatus(500);
+			 	$app->response->setBody(json_encode($e));	 			
+	 		}
+
+		});
+
+	 	/*Respuesta del post*/
+		$app->options('/permiso', function ($id) use ($app){
+			$app->response->setStatus(200);
+			$app->response->setBody(json_encode(array('message' => 'ok')));
+	 	});
 
 });
 
