@@ -1,0 +1,212 @@
+ <?php
+
+ $app->group('/rol', function () use ($app)	{
+
+ 	/*
+ 		1)
+ 		/rol/ GET ALL
+ 	*/
+		$app->get('/', function () use ($app) {
+
+			/*Consulta a la base*/
+			$rol = ORM::for_table('rol')
+				->select('rol.*')			
+				->find_many();
+
+			$response = array();	
+			foreach ($rol as $key => $value) {
+				$rol = array(
+					'id'     => $value->id_rol,
+					'nombre' => $value->nombre,
+					'descripcion' => $value->descripcion
+				);
+				$response[] = $rol;
+			}
+
+			/*Respuesta del servicio*/
+			$app->response->setBody(json_encode($response));			
+			$app->response->setStatus(200);
+			$app->stop();
+		});
+
+		/*Respuesta del get*/
+		$app->options('/', function () use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});
+
+
+ 	/*
+ 		2)
+ 		/rol/id GET
+ 	*/
+		$app->get('/:id', function ($id) use ($app) {
+
+			/*Consulta a la base*/
+			$rol = ORM::for_table('rol')
+				->select('rol.*')
+				->where('id_rol',$id)			
+				->find_one();
+
+			$response = array();	
+			$response = array(
+				'id'     => $rol->id_rol,
+				'nombre' => $rol->nombre,
+				'descripcion' => $rol->descripcion
+			);
+
+			if(empty($response)){
+				$response = array (
+					'mensaje' => "El rol no tiene permisos aun"
+				);
+			}
+			/*Respuesta del servicio*/
+			$app->response->setBody(json_encode($response));			
+			$app->response->setStatus(200);
+			$app->stop();
+
+		});
+
+		/*Respuesta del get id*/
+		$app->options('/:id', function () use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});
+
+
+	/*
+		3)
+		/rol/permiso/id GET
+	*/
+		$app->get('/permiso/:id', function ($id) use ($app) {
+
+			/*Consulta a la base*/
+			$rol = ORM::for_table('rol_permiso')
+				->select('rol_permiso.*')
+				->select('permiso.nombre','nombre_permiso')
+				->join('permiso', array('rol_permiso.id_permiso','=','permiso.id_permiso'))
+				->where('id_rol',$id)			
+				->find_many();
+
+			$response = array();	
+			foreach ($rol as $key => $value) {
+				$rol = array(
+					'id'     => $value->id_rol_permiso,
+					'id_rol' => $value->id_rol,
+					'id_permiso' => $value->id_permiso,
+					'nombre_permiso'=>$value->nombre_permiso
+				);
+				$response[] = $rol;
+			}
+
+			if(empty($response)){
+				$response = array (
+					'mensaje' => "El rol no tiene permisos aun"
+				);
+			}
+
+			/*Respuesta del servicio*/
+			$app->response->setBody(json_encode($response));			
+			$app->response->setStatus(200);
+			$app->stop();
+		});
+
+		/*Respuesta del get id permiso*/
+		$app->options('/permiso/:id', function () use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});	
+
+	/*
+		4)
+		/rol/permiso/ id_Rol POST
+		Nota: los ids del permiso y del rol deben de ser validos, no se valida que ya se haya agregado anteriormente
+	*/
+	 	$app->post('/permiso', function () use ($app) {
+
+	 		try{
+		 		/*Validacion de los parametros*/
+			 		$rules=array(
+			 			'id_rol' =>array(true, "integer", 1, 99),
+			 			'id_permiso' =>array(true, "integer", 1, 99)	 			
+			 		);
+
+			 		$v = new Validator($app->request->getBody(), $rules);
+			 		$params = $v->validate();
+
+			 		if(count($v->getErrors()) > 0){
+			 			foreach ($v->getErrors() as $key => $value) {
+			 				$response = array("error" => array($key => "campo incorrecto"));
+			 				$app->response->setStatus($v->getCode());
+			 				$app->response->setBody(json_encode($response));
+			 				$app->stop();
+			 			}
+			 		}
+
+			 	/*Creacion del registro*/
+			 		$rol_permiso=ORM::for_table('rol_permiso')->create();
+			 		$rol_permiso->id_rol=$params["id_rol"];
+			 		$rol_permiso->id_permiso=$params["id_permiso"];
+			 		$rol_permiso->save();
+
+			 	/*Respuesta del servidor*/
+			 		$response[] = array(
+			 			'mensaje'=>"se agrego el permiso al rol"
+			 		);
+			 		$app->response->setStatus(201);
+			 		$app->response->setBody(json_encode($response));
+	 		}catch(Exception $e){
+			 	$app->response->setStatus(500);
+			 	$app->response->setBody(json_encode($e));	 			
+	 		}
+	 	});
+
+	 	/*Respuesta del post*/
+		$app->options('/permiso', function () use ($app){
+			$app->response->setStatus(201);
+			$app->response->setBody(json_encode(array('message' => 'ok')));
+	 	});
+
+
+	/*
+		5)
+		/rol/permiso/ id_Rol DELETE
+		Nota: los ids del permiso y del rol deben de ser validos, no se valida que ya se haya agregado anteriormente
+	*/
+	 	$app->delete('/permiso/:id', function ($id) use ($app) {
+	 		try{
+			 	/*Eliminacion del registro*/
+					$rol = ORM::for_table('rol_permiso')
+						->where_equal('id_rol_permiso',$id)			
+						->delete_many();
+
+			 	/*Verificamos si se borro el registro*/
+			 		if($rol){
+				 		$response[] = array(
+				 			'mensaje'=>"se elimino el permiso al rol"
+				 		);
+			 		}else{
+				 		$response[] = array(
+				 			'mensaje'=>"no existe el permiso a eliminar"
+				 		);			 			
+			 		}
+			 		$app->response->setStatus(201);
+			 		$app->response->setBody(json_encode($response));
+
+	 		}catch (Exception $e){
+			 	$app->response->setStatus(201);
+			 	$app->response->setBody(json_encode($e));	 			
+	 		}
+
+		});
+
+	 	/*Respuesta del post*/
+		$app->options('/permiso', function () use ($app){
+			$app->response->setStatus(200);
+			$app->response->setBody(json_encode(array('message' => 'ok')));
+	 	});
+
+
+});
+
+?>
