@@ -3,3 +3,5 @@
 */
 
 angular.module('administrador',['roles','miservicio']);
+
+//angular.module('ng app, para se usada en html',['controladro','fuente de datos']);

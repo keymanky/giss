@@ -1,0 +1,56 @@
+/*
+	.clase
+	#id
+	elemento_html
+*/
+
+.titulo{
+	color: #FFF;
+	background-color: rgb(33,100,144);
+	padding: 5px;
+}
+.separator_main{
+	height: 5px;
+	background-color: rgb(33,100,144);
+	margin-top: 0px;	
+}
+.guardar{
+	background-color: rgb(163,217,121);
+	border-color: rgb(33,100,144);
+	/*position: absolute;
+  	left: 50%;
+  	transform: translate(-50%);*/
+}
+.limpiar{
+	background-color: rgb(255,250,131);
+	border-color: rgb(33,100,144);	
+}
+.page-header{
+	background-color: rgb(240,240,240);
+	height: 100%;
+	padding: 10px;
+}
+.nav-tabs{
+	background-color: #FFF;
+}
+.panel-heading{
+	width: 500px;
+}
+.panel-body{
+	width: 500px;
+}
+form{
+	padding: 5px;
+	width: 500px;	
+	border: solid;
+	border-color: #216490;
+}
+.table{
+	width: 500px;
+	border: solid;
+	border-color: #216490;
+}
+.panel-primary{
+	width: 800px;
+	padding: 30px;
+}
