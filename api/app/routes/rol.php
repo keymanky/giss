@@ -209,9 +209,9 @@
 		6)
 		/rol/id/ PUT id rol
 	*/
-	 	$app->put('/:id', function ($id) use ($app) {
+	 	$app->put('/', function () use ($app) {
 	 		try{
-			 	/*Eliminacion del registro*/
+			 	/*Validaciones del response*/
 		 		$rules=array(
 		 			'id' =>array(false, "integer", 1, 99),
 		 			'nombre' =>array(true, "string", 1, 99),
@@ -229,28 +229,50 @@
 		 				$app->stop();
 		 			}
 		 		}
-			 	/*Verificamos si se borro el registro*/
-			 		if($rol){
-				 		$response[] = array(
-				 			'mensaje'=>"se elimino el permiso al rol"
-				 		);
-			 		}else{
-				 		$response[] = array(
-				 			'mensaje'=>"no existe el permiso a eliminar"
-				 		);			 			
-			 		}
-			 		$app->response->setStatus(200);
-			 		$app->response->setBody(json_encode($response));
 
-	 		}catch (Exception $e){
+
+		 		if(empty($params['id'])){
+		 			//Insertamos un nuevo registro	
+					$rol = ORM::for_table('rol')->create();
+					$rol->nombre = $params['nombre'];
+					$rol->descripcion = $params['descripcion'];
+					$rol->save();	
+					$response = array(
+							'mensaje' =>"Se agrego correctamente el rol"
+					);
+		 		} else{
+		 			//Actualizamos el registro
+					ORM::configure('id_column_overrides', array('rol' => 'id_rol'));
+					$update = ORM::for_table('rol')->find_one($params['id']);
+
+					//Si no se encontro al registro a actualizar
+					if(!$update){
+						$app->response->setStatus(400);
+						$error = array('error'=>array('correo'=>"Este rol no se puede actualizar"));
+						$app->response->setBody(json_encode($error));
+						$app->stop();
+					}
+					//Actualizamos
+					$update->set('nombre', $params['nombre']);
+					$update->set('descripcion', $params['descripcion']);
+					$update->save();
+					$response = array(
+							'mensaje' =>"Se actualizo correctamente"
+					);	 
+				}		
+
+			 	$app->response->setStatus(200);
+			 	$app->response->setBody(json_encode($response));	
+
+	 		}catch (Exception $e){			
 			 	$app->response->setStatus(500);
-			 	$app->response->setBody(json_encode($e));	 			
+			 	$app->response->setBody(json_encode(array("mensaje" => "error al procesar la peticion")));	 			
 	 		}
 
 		});
 
-	 	/*Respuesta del post*/
-		$app->options('/permiso', function ($id) use ($app){
+	 	/*Respuesta del put*/
+		$app->options('/permiso', function () use ($app){
 			$app->response->setStatus(200);
 			$app->response->setBody(json_encode(array('message' => 'ok')));
 	 	});

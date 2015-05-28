@@ -1,0 +1,102 @@
+
+	<div>
+		<div class="page-header">
+			<h1 class="titulo">Configuraci&oacute;n de usuarios y roles</h1>
+			<!-- Tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" ><a class="tab tab_activa" href="#/roles" id="tabroles">Roles</a></li>
+				<li role="presentation"><a class="tab tab_desactiva" href="#/usuarios">Usuarios</a></li>
+			</ul>
+			<hr class="separator_main"></hr>
+			<!-- Fin Tabs -->
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Nuevo / Editar</h3>
+				</div>
+
+				<!-- Agregar o editar rol -->
+				<form>
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Nombre</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.nombre}}" ng-model="rolseleccionado.nombre">
+					</div>
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Descripci&oacute;n</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}" ng-model="rolseleccionado.descripcion">
+					</div>				
+					<button type="submit" class="btn guardar" ng-click="guardar_rol(idrolseleccionado,rolseleccionado.nombre,rolseleccionado.descripcion)">Guardar</button>	
+					<button type="submit" class="btn limpiar" ng-click="limpiar_rol()">Limpiar</button>	
+				</form>	
+
+				<!-- Fin agregar o editar rol-->
+
+
+				<div class="panel-heading">
+					<h3 class="panel-title">Roles definidos</h3>
+				</div>
+
+				<div class="bs-example" data-example-id="contextual-table">
+					<!-- Lista de los roles existentes -->
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Descripci&oacute;n</th>
+								<th>&nbsp;</th>							
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="editable normal-{{$index}}" ng-repeat="modelo in datos" ng-click="editarRol($index, modelo.id)">
+								<td>{{modelo.nombre}}</td>
+								<td>{{modelo.descripcion}}</td>
+								<td><img src="../../imgs/edit.png"/ ></td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- Fin de los roles existentes -->
+
+				</div>
+
+
+
+				<div class="panel-heading">
+					<table>
+						<tr>
+							<td width="200px"><h3 class="panel-title">Permisos del rol</h3>
+							</td>
+							<td>
+								<select  ng-model="listapermisos.id" ng-change="cambiarvalor(listapermisos.id)">
+									<option value="">&nbsp;</option>
+	 								<option value="{{listapermisos.id}}" ng-model="listapermisos.id" ng-repeat="listapermisos in permisos">{{listapermisos.nombre}}</option>
+								</select>
+							</td>
+							<td><img src="../../imgs/add.png" ng-click="agregar_permiso_rol(idrolseleccionado,idpermiso)"/>
+							</td>
+						</tr>
+					</table>				
+				</div>
+
+				<div class="bs-example" data-example-id="contextual-table">
+					<!-- Lista de los roles existentes -->
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Descripci&oacute;n</th>
+								<th>&nbsp;</th>									
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="pr in rolseleccionadopermisos">
+								<td>{{pr.nombre_permiso}}</td>
+								<td class="eliminable"><img src="../../imgs/delete.png" ng-click="eliminarPermiso(pr.id)" /></td>													
+							</tr>
+						</tbody>
+					</table>
+					<!-- Fin de los roles existentes -->
+				</div>
+
+
+			</div>	
+		</div>
+	</div>

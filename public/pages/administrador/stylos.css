@@ -29,6 +29,7 @@
 	background-color: rgb(240,240,240);
 	height: 100%;
 	padding: 10px;
+	margin: 0px;	
 }
 .nav-tabs{
 	background-color: #FFF;
@@ -53,4 +54,36 @@ form{
 .panel-primary{
 	width: 800px;
 	padding: 30px;
+}
+img{
+	height: 30px;
+	width: 30px;
+}
+.panel-title{
+	color: #FFF;
+}
+.big-blue {
+    width: 200px;
+    height: 200px;
+    background-color: #00f;
+  }
+.tab_desactiva{
+	color: #000;
+	background-color: #216490;
+}
+.tab_activa{
+	color: #FFF;
+	background-color: #2164AA;
+}
+.nav-tabs{
+	background-color: rgb(240,240,240)
+}
+select{
+	width: 200px;
+}
+form{
+	text-align: right;
+}
+label{
+	float: left;
 }
