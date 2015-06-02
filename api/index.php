@@ -36,7 +36,7 @@ ORM::configure('id_column_overrides', array('seccion' => 'id_rol_seccion'));
 require  'app/routes/permiso.php';
 require  'app/routes/rol.php';
 require  'app/routes/entidadfederativa.php';
-// require  'app/routes/empresa.php';
+require  'app/routes/usuario.php';
 // require 'app/routes/admin.php';
 // require 'app/routes/login.php';
 // require 'app/routes/drone.php';

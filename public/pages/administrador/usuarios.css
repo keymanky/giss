@@ -1,0 +1,19 @@
+.panel-body{
+	padding: 0px 15px 0px 0px
+}
+.panel-primary{
+	width: 1200px;
+	padding: 30px;
+}
+.usuarios{
+}
+.listausuarios{
+	position: absolute;
+	top: 190px;
+	left: 600px;
+}
+.listausuarios2{
+	position: absolute;
+	top: 228px;
+	left: 600px;
+}

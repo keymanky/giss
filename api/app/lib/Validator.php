@@ -44,16 +44,16 @@
 			}
 
 			// Establecer parámetros que´podrian ser una inyección.
-			$found = array("/</", "/>/");
-			$replace = "";
+			// $found = array("/</", "/>/");
+			// $replace = "";
 			// Verificar cada parametro y escapar caracteres de una inyección.
-			$t = array();
-			foreach ($params as $key => $value) {
-				$a = preg_replace($found, $replace, $value);
-				// Quitar espacios en exceso.
-				$t [$key] = preg_replace('/\s\s+/', ' ', trim($a));
-			}
-			$params = $t;
+			// $t = array();
+			// foreach ($params as $key => $value) {
+			// 	$a = preg_replace($found, $replace, $value);
+			// 	// Quitar espacios en exceso.
+			// 	$t [$key] = preg_replace('/\s\s+/', ' ', trim($a));
+			// }
+			// $params = $t;
 			
 			$this->formatParams($params);
 			$this->rules = $rules;
@@ -562,8 +562,9 @@
 
 			if (!empty($value)) {
 				
-				$val=("/^[a-zA-Z0-9\.\,\:\_\ \-\(\)\#\á\é\í\ó\ú\Á\É\Í\Ó\Ú\Ñ\ñ\'$']+(\s*[a-zA-Z0-9\_\.\-\:\#\á\é\í\ó\ú\Á\É\Í\Ó\Ú\ñ\Ñ\(\)\'$']]*){0,199}$/");
-				$pwd_valido=preg_match($val, $value);
+				//$val=("/^[a-zA-Z0-9\.\,\:\_\ \-\(\)\#\á\é\í\ó\ú\Á\É\Í\Ó\Ú\Ñ\ñ\'$']+(\s*[a-zA-Z0-9\_\.\-\:\#\á\é\í\ó\ú\Á\É\Í\Ó\Ú\ñ\Ñ\(\)\'$']]*){0,199}$/");
+				//$pwd_valido=preg_match($val, $value);
+				$pwd_valido=1;
 
 				//Si no cumple la condición
 				if(!$pwd_valido) {

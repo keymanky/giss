@@ -1,3 +1,4 @@
+	<link rel="stylesheet" type="text/css" href="usuarios.css">
 	<div>
 		<div class="page-header">
 			<h1 class="titulo">Configuraci&oacute;n de usuarios y roles</h1>
@@ -9,7 +10,7 @@
 			<hr class="separator_main"></hr>
 			<!-- Fin Tabs -->
 
-			<div class="panel panel-primary">
+			<div class="panel panel-primary usuarios">
 				<div class="panel-heading">
 					<h3 class="panel-title">Nuevo / Editar</h3>
 				</div>
@@ -17,11 +18,7 @@
 				<!-- Agregar o editar rol -->
 				<form>
 					<div class="panel-body">
-						<label for="exampleInputEmail1">Nombre</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.nombre}}">
-					</div>
-					<div class="panel-body">
-						<label for="exampleInputEmail1">Nombre login</label>
+						<label for="exampleInputEmail1">Nombre de la cuenta</label>
 						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
 					</div>	
 					<div class="panel-body">
@@ -31,7 +28,70 @@
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Estatus</label>
 						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
-					</div>												
+					</div>				
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Tipo</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+
+
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Nombre</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Apellido Paterno</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Apellido Materno</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>				
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Email</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Fecha nacimiento</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>									
+
+
+
+
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Calle</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Num Ext</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Num Int</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>				
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Codigo Postal</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Colonia</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>				
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Localidad</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Ciudad</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>				
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Telefono</label>
+						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+					</div>	
+
 					<button type="submit" class="btn guardar">Guardar</button>	
 					<button type="submit" class="btn limpiar">Limpiar</button>	
 				</form>	
@@ -39,11 +99,11 @@
 				<!-- Fin agregar o editar rol-->
 
 
-				<div class="panel-heading">
-					<h3 class="panel-title">Roles definidos</h3>
+				<div class="panel-heading listausuarios">
+					<h3 class="panel-title">Usuarios definidos</h3>
 				</div>
 
-				<div class="bs-example" data-example-id="contextual-table">
+				<div class="bs-example listausuarios2" data-example-id="contextual-table">
 					<!-- Lista de los roles existentes -->
 					<table class="table">
 						<thead>
@@ -62,47 +122,7 @@
 						</tbody>
 					</table>
 					<!-- Fin de los roles existentes -->
-
 				</div>
-
-
-
-				<div class="panel-heading">
-					<table>
-						<tr>
-							<td width="200px"><h3 class="panel-title">Permisos del rol</h3>
-							</td>
-							<td>
-								<select  ng-model="listapermisos.id" ng-change="cambiarvalor(listapermisos.id)">
-									<option value="">&nbsp;</option>
-	 								<option value="{{listapermisos.id}}" ng-model="listapermisos.id" ng-repeat="listapermisos in permisos">{{listapermisos.nombre}}</option>
-								</select>
-							</td>
-							<td><img src="../../imgs/add.png" ng-click="agregar_permiso_rol(idrolseleccionado,idpermiso)"/>
-							</td>
-						</tr>
-					</table>				
-				</div>
-
-				<div class="bs-example" data-example-id="contextual-table">
-					<!-- Lista de los roles existentes -->
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Descripci&oacute;n</th>
-								<th>&nbsp;</th>									
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="pr in rolseleccionadopermisos">
-								<td>{{pr.nombre_permiso}}</td>
-								<td class="eliminable"><img src="../../imgs/delete.png" ng-click="eliminarPermiso(pr.id)" /></td>													
-							</tr>
-						</tbody>
-					</table>
-					<!-- Fin de los roles existentes -->
-				</div>
-
 
 			</div>	
 		</div>

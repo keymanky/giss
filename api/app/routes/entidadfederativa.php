@@ -17,7 +17,7 @@
 			$response = array();	
 			foreach ($permiso as $key => $value) {
 				$permiso = array(
-					'id'     => $value->id_entidad_federativa,
+					'id'     => $value->id_identidad_federativa,
 					'nombre' => $value->nombre,
 				);
 				$response[] = $permiso;
