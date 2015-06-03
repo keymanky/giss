@@ -19,81 +19,93 @@
 				<form>
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Nombre de la cuenta</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" required="true" value="{{usuarioseleccionado.name_login}}" ng-model="usuarioseleccionado.name_login">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Password</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" required="true" value="{{usuarioseleccionado.password}}" ng-model="usuarioseleccionado.password">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Estatus</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" required="true" value="{{usuarioseleccionado.estatus}}" ng-model="usuarioseleccionado.estatus">
 					</div>				
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Tipo</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" required="true" value="{{usuarioseleccionado.tipo}}" ng-model="usuarioseleccionado.tipo">
 					</div>	
 
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Rol</label>
+						<select class="form-control" ng-model="listaroless.id" ng-change="cambiarvalor_rol(listaroless.id)">
+							<option value="">&nbsp;</option>
+							<option value="{{listaroless.id}}" ng-model="listaroless.id" ng-repeat="listaroless in datos">{{listaroless.nombre}}</option>
+						</select>						
+					</div>
 
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Nombre</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.pnombre}}" ng-model="usuarioseleccionado.pnombre">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Apellido Paterno</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.ppaterno}}" ng-model="usuarioseleccionado.ppaterno">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Apellido Materno</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.pmaterno}}" ng-model="usuarioseleccionado.pmaterno">
 					</div>				
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Email</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.pemail}}" ng-model="usuarioseleccionado.pemail">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Fecha nacimiento</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.pfecha}}" ng-model="usuarioseleccionado.pfecha">
 					</div>									
 
-
-
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Entidad federativa</label>
+						<select class="form-control" ng-model="listaentidades.id" ng-change="cambiarvalor_entidad(listaentidades.id)">
+							<option value="">&nbsp;</option>
+							<option value="{{listaentidades.id}}" ng-model="listaentidades.id" ng-repeat="listaentidades in entidades">{{listaentidades.nombre}}</option>
+						</select>						
+					</div>
 
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Calle</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.calle}}" ng-model="usuarioseleccionado.calle">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Num Ext</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.num_ext}}" ng-model="usuarioseleccionado.num_ext">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Num Int</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.num_int}}" ng-model="usuarioseleccionado.num_int">
 					</div>				
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Codigo Postal</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.codigo_postal}}" ng-model="usuarioseleccionado.codigo_postal">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Colonia</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.colonia}}" ng-model="usuarioseleccionado.colonia">
 					</div>				
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Localidad</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.efnombre}}" ng-model="usuarioseleccionado.efnombre">
 					</div>	
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Ciudad</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.ciudad}}" ng-model="usuarioseleccionado.ciudad">
 					</div>				
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Telefono</label>
-						<input type="text" class="form-control" required="true" value="{{rolseleccionado.descripcion}}">
+						<input type="text" class="form-control" value="{{usuarioseleccionado.telefono_particular}}" ng-model="usuarioseleccionado.telefono_particular">
 					</div>	
 
-					<button type="submit" class="btn guardar">Guardar</button>	
-					<button type="submit" class="btn limpiar">Limpiar</button>	
+					<button type="submit" class="btn guardar" ng-click="guardar_usuario(usuarioseleccionado.name_login,usuarioseleccionado.password,usuarioseleccionado.estatus,usuarioseleccionado.tipo, idroless,usuarioseleccionado.pnombre,usuarioseleccionado.ppaterno,usuarioseleccionado.pmaterno,usuarioseleccionado.pemail,usuarioseleccionado.pfecha,identidad,usuarioseleccionado.calle,usuarioseleccionado.num_ext,usuarioseleccionado.num_int,usuarioseleccionado.codigo_postal,usuarioseleccionado.colonia,usuarioseleccionado.efnombre,usuarioseleccionado.ciudad,usuarioseleccionado.telefono_particular)">Guardar</button>	
+					<button type="submit" class="btn limpiar" ng-click="limpiar_rol()">Limpiar</button>	
 				</form>	
 
 				<!-- Fin agregar o editar rol-->
@@ -108,15 +120,15 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Nombre</th>
-								<th>Descripci&oacute;n</th>
+								<th>Usuario</th>
+								<th>Password</th>
 								<th>&nbsp;</th>							
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="editable normal-{{$index}}" ng-repeat="modelo in datos" ng-click="editarRol($index, modelo.id)">
-								<td>{{modelo.nombre}}</td>
-								<td>{{modelo.descripcion}}</td>
+							<tr class="editable normal-{{$index}}" ng-repeat="modelo in usuarios" ng-click="editarUsuario($index, modelo.id)">
+								<td>{{modelo.name_login}}</td>
+								<td>{{modelo.password}}</td>
 								<td><img src="../../imgs/edit.png"/ ></td>
 							</tr>
 						</tbody>

@@ -12,6 +12,7 @@
 		/*Consulta a la base*/
 		$permiso = ORM::for_table('usuario')
 			->select('usuario.*')
+			->where('estatus',1)
 			->find_many();
 
 			$response = array();	

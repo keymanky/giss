@@ -34,7 +34,24 @@ angular.module('miservicio',[])
 			//6
 			agregar_actualizar_rol:function (obj) {
 				return $http.put('http://localhost/giss/api/rol/',obj);			
-			}								
+			},	
+			//7
+			consultar_todas_entidades:function () {
+				return $http.get('http://localhost/giss/api/entidad');			
+			},	
+			//8
+			consultar_todos_usuarios:function () {
+				return $http.get('http://localhost/giss/api/usuario/');			
+			},
+			//9
+			consultar_id_usuario:function(id){
+				return $http.get('http://localhost/giss/api/usuario/'+id)
+			},
+			//10
+			agregar_actualizar_usuario:function(obj){
+				return $http.put('http://localhost/giss/api/usuario/',obj)
+			}			
+			//9	
 			/*
 			sig_metodo: function (){
 				return $http.get('url_del_servicio');
