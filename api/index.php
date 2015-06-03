@@ -30,15 +30,15 @@ ORM::configure('id_column_overrides', array('rol' => 'id_rol'));
 ORM::configure('id_column_overrides', array('rol_permiso' => 'id_rol_permiso'));
 ORM::configure('id_column_overrides', array('usuario' => 'id_usuario'));
 ORM::configure('id_column_overrides', array('usuario_respuesta' => 'id_usuario_respuesta'));
-ORM::configure('id_column_overrides', array('seccion' => 'id_rol_seccion'));
+ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));
 
 // routes
 require  'app/routes/permiso.php';
 require  'app/routes/rol.php';
 require  'app/routes/entidadfederativa.php';
 require  'app/routes/usuario.php';
-// require 'app/routes/admin.php';
-// require 'app/routes/login.php';
+require 'app/routes/cuestionario.php';
+require 'app/routes/seccion.php';
 // require 'app/routes/drone.php';
 // require 'app/routes/oportunidades.php';
 
