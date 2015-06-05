@@ -116,13 +116,32 @@
 
 		 if(empty($params['id'])){
 
-				//Insertamos un nuevo registro				
+		 		//Consultamos la ultima secuencia
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, "http://localhost/giss/api/seccion/ultima/");
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$raw_data = curl_exec($ch);
+				curl_close($ch);
+				$data = json_decode($raw_data);
+				$ultima_seccion = $data->ultima_seccion+1;
+
+				//Insertamos un nuevo registrO			
 			 	$seccion = ORM::for_table('seccion')->create();
 			 	$seccion->nombre = $params['nombre'];		
 			 	$seccion->ruta_imagen = $params['ruta_imagen'];								
 			 	$seccion->ruta_video = $params['ruta_video'];					
 			 	$seccion->descripcion = $params['descripcion'];		
+			 	$seccion->secuencia = $ultima_seccion;
 			 	$seccion->save();	
+
+			 	//Se escribimos la secuencia final
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, "http://localhost/giss/api/seccion/es_final/" . $seccion->id());
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$raw_data = curl_exec($ch);
+				curl_close($ch);			 	
 			 
 			 	$response = array(
 			 		'mensaje' =>"Se agrego correctamente la seccion"
@@ -162,7 +181,7 @@
 
 	/*
 	16)
-		//Devuelve la ultima secuencia de seccion definida y activa
+		//Devuelve la ultima secuencia de seccion definida
 	*/
 	$app->get('/ultima/', function () use ($app) {
 
@@ -190,6 +209,155 @@
 	 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	});
 
+
+	/*
+	17)
+		//Establece como ultima la seccion pasada por el parametro
+	*/
+	$app->get('/es_final/:id', function ($id) use ($app) {
+
+		/*Consulta a la base*/
+		ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));
+		$seccionesu = ORM ::for_table('seccion')	
+			->select('seccion.*')
+			->where('id_seccion',$id)		
+			->find_one();
+
+		if($seccionesu){
+			$seccionesu->set('es_final',1);
+			$seccionesu->save();
+
+			ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));
+			$seccionesu = ORM ::for_table('seccion')	
+				->select('seccion.*')
+				->where_not_equal('id_seccion',$id)		
+				->find_many();
+
+			foreach ($seccionesu as $key => $value) {
+				$value->set('es_final',0);
+				$value->save();
+			}
+
+			$response= array(
+				"mensaje" =>  'OK'
+			);			
+		}
+
+		/*Respuesta del servicio*/
+		$app->response->setBody(json_encode($response));			
+		$app->response->setStatus(200);
+		$app->stop();
+	});
+
+	/*Respuesta del get*/
+	$app->options('/es_final/:id', function ($id) use ($app){
+	 	$app->response->setStatus(200);
+	 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	});
+
+	/*
+	18)
+ 		/Reordenar las secuecia de las secciones
+ 	*/
+
+	$app->put('/reordenar/', function () use ($app) {
+
+		$rules=array(
+			//De la seccion a la cual se le cambiara su secuencia
+			'id' =>array(false, "integer", 1, 99), 	 
+			//Su secuencia actual			
+			'secuencia' =>array(false, "integer", 1, 99), 	 	
+			//mas o menos				 							 			 	
+			'accion' =>array(false, "string", 1, 99)
+		);
+
+		 $v = new Validator($app->request->getBody(), $rules);
+		 $params = $v->validate();
+
+		 if(count($v->getErrors()) > 0){
+		 	foreach ($v->getErrors() as $key => $value) {
+		 		$response = array("error" => array($key => "campo incorrecto"));
+		 		$app->response->setStatus($v->getCode());
+		 		$app->response->setBody(json_encode($response));
+		 		$app->stop();
+		 	}
+		 }
+
+		 if($params['accion'] == "mas"){
+		 	$secuencia_buscada = $params['secuencia'] + 1;
+		 }elseif ($params['accion'] == "menos"){
+		 	$secuencia_buscada = $params['secuencia'] - 1;
+		 }else{
+		 	$secuencia_buscada = 0;
+		 }
+
+		//Intercambiamos las secuencias
+	 	ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));				
+	 	$update= ORM::for_table('seccion')
+	 		->select('seccion.*')
+	 		->where('secuencia',$secuencia_buscada)
+	 		->find_one();
+
+	 	if(!$update){
+		 		$app->response->setStatus(400);
+		 		$error = array('error'=>array('mensaje'=>"es la maxima o la minima " . $secuencia_buscada));
+		 		$app->response->setBody(json_encode($error));
+		 		$app->stop();
+	 	}
+
+ 		//Consultamos la ultima secuencia
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "http://localhost/giss/api/seccion/ultima/");
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$raw_data = curl_exec($ch);
+		curl_close($ch);
+		$data = json_decode($raw_data);
+		$ultima_seccion = $data->ultima_seccion;
+
+		//La ultima seccion sera la enviada en los parametros
+		if($ultima_seccion == $secuencia_buscada)
+			$id_ultima = $params['id'];
+		//la ultima seccion es la mandada en los parametros, pero ahora ssera la penultima
+		if($ultima_seccion == $params['secuencia'])
+			$id_ultima = $update->id_seccion;
+
+		$update->set('secuencia',$params['secuencia']);
+	 	$update->save();	
+
+	 	ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));				
+	 	$update= ORM::for_table('seccion')
+	 		->select('seccion.*')
+	 		->where('id_seccion',$params['id'])
+	 		->find_one();
+
+	 	$update->set('secuencia',$secuencia_buscada);
+	 	$update->save();	
+
+	 	if(isset($id_ultima))
+	 	{
+			//Se escribimos la secuencia final
+		 	$ch = curl_init();
+		 	curl_setopt($ch, CURLOPT_URL, "http://localhost/giss/api/seccion/es_final/" . $id_ultima);
+		 	curl_setopt($ch, CURLOPT_HEADER, 0);
+		 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		 	$raw_data = curl_exec($ch);
+		 	curl_close($ch);	
+	 	}
+	 	
+	 	$response = array(
+	 		'mensaje' =>"OK " . $id_ultima
+	 	);	
+
+		 $app->response->setStatus(200);
+		 $app->response->setBody(json_encode($response));	
+	});
+
+	 /*Respuesta del put*/
+	$app->options('/reordenar/', function () use ($app){
+	 	$app->response->setStatus(200);
+	 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	});	
 
 });
 

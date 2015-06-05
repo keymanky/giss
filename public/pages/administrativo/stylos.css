@@ -1,0 +1,99 @@
+/*
+	.clase
+	#id
+	elemento_html
+*/
+
+.titulo{
+	color: #FFF;
+	background-color: rgb(33,100,144);
+	padding: 5px;
+}
+.separator_main{
+	height: 5px;
+	background-color: rgb(33,100,144);
+	margin-top: 0px;	
+}
+.guardar{
+	background-color: rgb(163,217,121);
+	border-color: rgb(33,100,144);
+	/*position: absolute;
+  	left: 50%;
+  	transform: translate(-50%);*/
+}
+.limpiar{
+	background-color: rgb(255,250,131);
+	border-color: rgb(33,100,144);	
+}
+.page-header{
+	background-color: rgb(240,240,240);
+	height: 100%;
+	padding: 10px;
+	margin: 0px;	
+}
+.nav-tabs{
+	background-color: #FFF;
+}
+.panel-heading{
+	width: 500px;
+}
+.panel-body{
+	width: 500px;
+	padding: 0px 0px 15px 0px;
+}
+form{
+	padding: 5px;
+	width: 500px;
+	height: 600px;		
+	border: solid;
+	border-color: #216490;
+}
+.table{
+	width: 500px;
+	border: solid;
+	border-color: #216490;
+}
+.panel-primary{
+	width: 800px;
+	padding: 30px;
+}
+img{
+	height: 30px;
+	width: 30px;
+}
+.panel-title{
+	color: #FFF;
+}
+.big-blue {
+    width: 200px;
+    height: 200px;
+    background-color: #00f;
+  }
+.tab_desactiva{
+	color: #000;
+	background-color: #216490;
+}
+.tab_activa{
+	color: #FFF;
+	background-color: #2164AA;
+}
+.nav-tabs{
+	background-color: rgb(240,240,240)
+}
+form{
+	text-align: right;
+}
+label{
+	float: left;
+}
+.imagen{
+	float: left;
+	width: 50%;
+}
+.video{
+	display: inline-block;
+	width: 50%;
+}
+.activo_noactivo{
+	width: 50px;
+}

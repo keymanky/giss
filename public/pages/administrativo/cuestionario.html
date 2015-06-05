@@ -1,0 +1,103 @@
+	<link rel="stylesheet" type="text/css" href="cuestionarios.css">
+	<div>
+		<div class="page-header">
+			<h1 class="titulo">Configuraci&oacute;n de usuarios y roles</h1>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" ><a class="tab tab_activa" href="#/cuestionario" id="tabroles">Cuestionario</a></li>
+				<li role="presentation"><a class="tab tab_desactiva" href="#/seccion">Seccion</a></li>
+				<li role="presentation"><a class="tab tab_desactiva" href="#/pregunta">Pregunta</a></li>								
+			</ul>
+			<hr class="separator_main"></hr>
+			<!-- Fin Tabs -->
+
+			<div class="panel panel-primary usuarios">
+				<div class="panel-heading">
+					<h3 class="panel-title">Nuevo / Editar</h3>
+				</div>
+
+				<!-- Agregar o editar rol -->
+				<!-- Agregar o editar cuestionarios -->
+				<form>
+					<div class="panel-body">
+						<label for="exampleInputEmail1">Nombre del cuestionario</label>
+						<input type="text" class="form-control" required="true" value="{{cuestionarioseleccionado.nombre}}" ng-model="cuestionarioseleccionado.nombre">
+					</div>
+					<div class="panel-body">&nbsp;</div>
+
+					<div class="panel-body">
+
+
+						<label for="exampleInputEmail1">Activo  .</label>
+						<select class="form-control ng-pristine ng-valid ng-touched activo_noactivo">
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+
+						<input type="text" class="form-control" required="true" value="{{cuestionarioseleccionado.activo}}" ng-model="cuestionarioseleccionado.activo">
+
+					</div>
+					<div class="panel-body">&nbsp;</div>
+
+					<div class="panel-body">
+						<label>Imagen del cuestionario o Video del cuestionario</label>
+						<input type="text" class="form-control imagen" value="{{cuestionarioseleccionado.ruta_imagen}}" >
+
+						<input type="text" class="form-control video" value="{{cuestionarioseleccionado.ruta_video}}">						
+					</div>
+					<div class="panel-body">&nbsp;</div>						
+
+					<div>
+<!-- 					<iframe class="shortvideo" width="100%" height="300" src="https://www.youtube.com/watch?v=8CRP0rqJyPM" frameborder="0" allowfullscreen></iframe> -->
+<video width="560" height="315" src="{{cuestionarioseleccionado.ruta_video}}" frameborder="0" allowfullscreen></video>					
+					<div class="panel-body">&nbsp;</div>							
+					</div>	
+
+<!-- 
+					<div ng-if= "cuestionarioseleccionado.ruta_video" ng-model="cuestionarioseleccionado.ruta_video">
+						<video class="shortvideo" width="100%" height="300" src="https://www.youtube.com/watch?v=8CRP0rqJyPM" frameborder="0" allowfullscreen></video>
+						<div class="panel-body">&nbsp;</div>							
+					</div>	 -->
+
+
+					<div ng-if= "cuestionarioseleccionado.ruta_imagen">
+						<img width="100%" height="300" src="{{cuestionarioseleccionado.ruta_imagen}}"/>
+						<div class="panel-body">&nbsp;</div>							
+					</div>		
+
+
+					<button type="submit" class="btn guardar" ng-click="guardar_cuestionario()">Guardar</button>	
+					<button type="submit" class="btn limpiar" ng-click="limpiar_cuestionario()">Limpiar</button>	
+				</form>	
+				<!-- Fin agregar o editar rol-->
+
+
+				<div class="panel-heading listausuarios">
+					<h3 class="panel-title">Cuestionarios definidos</h3>
+				</div>
+
+				<div class="bs-example listausuarios2" data-example-id="contextual-table">
+					<!-- Lista de los roles existentes -->
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Secciones</th>
+								<th>Preguntas</th>							
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="editable normal-{{$index}}" ng-repeat="cues in cuestionarios" ng-click="editarCuestionario($index, cues.id)">
+								<td>{{cues.nombre}}</td>
+								<td>{{cues.num_secciones}}</td>
+								<td>{{cues.num_preguntas}}</td>								
+								<td><img src="../../imgs/edit.png"/ ></td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- Fin de los roles existentes -->
+				</div>
+
+			</div>	
+		</div>
+	</div>

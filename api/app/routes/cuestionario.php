@@ -28,9 +28,9 @@
 				'num_preguntas' => "$num_preguntas",
 		);
 
-
+		$res[]=$response;
 		/*Respuesta del servicio*/
-		$app->response->setBody(json_encode($response));			
+		$app->response->setBody(json_encode($res));			
 		$app->response->setStatus(200);
 		$app->stop();
 		});

@@ -39,7 +39,7 @@ require  'app/routes/entidadfederativa.php';
 require  'app/routes/usuario.php';
 require 'app/routes/cuestionario.php';
 require 'app/routes/seccion.php';
-// require 'app/routes/drone.php';
+require 'app/routes/pregunta.php';
 // require 'app/routes/oportunidades.php';
 
 
