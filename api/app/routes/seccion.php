@@ -27,8 +27,10 @@
 
 			$seccion = array(
 				'id'     => $value->id_seccion,
+				'nombre' => $value->nombre,
 				'secuencia' => $value->secuencia,
-				'num_preguntas' => $num_pregunta,																	
+				'num_preguntas' => $num_pregunta,	
+				'activo' =>$value->estatus,																
 			);
 
 			$response[] = $seccion;
@@ -346,7 +348,7 @@
 	 	}
 	 	
 	 	$response = array(
-	 		'mensaje' =>"OK " . $id_ultima
+	 		'mensaje' =>"OK "
 	 	);	
 
 		 $app->response->setStatus(200);
@@ -358,6 +360,46 @@
 	 	$app->response->setStatus(200);
 	 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	});	
+
+
+
+
+	/*25)
+		Activar desactivar seccion
+	*/
+
+	$app->get('/desactivar_activar/:id', function ($id) use ($app) {
+
+		/*Consulta a la base*/
+		ORM::configure('id_column_overrides', array('seccion' => 'id_seccion'));
+			$seccionesu = ORM ::for_table('seccion')	
+				->select('seccion.*')
+				->where('id_seccion',$id)		
+				->find_one();
+
+				if($seccionesu){
+					if($seccionesu->estatus)
+						$seccionesu->set('estatus',0);
+					else
+						$seccionesu->set('estatus',1);						
+				}
+				$seccionesu->save();
+
+			$response= array(
+				"mensaje" =>  'Operacion efectuada con exito'
+			);			
+
+		/*Respuesta del servicio*/
+		$app->response->setBody(json_encode($response));			
+		$app->response->setStatus(200);
+		$app->stop();
+	});
+
+	/*Respuesta del get*/
+	$app->options('/desactivar_activar/:id', function ($id) use ($app){
+	 	$app->response->setStatus(200);
+	 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	});
 
 });
 

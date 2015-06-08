@@ -1,9 +1,9 @@
 /*
 	Los servicios de alimentan la aplicación 
 	Deberan ser llamdos desde el controlador respectivo
-*/
+	*/
 
-angular.module('miservicio',[])
+	angular.module('miservicio',[])
 	.factory('giss_servicios', function ($http) {
 		console.log($http);
 		return{
@@ -53,7 +53,7 @@ angular.module('miservicio',[])
 			},
 			//11
 			consultar_todos_cuestionarios:function () {
-				return $http.get('http://localhost/giss/api/cuestionario/');			
+				return $http.get('http://localhost/giss/api/cuestionario/');
 			},
 			//12
 			consultar_id_cuestionario:function (id) {
@@ -92,7 +92,11 @@ angular.module('miservicio',[])
 			//23
 			reordenar_pregunta:function (id, obj) {
 				return $http.put('http://localhost/giss/api/pregunta/reordenar/'+id ,obj);			
-			}							
+			},
+			//25
+			activar_desactivar_seccion:function (id) {
+				return $http.get('http://localhost/giss/api/seccion/desactivar_activar/'+id);			
+			},
 			//24 reestablecer la secuencia de toda una seccion es de uso interno		
 			/*
 			sig_metodo: function (){
