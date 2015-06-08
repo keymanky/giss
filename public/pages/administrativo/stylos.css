@@ -44,7 +44,7 @@
 form{
 	padding: 5px;
 	width: 500px;
-	height: 600px;		
+	height: 650px;		
 	border: solid;
 	border-color: #216490;
 }
@@ -96,4 +96,5 @@ label{
 }
 .activo_noactivo{
 	width: 50px;
+	float: left;
 }

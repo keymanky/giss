@@ -27,13 +27,11 @@
 					<div class="panel-body">
 
 
-						<label for="exampleInputEmail1">Activo  .</label>
-						<select class="form-control ng-pristine ng-valid ng-touched activo_noactivo">
-							<option value="1">Si</option>
+						<label for="exampleInputEmail1">Activo&nbsp;</label>
+						<select class="activo_noactivo">
+							<option value="1" ng-selected="cuestionarioseleccionado.activo">Si</option>
 							<option value="0">No</option>
 						</select>
-
-						<input type="text" class="form-control" required="true" value="{{cuestionarioseleccionado.activo}}" ng-model="cuestionarioseleccionado.activo">
 
 					</div>
 					<div class="panel-body">&nbsp;</div>
@@ -46,21 +44,13 @@
 					</div>
 					<div class="panel-body">&nbsp;</div>						
 
-					<div>
-<!-- 					<iframe class="shortvideo" width="100%" height="300" src="https://www.youtube.com/watch?v=8CRP0rqJyPM" frameborder="0" allowfullscreen></iframe> -->
-<video width="560" height="315" src="{{cuestionarioseleccionado.ruta_video}}" frameborder="0" allowfullscreen></video>					
-					<div class="panel-body">&nbsp;</div>							
+					<div ng-if="cuestionarioseleccionado.ruta_video">
+						<youtube-video video-url="cuestionarioseleccionado.ruta_video" player-width="'100%'" player-height="'300px'"></youtube-video>				
+						<div class="panel-body">&nbsp;</div>							
 					</div>	
 
-<!-- 
-					<div ng-if= "cuestionarioseleccionado.ruta_video" ng-model="cuestionarioseleccionado.ruta_video">
-						<video class="shortvideo" width="100%" height="300" src="https://www.youtube.com/watch?v=8CRP0rqJyPM" frameborder="0" allowfullscreen></video>
-						<div class="panel-body">&nbsp;</div>							
-					</div>	 -->
-
-
 					<div ng-if= "cuestionarioseleccionado.ruta_imagen">
-						<img width="100%" height="300" src="{{cuestionarioseleccionado.ruta_imagen}}"/>
+						<img width="100%" height="300" ng-src="{{cuestionarioseleccionado.ruta_imagen}}"/>
 						<div class="panel-body">&nbsp;</div>							
 					</div>		
 
