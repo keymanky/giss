@@ -5,6 +5,10 @@ angular.module('administrativo_middle',['youtube-embed'])
 		$scope.json = {};
 		$scope.idseccionseleccionada = "";
 		$scope.idseccionseleccionada_estatus = "";
+		$scope.idpreguntaseleccionada = "";
+		$scope.idpreguntaseleccionada_estatus = "";	
+		$scope.idseccionagregar = "";	
+
 
 		giss_servicios.consultar_todos_cuestionarios().success( function(data){
 			$scope.cuestionarios = data;
@@ -68,8 +72,8 @@ angular.module('administrativo_middle',['youtube-embed'])
 			}
 
 			$scope.json.nombre = nombre;
-			ruta_imagen===undefined ? $scope.json.ruta_imagen = " " : $scope.json.ruta_imagen = ruta_imagen;			
-			ruta_video===undefined ? $scope.json.ruta_video = " " : $scope.json.ruta_video = ruta_video;
+			ruta_imagen===undefined ||  ruta_imagen=== "" ? $scope.json.ruta_imagen = " " : $scope.json.ruta_imagen = ruta_imagen;			
+			ruta_video===undefined || ruta_video==="" ? $scope.json.ruta_video = " " : $scope.json.ruta_video = ruta_video;
 
 			$scope.json.descripcion = descripcion;
 					
@@ -111,6 +115,97 @@ angular.module('administrativo_middle',['youtube-embed'])
 				alert(respuesta.mensaje);
 				location.reload(true);				
 			});			
+		}
+
+		$scope.cambiarseccion = function(id){
+			$scope.idseccionagregar = id;			
+			giss_servicios.consultar_todas_preguntas_de_seccion(id).success(function (respuesta){
+				$scope.preguntas = respuesta;		
+				console.log($scope.preguntas);		
+			});			
 		}		
-		//activar_desactivar_seccion
+
+		$scope.cambiarseccionagregar = function(id){
+			$scope.idseccionagregar = id;	
+			//alert($scope.idseccionagregar);
+		}		
+
+		$scope.editarPregunta = function (e, id){
+			var element = document.querySelector(".normal-"+ e);
+			var element2 = document.querySelector(".success");
+			//$scope.idseccionagregar = id;			
+			if(element2)
+				element2.classList.remove("success");
+			element.classList.toggle("success");
+
+			giss_servicios.consultar_pregunta_id(id).success( function(data){
+				$scope.preguntaseleccionada = data;
+				$scope.idpreguntaseleccionada = data.id;
+			
+				if($scope.preguntaseleccionada.ruta_video == " " )
+					$scope.preguntaseleccionada.ruta_video = undefined;
+				if($scope.preguntaseleccionada.ruta_imagen == " " )
+					$scope.preguntaseleccionada.ruta_imagen = undefined;	
+				//console.log($scope.preguntaseleccionada);	
+			});
+		}	
+
+		$scope.limpiar_pregunta = function (){
+			$scope.idseccionagregar = "";			
+			location.reload(true);	
+		}
+		$scope.guardar_pregunta = function (nombre, ruta_imagen, ruta_video, descripcion) {
+			if($scope.idseccionagregar === ""){
+				alert("Seleccione la seccion")
+				return;
+			}
+			$scope.json = {};			
+			if($scope.idpreguntaseleccionada){
+				$scope.json.id = $scope.idpreguntaseleccionada;
+			}
+
+			$scope.json.nombre = nombre;
+			ruta_imagen===undefined ||  ruta_imagen=== "" ? $scope.json.ruta_imagen = " " : $scope.json.ruta_imagen = ruta_imagen;			
+			ruta_video===undefined  || ruta_video==="" ? $scope.json.ruta_video = " " : $scope.json.ruta_video = ruta_video;
+			$scope.json.id_seccion = $scope.idseccionagregar;
+			$scope.json.descripcion = descripcion;
+					
+			console.log($scope.json);
+
+			giss_servicios.agregar_pregunta($scope.json).success(function (respuesta){
+				alert(respuesta.mensaje);
+				location.reload(true);				
+			});		
+		}
+		$scope.reordenarPreguntaMas = function (id, sec){
+			// alert("id: " + id + "secuencia: " + sec);
+			$scope.json = {}
+			$scope.json.id = id;
+			$scope.json.secuencia = sec;
+			$scope.json.accion = "mas"
+			console.log($scope.json);
+			giss_servicios.reordenar_pregunta($scope.idseccionagregar , $scope.json).success(function (respuesta){
+				alert(respuesta.mensaje);
+				location.reload(true);				
+			});				
+		}
+
+		$scope.reordenarPreguntaMenos = function (id, sec){
+			// alert("id: " + id + "secuencia: " + sec);
+			$scope.json.id = id;
+			$scope.json.secuencia = sec;
+			$scope.json.accion = "menos"
+			console.log($scope.json);			
+			giss_servicios.reordenar_pregunta($scope.idseccionagregar  , $scope.json).success(function (respuesta){
+				alert(respuesta.mensaje);
+				location.reload(true);				
+			});			
+		}		
+
+		$scope.activar_desactivar_pregunta = function (id){		
+			giss_servicios.activar_desactivar_pregunta(id).success(function (respuesta){
+				alert(respuesta.mensaje);
+				location.reload(true);				
+			});			
+		}		
 	}])

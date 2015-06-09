@@ -1,121 +1,130 @@
-	<link rel="stylesheet" type="text/css" href="cuestionarios.css">
-	<div>
-		<div class="page-header">
-			<h1 class="titulo">Configuraci&oacute;n de Cuestionarios</h1>
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" ><a class="tab tab_desactiva" href="#/cuestionario" id="tabroles">Cuestionario</a></li>
-				<li role="presentation"><a class="tab tab_desactiva" href="#/seccion">Seccion</a></li>
-				<li role="presentation"><a class="tab tab_activa" href="#/pregunta">Pregunta</a></li>								
-			</ul>
-			<hr class="separator_main"></hr>
-			<!-- Fin Tabs -->
 
-			<div class="panel panel-primary usuarios">
-				<div class="panel-heading">
-					<h3 class="panel-title">Nueva / Editar</h3>
+<link rel="stylesheet" type="text/css" href="pregunta.css">
+<div>
+	<div class="page-header">
+		<h1 class="titulo">Configuraci&oacute;n de Cuestionarios</h1>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" ><a class="tab tab_desactiva" href="#/cuestionario" id="tabroles">Cuestionario</a></li>
+			<li role="presentation"><a class="tab tab_desactiva" href="#/seccion">seccion</a></li>
+			<li role="presentation"><a class="tab tab_activa" href="#/pregunta">Pregunta</a></li>								
+		</ul>
+		<hr class="separator_main"></hr>
+		<!-- Fin Tabs -->
+
+		<div class="panel panel-primary usuarios">
+			<div class="panel-heading">
+				<h3 class="panel-title">Nueva / Editar</h3>
+			</div>
+
+			<!-- Agregar o editar rol -->
+			<!-- Agregar o editar cuestionarios -->
+			<form>
+				<div class="panel-body">
+					<label for="exampleInputEmail1">Nombre de la pregunta</label>
+					<input type="text" class="form-control" required="true" value="{{preguntaseleccionada.nombre}}" ng-model="preguntaseleccionada.nombre">
+				</div>
+				<div class="panel-body">&nbsp;</div>
+
+				<div class="panel-body">
+					<label for="exampleInputEmail1">Descripción de la pregunta</label>
+					<input type="text" class="form-control descripcionpregunta" required="true" value="{{preguntaseleccionada.descripcion}}" ng-model="preguntaseleccionada.descripcion">
+				</div>
+				<div class="panel-body">&nbsp;</div>					
+
+				<div class="panel-body">
+					<label for="exampleInputEmail1">Activa&nbsp;</label>
+					<select class="selectpicker activo_noactivo" disabled>
+						<option value="1" ng-selected="preguntaseleccionada.estatus">Si</option>
+						<option value="0" ng-selected="!preguntaseleccionada.estatus">No</option>
+					</select>
 				</div>
 
-				<!-- Agregar o editar rol -->
-				<!-- Agregar o editar cuestionarios -->
-				<form>
-					<div class="panel-body">
-						<label for="exampleInputEmail1">Nombre de la pregunta</label>
-						<input type="text" class="form-control" required="true" value="{{seccionseleccionada.nombre}}" ng-model="seccionseleccionada.nombre">
-					</div>
-					<div class="panel-body">&nbsp;</div>
-
-					<div class="panel-body">
-						<label for="exampleInputEmail1">Descripción de la pregunta</label>
-						<input type="text" class="form-control" required="true" value="{{seccionseleccionada.descripcion}}" ng-model="seccionseleccionada.descripcion">
-					</div>
-					<div class="panel-body">&nbsp;</div>					
-
-					<div class="panel-body">
-						<label for="exampleInputEmail1">Activa&nbsp;</label>
-						<select class="selectpicker activo_noactivo" disabled>
-							<option value="1" ng-selected="seccionseleccionada.estatus">Si</option>
-							<option value="0">No</option>
-						</select>
-					</div>
-
-					<div class="panel-body">&nbsp;</div>
-
-					<div class="panel-body">
-						<label>Imagen del cuestionario o Video de la pregunta</label>
-						<input type="text" class="form-control imagen" value="{{seccionseleccionada.ruta_imagen}}" ng-model="seccionseleccionada.ruta_imagen">
-
-						<input type="text" class="form-control video" value="{{seccionseleccionada.ruta_video}}" ng-model="seccionseleccionada.ruta_video">						
-					</div>
-					<div class="panel-body">&nbsp;</div>						
-
-					<div ng-if="seccionseleccionada.ruta_video">
-						<youtube-video video-url="seccionseleccionada.ruta_video" player-width="'100%'" player-height="'300px'"></youtube-video>				
-						<div class="panel-body">&nbsp;</div>							
-					</div>	
-
-					<div ng-if= "seccionseleccionada.ruta_imagen">
-						<img width="100%" height="300" ng-src="{{seccionseleccionada.ruta_imagen}}"/>
-						<div class="panel-body">&nbsp;</div>							
-					</div>		
-
-
-					<button type="submit" class="btn guardar" ng-click="guardar_seccion(seccionseleccionada.nombre,seccionseleccionada.ruta_imagen,seccionseleccionada.ruta_video,seccionseleccionada.descripcion)">Guardar</button>	
-					<button type="submit" class="btn limpiar" ng-click="limpiar_seccion()">Limpiar</button>	
-				</form>	
-				<!-- Fin agregar o editar rol-->
-
-
-				<div class="panel-heading listausuarios">
-					<h3 class="panel-title">Preguntas definidas</h3>
-
-					<select  ng-model="listasecciones.id" ng-change="cambiarseccion(listasecciones.id)">
-						<option value="">&nbsp;</option>
+				<div class="panel-body">
+					<label for="exampleInputEmail1">Sección a la que pertenece</label>
+					<select class=" nuevaseccion" ng-model="listasecciones.id" ng-change="cambiarseccionagregar(listasecciones.id)">
 						<option value="{{listasecciones.id}}" ng-model="listasecciones.id" ng-repeat="listasecciones in secciones">{{listasecciones.nombre}}</option>
 					</select>
-
 				</div>
 
-				<div class="bs-example listausuarios2" data-example-id="contextual-table">
-					<!-- Lista de los roles existentes -->
+				<div class="panel-body">&nbsp;</div>
+
+				<div class="panel-body">
+					<label>Imagen de la pregunta o Video de la pregunta</label>
+					<input type="text" class="form-control imagen" value="{{preguntaseleccionada.ruta_imagen}}" ng-model="preguntaseleccionada.ruta_imagen">
+
+					<input type="text" class="form-control video" value="{{preguntaseleccionada.ruta_video}}" ng-model="preguntaseleccionada.ruta_video">						
+				</div>
+				<div class="panel-body">&nbsp;</div>						
+
+				<div ng-if="preguntaseleccionada.ruta_video">
+					<youtube-video video-url="preguntaseleccionada.ruta_video" player-width="'100%'" player-height="'300px'"></youtube-video>				
+					<div class="panel-body">&nbsp;</div>							
+				</div>	
+
+				<div ng-if= "preguntaseleccionada.ruta_imagen">
+					<img width="100%" height="300" ng-src="{{preguntaseleccionada.ruta_imagen}}"/>
+					<div class="panel-body">&nbsp;</div>							
+				</div>		
+
+
+				<button type="submit" class="btn guardar" ng-click="guardar_pregunta(preguntaseleccionada.nombre,preguntaseleccionada.ruta_imagen,preguntaseleccionada.ruta_video,preguntaseleccionada.descripcion)">Guardar</button>	
+				<button type="submit" class="btn limpiar" ng-click="limpiar_pregunta()">Limpiar</button>	
+			</form>	
+			<!-- Fin agregar o editar rol-->
+
+
+			<div class="panel-heading listausuarios">
+				<h3 class="panel-title">Preguntas definidas de la sección</h3>
+			</div>
+
+			<div class="bs-example listausuarios2" data-example-id="contextual-table">
+				<select class="lista_secciones" ng-model="listasecciones.id" ng-change="cambiarseccion(listasecciones.id)">
+					<option value="{{listasecciones.id}}" ng-model="listasecciones.id" ng-repeat="listasecciones in secciones">{{listasecciones.nombre}}</option>
+				</select>				
+				<!-- Lista de los roles existentes -->
+				<div class="desplegartodassecciones">
+
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Secuencia</th>
+								<th>secuencia</th>
 								<th>&nbsp;</th>
 								<th>Nombre</th>
-								<th>Preguntas</th>							
+								<th>Incisos</th>							
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="editable normal-{{$index}}" ng-repeat="sec in secciones" ng-click="editarSeccion($index, sec.id)">
-								<td>{{sec.secuencia}}</td>
+							<tr class="editable normal-{{$index}}" ng-repeat="preg in preguntas" ng-click="editarPregunta($index, preg.id)">
+								<td>{{preg.secuencia}}</td>
 								<td>	
 									<table>
 										<tr>
-											<td><img src="../../imgs/up.png" ng-click="reordenarSeccionMenos(sec.id, sec.secuencia)" /></td>
-											<td><img src="../../imgs/down.png" ng-click="reordenarSeccionMas(sec.id, sec.secuencia)" /></td></td>
+											<td><img src="../../imgs/up.png" ng-click="reordenarPreguntaMenos(preg.id, preg.secuencia)" /></td>
+											<td><img src="../../imgs/down.png" ng-click="reordenarPreguntaMas(preg.id, preg.secuencia)" /></td></td>
 										</tr>
 									</table>
 								</td>
-								<td>{{sec.nombre}}</td>		
-								<td>{{sec.num_preguntas}}</td>	
+								<td>{{preg.nombre}}</td>		
+								<td>{{preg.num_incisos}}</td>	
 								<td>	
-									<table ng-switch on = "sec.activo">
+									<table ng-switch on = "preg.activo">
 										<tr>
 											<td><img src="../../imgs/edit.png"/ ></td>
 											<td>&nbsp;</td>
-											<td><img src="../../imgs/delete.png"/ ng-click="activar_desactivar_seccion(sec.id)" ng-switch-when="1"></td></td>
-											<td><img src="../../imgs/activar.png"/ ng-click="activar_desactivar_seccion(sec.id)" ng-switch-when="0"></td></td>											
+											<td><img src="../../imgs/delete.png"/ ng-click="activar_desactivar_pregunta(preg.id)" ng-switch-when="1"></td></td>
+											<td><img src="../../imgs/activar.png"/ ng-click="activar_desactivar_pregunta(preg.id)" ng-switch-when="0"></td></td>											
 										</tr>
 									</table>
 								</td>								
 							</tr>
 						</tbody>
 					</table>
-					<!-- Fin de los roles existentes -->
-				</div>
 
-			</div>	
-		</div>
+				</div>
+				<!-- Fin de los roles existentes -->
+			</div>
+
+		</div>	
 	</div>
+</div>

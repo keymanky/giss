@@ -97,6 +97,10 @@
 			activar_desactivar_seccion:function (id) {
 				return $http.get('http://localhost/giss/api/seccion/desactivar_activar/'+id);			
 			},
+			//26
+			activar_desactivar_pregunta:function (id) {
+				return $http.get('http://localhost/giss/api/pregunta/desactivar_activar/'+id);			
+			}
 			//24 reestablecer la secuencia de toda una seccion es de uso interno		
 			/*
 			sig_metodo: function (){

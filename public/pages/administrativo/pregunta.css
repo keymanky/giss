@@ -1,0 +1,40 @@
+form{
+	height: 750px;
+}
+.panel-body{
+	padding: 0px 15px 0px 0px
+}
+.panel-primary{
+	width: 1200px;
+	padding: 30px;
+}
+.usuarios{
+}
+.listausuarios{
+	position: absolute;
+	top: 190px;
+	left: 600px;
+}
+.listausuarios2{
+	position: absolute;
+	top: 228px;
+	left: 600px;
+}
+.lista_secciones{
+	background-color: #337AB7;
+	color: #FFF;
+	width: 525px;
+}
+.listausuarios{
+	width: 525px;
+}
+.desplegartodassecciones{
+	overflow: auto;
+	height: 620px;
+}
+.descripcionpregunta{
+	height: 100px;
+}
+.nuevaseccion{
+	width: 490px;
+}

@@ -1,4 +1,5 @@
 	<link rel="stylesheet" type="text/css" href="cuestionarios.css">
+			<link rel="stylesheet" type="text/css" href="secciones.css">
 	<div>
 		<div class="page-header">
 			<h1 class="titulo">Configuraci&oacute;n de Cuestionarios</h1>
@@ -34,14 +35,14 @@
 						<label for="exampleInputEmail1">Activo&nbsp;</label>
 						<select class="selectpicker activo_noactivo" disabled>
 							<option value="1" ng-selected="seccionseleccionada.estatus">Si</option>
-							<option value="0">No</option>
+							<option value="0" ng-selected="!seccionseleccionada.estatus">No</option>
 						</select>
 					</div>
 
 					<div class="panel-body">&nbsp;</div>
 
 					<div class="panel-body">
-						<label>Imagen del cuestionario o Video de la sección</label>
+						<label>Imagen de la sección o Video de la sección</label>
 						<input type="text" class="form-control imagen" value="{{seccionseleccionada.ruta_imagen}}" ng-model="seccionseleccionada.ruta_imagen">
 
 						<input type="text" class="form-control video" value="{{seccionseleccionada.ruta_video}}" ng-model="seccionseleccionada.ruta_video">						

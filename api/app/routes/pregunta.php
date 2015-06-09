@@ -29,7 +29,9 @@
 			$seccion = array(
 				'id'     => $value->id_pregunta,
 				'secuencia' => $value->secuencia,
-				'num_incisos' => $num_inciso,	
+				'num_incisos' => $num_inciso,
+				'nombre' =>$value->nombre,
+				'activo' =>$value->estatus,
 			);
 
 			$response[] = $seccion;
@@ -195,18 +197,25 @@
 	*/
 	$app->get('/ultima/:id', function ($id) use ($app) {
 
-		/*Consulta a la base*/
-		ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
-		$secciones = ORM ::for_table('pregunta')	
-			->select('pregunta.secuencia')
-			->where('id_seccion',$id)
-			->order_by_desc('pregunta.secuencia')			
-			->find_many();
+		try{
+			/*Consulta a la base*/
+			ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
+			$secciones = ORM ::for_table('pregunta')	
+				->select('pregunta.secuencia')
+				->where('id_seccion',$id)
+				->order_by_desc('pregunta.secuencia')			
+				->find_many();
 
-		$response = array(
-			'ultima_pregunta' => $secciones[0]->secuencia,
-		);
-
+			$response = [];
+			$response = array(
+				'ultima_pregunta' => $secciones[0]->secuencia,
+			);			
+		}catch (Exception $e){
+			$response = [];
+			$response = array(
+				'ultima_pregunta' => 0,
+			);
+		}
 
 		/*Respuesta del servicio*/
 		$app->response->setBody(json_encode($response));			
@@ -341,6 +350,43 @@
 
 	 /*Respuesta del put*/
 	$app->options('/consecutiva/:id', function ($id) use ($app){
+	 	$app->response->setStatus(200);
+	 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	});	
+
+	/*26)
+		Activar desactivar pregunta
+	*/
+
+	$app->get('/desactivar_activar/:id', function ($id) use ($app) {
+
+		/*Consulta a la base*/
+		ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
+			$seccionesu = ORM ::for_table('pregunta')	
+				->select('pregunta.*')
+				->where('id_pregunta',$id)		
+				->find_one();
+
+				if($seccionesu){
+					if($seccionesu->estatus)
+						$seccionesu->set('estatus',0);
+					else
+						$seccionesu->set('estatus',1);						
+				}
+				$seccionesu->save();
+
+			$response= array(
+				"mensaje" =>  'Operacion efectuada con exito'
+			);			
+
+		/*Respuesta del servicio*/
+		$app->response->setBody(json_encode($response));			
+		$app->response->setStatus(200);
+		$app->stop();
+	});
+
+	/*Respuesta del get*/
+	$app->options('/desactivar_activar/:id', function ($id) use ($app){
 	 	$app->response->setStatus(200);
 	 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	});	
