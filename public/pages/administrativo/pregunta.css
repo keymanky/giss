@@ -12,12 +12,12 @@ form{
 }
 .listausuarios{
 	position: absolute;
-	top: 190px;
+	top: 390px;
 	left: 600px;
 }
 .listausuarios2{
 	position: absolute;
-	top: 228px;
+	top: 428px;
 	left: 600px;
 }
 .lista_secciones{
@@ -30,11 +30,25 @@ form{
 }
 .desplegartodassecciones{
 	overflow: auto;
-	height: 620px;
+	height: 520px;
 }
 .descripcionpregunta{
 	height: 100px;
 }
 .nuevaseccion{
 	width: 490px;
+}
+.listaincisos{
+	position: absolute;
+	width: 525px;	
+	top: 190px;
+	left: 600px;	
+}
+.incisos{
+	overflow: auto;
+	height: 520px;	
+	position: absolute;
+	width: 525px;	
+	top: 240px;
+	left: 600px;	
 }

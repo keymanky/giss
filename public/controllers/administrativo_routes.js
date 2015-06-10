@@ -16,9 +16,5 @@ angular.module("rutasadministrativo", ['ngRoute']).
 		.when('/pregunta',{
 				templateUrl : "pregunta.html",
 				controller : 'administrativo_page'
-		})		
-		.when('/inciso',{
-				templateUrl : "inciso.html",
-				controller : 'administrativo_page'
-		})		
+		})	
 	})

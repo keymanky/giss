@@ -100,12 +100,19 @@
 			//26
 			activar_desactivar_pregunta:function (id) {
 				return $http.get('http://localhost/giss/api/pregunta/desactivar_activar/'+id);			
+			},
+			//27
+			consultar_todos_incisos: function(id){
+				return $http.get('http://localhost/giss/api/inciso/'+id);						
+			},
+			//28 uso interno devuelve la ultima
+			//29
+			agregar_inciso_pregunta: function(id){
+				return $http.post('http://localhost/giss/api/inciso/'+id);						
+			},
+			//30 Eliminar inciso
+			eliminar_inciso_pregunta: function(id){
+				return $http.delete('http://localhost/giss/api/inciso/'+id);						
 			}
-			//24 reestablecer la secuencia de toda una seccion es de uso interno		
-			/*
-			sig_metodo: function (){
-				return $http.get('url_del_servicio');
-			}
-			*/		
 		}
 	});

@@ -5,7 +5,7 @@
 		<h1 class="titulo">Configuraci&oacute;n de Cuestionarios</h1>
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" ><a class="tab tab_desactiva" href="#/cuestionario" id="tabroles">Cuestionario</a></li>
-			<li role="presentation"><a class="tab tab_desactiva" href="#/seccion">seccion</a></li>
+			<li role="presentation"><a class="tab tab_desactiva" href="#/seccion">Seccion</a></li>
 			<li role="presentation"><a class="tab tab_activa" href="#/pregunta">Pregunta</a></li>								
 		</ul>
 		<hr class="separator_main"></hr>
@@ -77,6 +77,40 @@
 				<h3 class="panel-title">Preguntas definidas de la sección</h3>
 			</div>
 
+			<div class="panel-heading listaincisos">
+				<table>
+					<tr>
+						<td width="200px"><h3 class="panel-title">Incisos de la pregunta</h3>
+						</td>
+						<td><img src="../../imgs/add.png" ng-click="agregar_inciso_pregunta()"/>	
+						</td>
+					</tr>
+				</table>			
+				
+
+			</div>
+
+			<div class="incisos">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Nombre</th>							
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="editable normal-{{$index}}" ng-repeat="inc in incisos" ng-click="ir_a_inciso(inc.id)">
+							<td>{{inc.inciso_letra}}</td>
+							<td>{{inc.nombre}}</td>		
+							<td>	
+								<img src="../../imgs/delete.png" ng-click="eliminar_inciso_pregunta(inc.id)" />
+							</td>								
+						</tr>
+					</tbody>
+				</table>
+			</div>			
+
 			<div class="bs-example listausuarios2" data-example-id="contextual-table">
 				<select class="lista_secciones" ng-model="listasecciones.id" ng-change="cambiarseccion(listasecciones.id)">
 					<option value="{{listasecciones.id}}" ng-model="listasecciones.id" ng-repeat="listasecciones in secciones">{{listasecciones.nombre}}</option>
@@ -113,14 +147,13 @@
 											<td><img src="../../imgs/edit.png"/ ></td>
 											<td>&nbsp;</td>
 											<td><img src="../../imgs/delete.png"/ ng-click="activar_desactivar_pregunta(preg.id)" ng-switch-when="1"></td></td>
-											<td><img src="../../imgs/activar.png"/ ng-click="activar_desactivar_pregunta(preg.id)" ng-switch-when="0"></td></td>											
+											<td><img src="../../imgs/activar.png"/ ng-click="activar_desactivar_pregunta(preg.id)" ng-switch-when="0"></td></td>				
 										</tr>
 									</table>
 								</td>								
 							</tr>
 						</tbody>
 					</table>
-
 				</div>
 				<!-- Fin de los roles existentes -->
 			</div>

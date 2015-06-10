@@ -40,7 +40,7 @@ require  'app/routes/usuario.php';
 require 'app/routes/cuestionario.php';
 require 'app/routes/seccion.php';
 require 'app/routes/pregunta.php';
-// require 'app/routes/oportunidades.php';
+require 'app/routes/inciso.php';
 
 
 // set 'json response' header

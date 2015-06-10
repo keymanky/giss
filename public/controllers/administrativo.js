@@ -138,16 +138,21 @@ angular.module('administrativo_middle',['youtube-embed'])
 				element2.classList.remove("success");
 			element.classList.toggle("success");
 
-			giss_servicios.consultar_pregunta_id(id).success( function(data){
-				$scope.preguntaseleccionada = data;
-				$scope.idpreguntaseleccionada = data.id;
-			
-				if($scope.preguntaseleccionada.ruta_video == " " )
-					$scope.preguntaseleccionada.ruta_video = undefined;
-				if($scope.preguntaseleccionada.ruta_imagen == " " )
-					$scope.preguntaseleccionada.ruta_imagen = undefined;	
-				//console.log($scope.preguntaseleccionada);	
-			});
+
+			giss_servicios.consultar_todos_incisos(id).success(function (respuesta){
+				$scope.incisos = respuesta;
+				console.log(respuesta);				
+				giss_servicios.consultar_pregunta_id(id).success( function(data){
+					$scope.preguntaseleccionada = data;
+					$scope.idpreguntaseleccionada = data.id;
+				
+					if($scope.preguntaseleccionada.ruta_video == " " )
+						$scope.preguntaseleccionada.ruta_video = undefined;
+					if($scope.preguntaseleccionada.ruta_imagen == " " )
+						$scope.preguntaseleccionada.ruta_imagen = undefined;	
+					//console.log($scope.preguntaseleccionada);	
+				});				
+			});		
 		}	
 
 		$scope.limpiar_pregunta = function (){
@@ -202,10 +207,30 @@ angular.module('administrativo_middle',['youtube-embed'])
 			});			
 		}		
 
-		$scope.activar_desactivar_pregunta = function (id){		
-			giss_servicios.activar_desactivar_pregunta(id).success(function (respuesta){
-				alert(respuesta.mensaje);
+		$scope.agregar_inciso_pregunta = function (){		
+			giss_servicios.agregar_inciso_pregunta($scope.idpreguntaseleccionada).success(function (respuesta){
+				alert(respuesta[0].mensaje);
+				//console.log(respuesta[0].mensaje)
 				location.reload(true);				
 			});			
-		}		
+		}
+
+		$scope.eliminar_inciso_pregunta = function (id){		
+			giss_servicios.eliminar_inciso_pregunta(id).success(function (respuesta){
+				alert(respuesta[0].mensaje);
+				//console.log(respuesta[0].mensaje)
+				location.reload(true);				
+			});			
+		}	
+
+		$scope.ir_a_inciso = function (id){
+			//alert("Hacer lo que tengo que hacer para "+ id);
+			window.location="http://localhost/giss/public/pages/incisos/";
+		}	
+		// $scope.consultar_todos_incisos = function (id){		
+		// 	giss_servicios.consultar_todos_incisos(id).success(function (respuesta){
+		// 		$scope.incisos = respuesta;
+		// 		console.log($scope.incisos);				
+		// 	});			
+		// }	
 	}])
