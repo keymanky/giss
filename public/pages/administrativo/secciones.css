@@ -52,3 +52,9 @@ form{
 	top: 240px;
 	left: 600px;	
 }
+.encabezados{
+	display: inline;
+	width: 50px;
+	height: 50px;
+	float: right;
+}

@@ -260,4 +260,8 @@ angular.module('administrativo_middle',['youtube-embed'])
 			window.localStorage.setItem("id_seccion",$scope.seccionseleccionada.id);	
 			window.location="http://localhost/giss/public/pages/pantallas/#/view";
 		}	
+
+		$scope.ir_a_probar = function(){
+			//alert("Cargando ...");
+		}
 	}])

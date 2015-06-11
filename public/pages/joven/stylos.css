@@ -1,0 +1,73 @@
+/*
+	.clase
+	#id
+	elemento_html
+*/
+
+.titulo{
+	color: #FFF;
+	background-color: rgb(33,100,144);
+	padding: 5px;
+	width: 100%;
+}
+.instruccion{
+	color: #000;
+	background-color: #FFF;
+	padding: 5px;
+	width: 100%;
+}
+.page-header{
+	background-color: #FFF;
+	height: 100%;
+	padding: 10px;
+	margin: 0px;
+}	
+img{
+	height: 60px;
+	width: 60px;
+}
+.centrado{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+.table{
+	width: 600px;
+	border: solid;
+	border-color: #216490;
+}
+.texto_instrucciones{
+	display: inline;
+	font-size: 22px;
+	font-weight: bold;
+}
+input{
+	display:block;
+	width:100%;
+	height:50px;
+	padding:6px 12px;
+	font-size: 22px;
+	text-align: center;
+	line-height:1.42857143;
+	color:#555;
+	background-color: rgb(192,237,254);
+	background-image:none;
+	border:2px solid #ccc;
+	border-radius:4px;
+	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+input:focus{
+	border-color:#F7FE2E;
+	outline:0;
+	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+	box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}
+.seleccionable:hover {
+	background-color: #DFF0D8;
+}
