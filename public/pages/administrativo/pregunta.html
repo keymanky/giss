@@ -100,8 +100,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="editable normal-{{$index}}" ng-repeat="inc in incisos" ng-click="ir_a_inciso(inc.id)">
-							<td>{{inc.inciso_letra}}</td>
+						<tr class="editable normal-{{$index}}" ng-repeat="inc in incisos">
+							<td ng-click="ir_a_inciso(inc.id)">{{inc.inciso_letra}}</td>
 							<td>{{inc.nombre}}</td>		
 							<td>	
 								<img src="../../imgs/delete.png" ng-click="eliminar_inciso_pregunta(inc.id)" />

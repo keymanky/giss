@@ -1,3 +1,54 @@
+form{
+	height: 750px;
+}
+.panel-body{
+	padding: 0px 15px 0px 0px
+}
+.panel-primary{
+	width: 1200px;
+	padding: 30px;
+}
+.usuarios{
+}
+.listausuarios{
+	position: absolute;
+	top: 390px;
+	left: 600px;
+}
+.listausuarios2{
+	position: absolute;
+	top: 428px;
+	left: 600px;
+}
+.lista_secciones{
+	background-color: #337AB7;
+	color: #FFF;
+	width: 525px;
+}
 .listausuarios{
 	width: 525px;
+}
+.desplegartodassecciones{
+	overflow: auto;
+	height: 520px;
+}
+.descripcionpregunta{
+	height: 100px;
+}
+.nuevaseccion{
+	width: 490px;
+}
+.listaincisos{
+	position: absolute;
+	width: 525px;	
+	top: 190px;
+	left: 600px;	
+}
+.incisos{
+	overflow: auto;
+	height: 520px;	
+	position: absolute;
+	width: 525px;	
+	top: 240px;
+	left: 600px;	
 }

@@ -66,6 +66,44 @@
 				<!-- Fin agregar o editar rol-->
 
 
+
+
+			<div class="panel-heading listaincisos">
+				<table>
+					<tr>
+						<td width="200px"><h3 class="panel-title">Pantallas de instrucciones</h3>
+						</td>
+						<td><img src="../../imgs/add.png" ng-click="agregar_inciso_pregunta()"/>	
+						</td>
+					</tr>
+				</table>			
+				
+
+			</div>
+
+			<div class="incisos">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>&nbsp;</th>
+							<th>Nombre</th>							
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="editable normal-{{$index}}" ng-repeat="inc in pantallas">
+							<td ng-click="ir_a_pantalla(inc.id)">{{inc.secuencia}}</td>
+							<td>{{inc.nombre}}</td>		
+							<td>	
+								<img src="../../imgs/delete.png" ng-click="eliminar_pantalla_seccion(inc.id)" />
+							</td>								
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+
+
+
 				<div class="panel-heading listausuarios">
 					<h3 class="panel-title">Secciones definidas</h3>
 				</div>

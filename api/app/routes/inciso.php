@@ -154,6 +154,65 @@ $app->group('/inciso', function () use ($app)	{
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	 });
 
+ 	/*
+	32)
+ 		/actualiza un id por su id_inciso
+ 	*/
+	$app->put('/:id', function ($id) use ($app) {
+		// try{
+			$rules=array(
+				'nombre' =>array(false, "string", 1, 99), 	
+				'ruta_imagen' =>array(false, "string", 1, 99), 
+				'codificacion' =>array(false, "string", 1, 99),
+				'salta_a_la_seccion_id' =>array(false, "string", 1, 99),		 			 		
+			);
+
+
+			 $v = new Validator($app->request->getBody(), $rules);
+			 $params = $v->validate();
+
+			 if(count($v->getErrors()) > 0){
+			 	foreach ($v->getErrors() as $key => $value) {
+			 		$response = array("error" => array($key => "campo incorrecto"));
+			 		$app->response->setStatus($v->getCode());
+			 		$app->response->setBody(json_encode($response));
+			 		$app->stop();
+			 	}
+			 }
+
+		 	ORM::configure('id_column_overrides', array('inciso' => 'id_inciso'));				
+		 	$update= ORM::for_table('inciso')->find_one($id);
+
+		 	if(!$update){
+		 		$app->response->setStatus(400);
+		 		$error = array('error'=>array('correo'=>"El id del inciso no es correcto"));
+		 		$app->response->setBody(json_encode($error));
+		 		$app->stop();
+		 	}
+
+		 	$update->set('nombre',$params['nombre']);
+		 	$update->set('ruta_imagen',$params['ruta_imagen']);
+		 	$update->set('codificacion',$params['codificacion']);
+		 	$update->set('salta_a_la_seccion_id',$params['salta_a_la_seccion_id']);
+		 	$update->save();
+			/*Respuesta del servidor*/
+			$response[] = array(
+				'mensaje'=>"se actualizo correctamente el inciso " // . $secuencia
+			);
+			$app->response->setStatus(201);
+			$app->response->setBody(json_encode($response));
+		// }catch(Exception $e){
+		// 	$app->response->setStatus(500);
+		// 	$app->response->setBody(json_encode($e));	 			
+		// }
+	});
+
+	 /*Respuesta del post*/
+	 $app->options('/:id', function ($id) use ($app){
+		 	$app->response->setStatus(201);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	 });
+
 
  	/*
 	30)
@@ -213,11 +272,6 @@ $app->group('/inciso', function () use ($app)	{
  		/Reordenar las secuecia de los incisos
  	*/
 
-	/*
-	24)
- 		/Pone la secuencia en orden consecutivo los incisos de una pregunta
- 	*/
-
 	$app->get('/consecutiva/:id', function ($id) use ($app) {
 		$count =1;
 		//Intercambiamos las secuencias
@@ -252,7 +306,6 @@ $app->group('/inciso', function () use ($app)	{
 	 	$app->response->setStatus(200);
 	 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	});	
-
 
 });
 

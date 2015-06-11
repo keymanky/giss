@@ -113,6 +113,11 @@
 			//30 Eliminar inciso
 			eliminar_inciso_pregunta: function(id){
 				return $http.delete('http://localhost/giss/api/inciso/'+id);						
+			},
+			//31 es de uso interno
+			//32 
+			actualizar_inciso: function(id, obj){
+				return $http.put("http://localhost/giss/api/inciso/" + id, obj);
 			}
 		}
 	});

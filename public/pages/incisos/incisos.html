@@ -1,34 +1,58 @@
-	<div>
-		<div class="page-header">
-			<h1 class="titulo">Configuraci&oacute;n de Cuestionarios</h1>
-			<hr class="separator_main"></hr>
-			<!-- Fin Tabs -->
 
-			<div class="panel panel-primary usuarios">
-				<div class="panel-heading">
-					<h3 class="panel-title">Incisos de la pregunta: </h3>
-				</div>
-				
+<div>
+	<div class="page-header">
+		<table class="titulo">
+			<tr>
+				<td>
+					<h1>Incisos de la Pregunta</h1>
+				</td>
+				<td>
+					<img width="10%" ng-src="../../imgs/back.png" ng-click="ir_a_preguntas()" />
+				</td>
+			</tr>
+		</table>
+
+
+		<div>
+
+			<div class="etiqueta nompregunta">
+				<h3>{{nombre_pregunta}}</h3>
+			</div>
+
+			<br />
+
 			<div class="incisos">
 				<table class="table">
 					<thead>
 						<tr>
 							<th>&nbsp;</th>
 							<th>Nombre</th>							
-							<th>Acciones</th>
+							<th>Imagen</th>
+							<th>&nbsp;</th>
+							<th>Codificación</th>
+							<th>Salta a la sección</th>
+							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="editable normal-{{$index}}" ng-repeat="inc in incisos" ng-click="ir_a_inciso(inc.id)">
+						<tr ng-repeat="inc in incisos">
 							<td>{{inc.inciso_letra}}</td>
-							<td>{{inc.nombre}}</td>		
-							<td>	
-								<img src="../../imgs/delete.png" ng-click="eliminar_inciso_pregunta(inc.id)" />
-							</td>								
+							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.nombre}}" ng-model="inc.nombre"></td>		
+							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.ruta_imagen}}" ng-model="inc.ruta_imagen"></td>
+							<td><img src="{{inc.ruta_imagen}}"/></td>	
+							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.codificacion}}" ng-model="inc.codificacion"></td>	
+							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.salta_a_la_seccion_id}}" ng-model="inc.salta_a_la_seccion_id"></td>		
+							<td><img src="../../imgs/save.png" ng-click="guardar_inciso(inc.id,inc.nombre, inc.ruta_imagen, inc.codificacion, inc.salta_a_la_seccion_id)"/></td></td>				
 						</tr>
 					</tbody>
 				</table>
 			</div>
+
+			<div class="etiqueta nomcuestionario">
+				<h5>Que pertenecen al cuestionario: {{cuestionario_nombre}}</h5>
+				<h5>Que pertenecen a la seccion: {{seccion.nombre}}</h5>
 			</div>	
-		</div>
+
+		</div>	
 	</div>
+</div>

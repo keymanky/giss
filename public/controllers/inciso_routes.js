@@ -7,6 +7,6 @@ angular.module("rutasinciso", ['ngRoute']).
 		$routeProvider
 		.when('/view', {
 				templateUrl : "incisos.html",
-				controller : 'inci'
+				controller : 'incisos'
 		})
 	})

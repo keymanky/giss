@@ -41,7 +41,7 @@ require 'app/routes/cuestionario.php';
 require 'app/routes/seccion.php';
 require 'app/routes/pregunta.php';
 require 'app/routes/inciso.php';
-
+require 'app/routes/pantalla.php';
 
 // set 'json response' header
 $app->contentType('application/json');

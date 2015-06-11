@@ -1,0 +1,24 @@
+.nompregunta{
+	background-color: #A3D979;
+}
+.nomseccion{
+	background-color: #CFCFCF;	
+}
+.nomcuestionario{
+	background-color: #CFCFCF;	
+}
+.centrado{
+	text-align: center;
+	vertical-align: center;
+}
+.panel-heading{
+	width: 100px;
+}
+.etiqueta{
+	height: 50px;
+/*	border-color: #000;
+	border-style: double;*/
+}
+.table{
+	width: 900px;
+}

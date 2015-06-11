@@ -117,8 +117,8 @@ angular.module('administrativo_middle',['youtube-embed'])
 			});			
 		}
 
-		$scope.cambiarseccion = function(id){
-			$scope.idseccionagregar = id;			
+		$scope.cambiarseccion = function(id, nombre){
+			$scope.idseccionagregar = id;		
 			giss_servicios.consultar_todas_preguntas_de_seccion(id).success(function (respuesta){
 				$scope.preguntas = respuesta;		
 				console.log($scope.preguntas);		
@@ -143,14 +143,15 @@ angular.module('administrativo_middle',['youtube-embed'])
 				$scope.incisos = respuesta;
 				console.log(respuesta);				
 				giss_servicios.consultar_pregunta_id(id).success( function(data){
+
 					$scope.preguntaseleccionada = data;
 					$scope.idpreguntaseleccionada = data.id;
-				
 					if($scope.preguntaseleccionada.ruta_video == " " )
 						$scope.preguntaseleccionada.ruta_video = undefined;
 					if($scope.preguntaseleccionada.ruta_imagen == " " )
 						$scope.preguntaseleccionada.ruta_imagen = undefined;	
 					//console.log($scope.preguntaseleccionada);	
+
 				});				
 			});		
 		}	
@@ -225,12 +226,11 @@ angular.module('administrativo_middle',['youtube-embed'])
 
 		$scope.ir_a_inciso = function (id){
 			//alert("Hacer lo que tengo que hacer para "+ id);
-			window.location="http://localhost/giss/public/pages/incisos/";
-		}	
-		// $scope.consultar_todos_incisos = function (id){		
-		// 	giss_servicios.consultar_todos_incisos(id).success(function (respuesta){
-		// 		$scope.incisos = respuesta;
-		// 		console.log($scope.incisos);				
-		// 	});			
-		// }	
+			window.localStorage.setItem("inciso_a_modificar",id);
+			window.localStorage.setItem("id_seccion",$scope.idseccionagregar);
+			window.localStorage.setItem("nombre_pregunta",$scope.preguntaseleccionada.descripcion);
+			window.localStorage.setItem("incisos",JSON.stringify($scope.incisos));
+
+			window.location="http://localhost/giss/public/pages/incisos/#/view";
+		}		
 	}])
