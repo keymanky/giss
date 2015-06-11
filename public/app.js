@@ -5,3 +5,4 @@
 angular.module('administrador',['rutasadmin','roles','miservicio']);
 angular.module('administrativo',['rutasadministrativo','administrativo_middle','miservicio']);
 angular.module('incisos',['rutasinciso','incisos_middle','miservicio']);
+angular.module('pantallas',['rutaspantallas','pantallas_middle','miservicio']);

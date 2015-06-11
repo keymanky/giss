@@ -120,7 +120,7 @@
 				return $http.put("http://localhost/giss/api/inciso/" + id, obj);
 			},
 			//33
-			consultar_pantallas: function(id, obj){
+			consultar_pantallas: function(id){
 				return $http.get("http://localhost/giss/api/pantalla/" + id);
 			},
 			//34 uso interno devuelve la ultima

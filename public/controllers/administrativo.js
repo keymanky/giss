@@ -254,4 +254,10 @@ angular.module('administrativo_middle',['youtube-embed'])
 				location.reload(true);				
 			});			
 		}	
+
+		$scope.ir_a_pantallas = function (id){
+			window.localStorage.setItem("pantalla_a_modificar",id);
+			window.localStorage.setItem("id_seccion",$scope.seccionseleccionada.id);	
+			window.location="http://localhost/giss/public/pages/pantallas/#/view";
+		}	
 	}])
