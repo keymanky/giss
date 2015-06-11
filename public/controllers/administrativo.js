@@ -53,7 +53,12 @@ angular.module('administrativo_middle',['youtube-embed'])
 				if($scope.seccionseleccionada.ruta_video == " " )
 					$scope.seccionseleccionada.ruta_video = undefined;
 				if($scope.seccionseleccionada.ruta_imagen == " " )
-					$scope.seccionseleccionada.ruta_imagen = undefined;				
+					$scope.seccionseleccionada.ruta_imagen = undefined;	
+
+				
+				giss_servicios.consultar_pantallas($scope.idseccionseleccionada).success(function (respuesta){
+					$scope.pantallas = respuesta;			
+				});				
 			});
 		}		
 
@@ -232,5 +237,21 @@ angular.module('administrativo_middle',['youtube-embed'])
 			window.localStorage.setItem("incisos",JSON.stringify($scope.incisos));
 
 			window.location="http://localhost/giss/public/pages/incisos/#/view";
-		}		
+		}	
+
+		$scope.agregar_pantalla_seccion = function (){		
+			giss_servicios.agregar_pantalla_seccion($scope.idseccionseleccionada).success(function (respuesta){
+				alert(respuesta[0].mensaje);
+				//console.log(respuesta[0].mensaje)
+				location.reload(true);				
+			});			
+		}
+
+		$scope.eliminar_pantalla_seccion = function (id){		
+			giss_servicios.eliminar_pantalla_seccion(id).success(function (respuesta){
+				alert(respuesta[0].mensaje);
+				//console.log(respuesta[0].mensaje)
+				location.reload(true);				
+			});			
+		}	
 	}])

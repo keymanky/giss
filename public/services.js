@@ -118,6 +118,24 @@
 			//32 
 			actualizar_inciso: function(id, obj){
 				return $http.put("http://localhost/giss/api/inciso/" + id, obj);
-			}
+			},
+			//33
+			consultar_pantallas: function(id, obj){
+				return $http.get("http://localhost/giss/api/pantalla/" + id);
+			},
+			//34 uso interno devuelve la ultima
+			//35
+			agregar_pantalla_seccion: function(id){
+				return $http.post('http://localhost/giss/api/pantalla/'+id);						
+			},
+			//36 Eliminar pantalla
+			eliminar_pantalla_seccion: function(id){
+				return $http.delete('http://localhost/giss/api/pantalla/'+id);						
+			},
+			//37 es de uso interno
+			//38 
+			actualizar_pantalla: function(id, obj){
+				return $http.put("http://localhost/giss/api/pantalla/" + id, obj);
+			},
 		}
 	});
