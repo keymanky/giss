@@ -45,7 +45,7 @@
 form{
 	padding: 5px;
 	width: 500px;
-	height: 650px;		
+	height: 760px;		
 	border: solid;
 	border-color: #216490;
 }
@@ -53,6 +53,7 @@ form{
 	width: 500px;
 	border: solid;
 	border-color: #216490;
+	overflow: auto;
 }
 .panel-primary{
 	width: 800px;

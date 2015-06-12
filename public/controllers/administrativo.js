@@ -161,6 +161,13 @@ angular.module('administrativo_middle',['youtube-embed'])
 			});		
 		}	
 
+		$scope.activar_desactivar_pregunta = function (id){		
+			giss_servicios.activar_desactivar_pregunta(id).success(function (respuesta){
+				alert(respuesta.mensaje);
+				location.reload(true);				
+			});			
+		}
+
 		$scope.limpiar_pregunta = function (){
 			$scope.idseccionagregar = "";			
 			location.reload(true);	
