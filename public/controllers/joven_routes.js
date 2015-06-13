@@ -9,4 +9,8 @@ angular.module("rutasjoven", ['ngRoute']).
 				templateUrl : "ingresar_folio.html",
 				controller : 'joven'
 		})
+		.when('/contestar', {
+				templateUrl : "contestar.html",
+				controller : 'joven'
+		})		
 	})

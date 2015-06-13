@@ -40,15 +40,15 @@ img{
 }
 .texto_instrucciones{
 	display: inline;
-	font-size: 22px;
+	font-size: 28px;
 	font-weight: bold;
 }
 input{
 	display:block;
 	width:100%;
-	height:50px;
+	height:100px;
 	padding:6px 12px;
-	font-size: 22px;
+	font-size: 28px;
 	text-align: center;
 	line-height:1.42857143;
 	color:#555;
@@ -70,4 +70,68 @@ input:focus{
 }
 .seleccionable:hover {
 	background-color: #DFF0D8;
+}
+.guardar{
+	background-color: rgb(163,217,121);
+	border-color: rgb(33,100,144);
+	color: #000;
+	float: right;
+	height: 50px;
+	font-size: 28px;	
+	/*position: absolute;
+  	left: 50%;
+  	transform: translate(-50%);*/
+}
+.guardar:hover{
+	background-color: #00FF00;	
+}
+.limpiar{
+	background-color: rgb(255,250,131);
+	border-color: rgb(33,100,144);	
+	color: #000;	
+	float: right;	
+	height: 50px;
+	font-size: 28px;
+}
+.limpiar:hover{
+	background-color: #FFFF00;
+}
+.repetir{
+	background-color: rgb(70,204,251);
+	border-color: rgb(33,100,144);	
+	color: #000;	
+	float: right;	
+	height: 50px;
+	font-size: 28px;
+}
+.repetir:hover{
+	background-color: #0489B1;
+}
+.salir{
+	background-color: #FA5858;	
+	color: #000;
+	float: right;	
+	height: 50px;
+	font-size: 28px;				
+}
+.salir:hover{
+	background-color: rgb(255,0,0);
+}
+.texto_mostrar{
+	text-align: center;
+	padding: 10px;
+	font-size: 28px;
+	background-color: #FAFAFA
+}
+.introducir_texto{
+	text-align: center;
+	padding: 10px;
+	font-size: 28px;
+	width: 200px;
+    position: absolute;
+    left: 50%;
+    top: 250px;
+    transform: translate(-50%, -50%);
+}
+.video{
 }

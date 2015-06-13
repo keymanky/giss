@@ -137,5 +137,11 @@
 			actualizar_pantalla: function(id, obj){
 				return $http.put("http://localhost/giss/api/pantalla/" + id, obj);
 			},
+			//
+			//	40 	
+			// 
+			valida_folio: function(id){
+				return $http.get("http://localhost/giss/api/usuario/valido/" + id);
+			}
 		}
 	});

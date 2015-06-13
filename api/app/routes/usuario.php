@@ -9,33 +9,37 @@
 
 		$app->get('/', function () use ($app) {
 
-		/*Consulta a la base*/
-		$permiso = ORM::for_table('usuario')
-			->select('usuario.*')
-			->where('estatus',1)
-			->find_many();
+			/*Consulta a la base*/
+			$permiso = ORM::for_table('usuario')
+				->select('usuario.*')
+				->where('estatus',1)
+				->find_many();
 
-			$response = array();	
-			foreach ($permiso as $key => $value) {
-				$permiso = array(
-					'id'     => $value->id_usuario,
-					'id_persona' => $value->id_persona,
-					'name_login'     => $value->name_login,
-					'password' => $value->password,	
-					'estatus' => $value->estatus,										
-					'tipo' => $value->tipo,			
-					'ultima_pregunta_contestada_id' => $value->ultima_pregunta_contestada_id,	
-					'id_rol' => $value->id_rol,																		
-				);
-				$response[] = $permiso;
-			}
+				$response = array();	
+				foreach ($permiso as $key => $value) {
+					$permiso = array(
+						'id'     => $value->id_usuario,
+						'id_persona' => $value->id_persona,
+						'name_login'     => $value->name_login,
+						'password' => $value->password,	
+						'estatus' => $value->estatus,										
+						'tipo' => $value->tipo,			
+						'ultima_pregunta_contestada_id' => $value->ultima_pregunta_contestada_id,	
+						'id_rol' => $value->id_rol,																		
+					);
+					$response[] = $permiso;
+				}
 
-		/*Respuesta del servicio*/
-		$app->response->setBody(json_encode($response));			
-		$app->response->setStatus(200);
-		$app->stop();
+			/*Respuesta del servicio*/
+			$app->response->setBody(json_encode($response));			
+			$app->response->setStatus(200);
+			$app->stop();
 		});
-
+		/*Respuesta del post*/
+		$app->options('/', function () use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});
  	/*
  		9)
  		/usuario/id GET
@@ -258,10 +262,91 @@
 			$app->response->setBody(json_encode(array('message' => 'ok')));
 	 	});
 
-	/*Respuesta del post*/
-	$app->options('/', function () use ($app){
-	 	$app->response->setStatus(200);
-	 	$app->response->setBody(json_encode(array('message' => 'ok')));
-	});
+ 	/*
+	40)
+ 		/Retorna 1 si es valido, 0 en caso de que el uusario es invalido,
+ 		Se dice que un usuario es invalido cuando:
+ 			->Esta inactivo
+ 			->Ya contesto todas las respuestas
+ 			->El password es incorrecto
+ 	*/
+
+		$app->get('/valido/:pass', function ($pass) use ($app) {
+ 			// try{
+				/*Consulta a la base*/
+				$permiso = ORM::for_table('usuario')
+					->select('usuario.*')
+					->where('name_login','folio')				
+					->where('password',$pass)
+					->find_one();
+
+				//Es incorrecto el folio
+				if($permiso== false){
+					$permiso = array(
+						"mensaje" => "El folio es incorrecto"
+						);
+					$response[] = $permiso;
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}
+				//Si completo el cuestionario
+				if($permiso->ultima_pregunta_contestada_id == 99){
+					$permiso = array(
+						"mensaje" => "El cuestionario ya fue contestado en su totalidad"
+						);
+					$response[] = $permiso;
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}	
+				//Si completo el cuestionario
+				if(!$permiso->estatus){
+					$permiso = array(
+						"mensaje" => "El folio esta inactivo"
+						);
+					$response[] = $permiso;					
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}						
+
+				$response = array();	
+				// foreach ($permiso as $key => $value) {
+					$permiso = array(
+						'id'     => $permiso->id_usuario,
+						'id_persona' => $permiso->id_persona,
+						'name_login'     => $permiso->name_login,
+						'password' => $permiso->password,	
+						'estatus' => $permiso->estatus,										
+						'tipo' => $permiso->tipo,			
+						'ultima_pregunta_contestada_id' => $permiso->ultima_pregunta_contestada_id,	
+						'id_rol' => $permiso->id_rol,																		
+						);
+					$response[] = $permiso;
+				// }
+
+				/*Respuesta del servicio*/
+				$app->response->setBody(json_encode($response));			
+				$app->response->setStatus(200);
+				$app->stop();
+
+		// }catch(Exception $e){
+		// 	$response = array(
+		// 		"mensaje" => "El folio es incorrecto ddd"
+		// 		);
+		// 	$app->response->setBody(json_encode($response));			
+		// 	$app->response->setStatus(200);
+		// 	$app->stop();
+		// }
+
+
+		});
+		/*Respuesta del post*/
+		$app->options('/valido/:pass', function ($pass) use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});		
+
 });
 ?>
