@@ -36,7 +36,7 @@
 
 					<div class="panel-body">
 						<label for="exampleInputEmail1">Rol</label>
-						<select class="form-control" ng-model="listaroless.id" ng-change="cambiarvalor_rol(listaroless.id)">
+						<select class="form-control" ng-model="usuarioseleccionado.id_rol" ng-change="cambiarvalor_rol(listaroless.id)" ng-selected="usuarioseleccionado.id_rol">
 							<option value="">&nbsp;</option>
 							<option value="{{listaroless.id}}" ng-model="listaroless.id" ng-repeat="listaroless in datos">{{listaroless.nombre}}</option>
 						</select>						

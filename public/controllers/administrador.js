@@ -66,6 +66,7 @@ angular.module('roles',[])
 				$scope.idusuarioseleccionadoiddireccion = data.id_direccion;
 				$scope.identidad=data.id_entidadf;
 				$scope.idroless=data.id_rol;
+				console.log($scope.usuarioseleccionado);
 				//alert($scope.identidad+$scope.idroless);
 			});
 		}
@@ -148,7 +149,7 @@ angular.module('roles',[])
 			efnombre===undefined ? $scope.json.localidad = " " : $scope.json.localidad = efnombre;
 			telefono_particular===undefined ? $scope.json.telefono_particular = " " : $scope.json.telefono_particular = telefono_particular;	
 					
-			console.log($scope.json);
+			//console.log($scope.json);
 
 			giss_servicios.agregar_actualizar_usuario($scope.json).success(function (respuesta){
 				alert(respuesta.mensaje);

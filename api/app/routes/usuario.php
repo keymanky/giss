@@ -48,7 +48,8 @@
 
 			/*Consulta a la base*/
 			$usuario = ORM::for_table('usuario')
-				->select('usuario.*')			
+				->select('usuario.*')		
+				->select('rol.nombre','rnombre')					
 				->select('persona.nombre','pnombre')
 				->select('persona.apellido_paterno','ppaterno')	
 				->select('persona.apellido_materno','pmaterno')		
@@ -66,6 +67,7 @@
 				->select('direccion.telefono_particular','telefono_particular')	
 				->select('entidad_federativa.nombre','efnombre')					
 				->join('persona', array('usuario.id_persona','=','persona.id_persona'))
+				->join('rol', array('usuario.id_rol','=','rol.id_rol'))				
 				->join('direccion', array('persona.id_direccion','=','direccion.id_direccion'))		
 				->join('entidad_federativa', array('direccion.id_entidad_federativa','=','entidad_federativa.id_identidad_federativa'))		
 				->where('id_usuario',$id)			
@@ -80,7 +82,8 @@
 				'estatus' => $usuario->estatus,										
 				'tipo' => $usuario->tipo,			
 				'ultima_pregunta_contestada_id' => $usuario->ultima_pregunta_contestada_id,	
-				'id_rol' => $usuario->id_rol,				
+				'id_rol' => $usuario->id_rol,
+				'rnombre' => $usuario->rnombre,				
 				'pnombre'=>$usuario->pnombre,
 				'ppaterno'=>$usuario->ppaterno,				
 				'pmaterno'=>$usuario->pmaterno,				
