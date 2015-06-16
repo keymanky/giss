@@ -3,21 +3,31 @@
 		<table class="titulo">
 			<tr>
 				<td>
-					<h1>{{seccion.nombre}} EJEMPLO</h1>
+					<h1>{{cuestionarios[0].nombre}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir">Salir</button>
 					<button type="submit" class="btn guardar">Siguiente</button>	
 				</td>
 			</tr>
+
+			<tr>
+				<td>
+					<h1>{{informacion.nombre_seccion}}</h1>
+				</td>
+				<td>
+					<button type="submit" class="btn salir">Salir</button>
+					<button type="submit" class="btn guardar">Siguiente</button>	
+				</td>
+			</tr>
+			
 		</table>
 
-		<div class="texto_mostrar">
-			{{seccion_nombre}} EJEMPLO SECCION
+		<div class="texto_mostrar">		
 		</div>
 
 		<div class="texto_mostrar">
-			{{pregunta_nombre}} EJEMPLO PREGUNTA
+			{{informacion.nombre}}
 		</div>
 
 
@@ -47,13 +57,13 @@
 
 
 
-<!-- 		<div class="centrado">
+		<div class="centrado">
 			<table class="table">
-				<tr ng-repeat="inc in cuestionarios">
+				<tr ng-repeat="inc in informacion.incisos">
 					<td class="seleccionable">{{inc.nombre}}</td>			
 				</tr>
 			</table>
-		</div> -->
+		</div>
 
 
 	</div>

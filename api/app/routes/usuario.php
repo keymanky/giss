@@ -199,7 +199,10 @@
 					$usuario->id_persona = $id_persona;
 					$usuario->save();					
 					$response = array(
-							'mensaje' =>"Se agrego correctamente el usuario"
+							'mensaje' =>"Se agrego correctamente el usuario",
+							'id' =>$usuario->id(),
+							'id_persona' =>$id_persona,
+							'id_direccion' => $id_direccion,
 					);	
 				}else{
 					//Actualizamos con el id
@@ -288,31 +291,43 @@
 					$permiso = array(
 						"mensaje" => "El folio es incorrecto"
 						);
-					$response[] = $permiso;
-					$app->response->setBody(json_encode($response));			
+					$app->response->setBody(json_encode($permiso));			
 					$app->response->setStatus(200);
 					$app->stop();
 				}
 				//Si completo el cuestionario
-				if($permiso->ultima_pregunta_contestada_id == 99){
+				if($permiso->ultima_pregunta_contestada_id == 9999){
 					$permiso = array(
 						"mensaje" => "El cuestionario ya fue contestado en su totalidad"
 						);
-					$response[] = $permiso;
-					$app->response->setBody(json_encode($response));			
+					$app->response->setBody(json_encode($permiso));			
 					$app->response->setStatus(200);
 					$app->stop();
 				}	
-				//Si completo el cuestionario
+
 				if(!$permiso->estatus){
 					$permiso = array(
 						"mensaje" => "El folio esta inactivo"
-						);
-					$response[] = $permiso;					
-					$app->response->setBody(json_encode($response));			
+						);				
+					$app->response->setBody(json_encode($permiso));			
 					$app->response->setStatus(200);
 					$app->stop();
 				}						
+
+
+				if($permiso->id_rol != 1){
+					$permiso = array(
+						"mensaje" => "El rol es incorrecto"
+						);				
+					$app->response->setBody(json_encode($permiso));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}
+
+				if(!$permiso->ultima_pregunta_contestada_id)
+					$uultima = 9998;
+				else
+					$uultima = $permiso->ultima_pregunta_contestada_id;
 
 				$response = array();	
 				// foreach ($permiso as $key => $value) {
@@ -323,14 +338,14 @@
 						'password' => $permiso->password,	
 						'estatus' => $permiso->estatus,										
 						'tipo' => $permiso->tipo,			
-						'ultima_pregunta_contestada_id' => $permiso->ultima_pregunta_contestada_id,	
+						'ultima_pregunta_contestada_id' => $uultima,	
 						'id_rol' => $permiso->id_rol,																		
 						);
-					$response[] = $permiso;
+
 				// }
 
 				/*Respuesta del servicio*/
-				$app->response->setBody(json_encode($response));			
+				$app->response->setBody(json_encode($permiso));			
 				$app->response->setStatus(200);
 				$app->stop();
 

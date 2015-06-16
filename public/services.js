@@ -142,6 +142,13 @@
 			// 
 			valida_folio: function(id){
 				return $http.get("http://localhost/giss/api/usuario/valido/" + id);
+			},
+			genera_folio: function(id){
+				return $http.get("http://localhost/giss/api/usuario/genera/" + id);
+			},
+			info_sig_pregunta: function(id){
+				return $http.get("http://localhost/giss/api/engine/" + id);
 			}
+
 		}
 	});

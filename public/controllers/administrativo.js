@@ -3,6 +3,7 @@
 angular.module('administrativo_middle',['youtube-embed'])
 	.controller('administrativo_page', [ '$scope', 'giss_servicios' , function ($scope, giss_servicios){
 		$scope.json = {};
+		$scope.json2 = {};
 		$scope.idseccionseleccionada = "";
 		$scope.idseccionseleccionada_estatus = "";
 		$scope.idpreguntaseleccionada = "";
@@ -270,5 +271,60 @@ angular.module('administrativo_middle',['youtube-embed'])
 
 		$scope.ir_a_probar = function(){
 			//alert("Cargando ...");
+			var meses = new Array ("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");
+			var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");			
+			var f=new Date();
+			var folio = meses[f.getMonth()].substring(0,2) + f.getDate();
+			$scope.json = {};
+			$scope.json.name_login = "folio";
+			$scope.json.password = folio,
+			$scope.json.estatus = "1",
+			$scope.json.tipo = "1",
+			$scope.json.id_rol = "1",
+			$scope.json.pnombre = " ",
+			$scope.json.ppaterno = " ",
+			$scope.json.pmaterno = " ",
+			$scope.json.pemail = " ",
+			$scope.json.pfecha = "0000-00-00",
+			$scope.json.id_entidadf = "1",
+			$scope.json.calle = " ",
+			$scope.json.num_ext = " ",
+			$scope.json.num_int = " ",
+			$scope.json.codigo_postal = " ",
+			$scope.json.colonia = " ",
+			$scope.json.localidad = " ",
+			$scope.json.ciudad = " ",
+			$scope.json.telefono_particular = " "			
+			//alert(diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+			giss_servicios.agregar_actualizar_usuario($scope.json).success(function (respuesta){
+				$scope.json2 = {};
+				$scope.json2.id= respuesta.id,
+				$scope.json2.id_persona = respuesta.id_persona,
+				$scope.json2.id_direccion = respuesta.id_direccion,
+				$scope.json2.name_login = "folio";
+				$scope.json2.password = folio + respuesta.id,
+				$scope.json2.estatus = "1",
+				$scope.json2.tipo = "1",
+				$scope.json2.id_rol = "1",
+				$scope.json2.pnombre = " ",
+				$scope.json2.ppaterno = " ",
+				$scope.json2.pmaterno = " ",
+				$scope.json2.pemail = " ",
+				$scope.json2.pfecha = "0000-00-00",
+				$scope.json2.id_entidadf = "1",
+				$scope.json2.calle = " ",
+				$scope.json2.num_ext = " ",
+				$scope.json2.num_int = " ",
+				$scope.json2.codigo_postal = " ",
+				$scope.json2.colonia = " ",
+				$scope.json2.localidad = " ",
+				$scope.json2.ciudad = " ",
+				$scope.json2.telefono_particular = " "		
+
+				giss_servicios.agregar_actualizar_usuario($scope.json2).success(function (respuesta2){
+					window.localStorage.setItem("folio",folio + respuesta.id);
+				});	
+
+			});			
 		}
 	}])
