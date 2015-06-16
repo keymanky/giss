@@ -2,68 +2,105 @@
 	<div class="page-header">
 		<table class="titulo">
 			<tr>
+<!-- 			Cuestionarios -->
 				<td>
 					<h1>{{cuestionarios[0].nombre}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir">Salir</button>
-					<button type="submit" class="btn guardar">Siguiente</button>	
+					<button type="submit" class="btn guardar">Continuar</button>	
 				</td>
 			</tr>
-
+<!-- 			Secciones -->
 			<tr>
 				<td>
 					<h1>{{informacion.nombre_seccion}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir">Salir</button>
-					<button type="submit" class="btn guardar">Siguiente</button>	
+					<button type="submit" class="btn guardar">Continuar</button>	
 				</td>
 			</tr>
 			
 		</table>
 
-		<div class="texto_mostrar">		
-		</div>
-
 		<div class="texto_mostrar">
-			{{informacion.nombre}}
+			{{informacion.descripcion_seccion}}	
 		</div>
 
+<!-- 			Preguntas -->
+		<div class="texto_mostrar">
+			{{informacion.descripcion}}
+		</div>
 
-		<form class="form-horizontal introducir_texto">
-			<div class="form-group form-group-lg">
-				<input type="text" id="formGroupInputLarge">
-			</div>
-		</form>
+		<center>
+			<form class="introducir_texto">
+				<div class="">
+					<input type="text">
+				</div>
+			</form>
+		</center>
 
-		<br/>
-		<br/>
-		<br/>			
-		<br/>	
+<!-- 			Videos -->
+		<center>
+			<table>
+				<tr>
+					<td>
+						<div class="video">
+								<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+						</div>					
+					</td>
+					<td>
+						<button type="submit" class="btn repetir">Repetir</button>					
+					</td>
+				</tr>
+			</table>	
 
-		<table>
-			<tr>
-				<td>
-					<div class="video">
-							<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
-					</div>					
-				</td>
-				<td>
-					<button type="submit" class="btn repetir">Repetir</button>					
-				</td>
-			</tr>
-		</table>		
+			<table>
+				<tr>
+					<td>
+						<div class="video">
+								<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+						</div>					
+					</td>
+					<td>
+						<button type="submit" class="btn repetir">Repetir</button>					
+					</td>
+				</tr>
+			</table>	
 
-
-
-		<div class="centrado">
-			<table class="table">
-				<tr ng-repeat="inc in informacion.incisos">
-					<td class="seleccionable">{{inc.nombre}}</td>			
+			<table>
+				<tr>
+					<td>
+						<div>
+								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
+						</div>					
+					</td>
 				</tr>
 			</table>
-		</div>
+
+			<table>
+				<tr>
+					<td>
+						<div>
+								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
+						</div>					
+					</td>
+				</tr>
+			</table>
+
+<!-- 		incisos -->
+			<table class="table">
+				<tr ng-repeat="inc in informacion.incisos">
+					<td class="seleccionable">{{inc.inciso_letra}}</td>					
+					<td class="seleccionable">{{inc.nombre}}</td>
+					<td class="seleccionable"><img width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" />
+					</td>									
+				</tr>
+			</table>
+
+		</center>
+	
 
 
 	</div>

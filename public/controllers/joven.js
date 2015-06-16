@@ -19,17 +19,17 @@ angular.module('joven_middle',['youtube-embed'])
 		};
 		giss_servicios.consultar_todos_cuestionarios().success( function(data){
 			$scope.cuestionarios = data;
-			console.log($scope.cuestionarios);
+			//console.log($scope.cuestionarios);
 		});
 
 		//Cuando el usuario selecciona el cuestionario que desea contestar
 		$scope.iniciar = function (Folio){
 			giss_servicios.valida_folio(Folio).success(function (data) {
 				var pregunta = data.ultima_pregunta_contestada_id;
-
 				if(data.ultima_pregunta_contestada_id < 9999){
-					window.localStorage.setItem("usuario",JSON.stringify(data));					
+					//window.localStorage.setItem("usuario",JSON.stringify(data));					
 					giss_servicios.info_sig_pregunta($scope.usuario.ultima_pregunta_contestada_id).success(function (data2) {					
+						//console.log(data2);
 						window.localStorage.setItem("info",JSON.stringify(data2));													
 					});
 				}else{

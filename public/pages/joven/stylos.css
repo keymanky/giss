@@ -22,14 +22,9 @@
 	padding: 10px;
 	margin: 0px;
 }	
-img{
-	height: 60px;
-	width: 60px;
-}
 .centrado{
     position: absolute;
     left: 50%;
-    top: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
 }
@@ -78,9 +73,6 @@ input:focus{
 	float: right;
 	height: 50px;
 	font-size: 28px;	
-	/*position: absolute;
-  	left: 50%;
-  	transform: translate(-50%);*/
 }
 .guardar:hover{
 	background-color: #00FF00;	
@@ -118,20 +110,32 @@ input:focus{
 	background-color: rgb(255,0,0);
 }
 .texto_mostrar{
+	height: 80px;
 	text-align: center;
-	padding: 10px;
+/*	padding: 10px;*/
 	font-size: 28px;
 	background-color: #FAFAFA
 }
 .introducir_texto{
 	text-align: center;
-	padding: 10px;
+    display: block;	   
 	font-size: 28px;
 	width: 200px;
-    position: absolute;
-    left: 50%;
-    top: 250px;
-    transform: translate(-50%, -50%);
 }
 .video{
+}
+.imagen_grande{
+	height: 400px;
+	width: 600px;
+}
+.imagen_chica{
+	height: 60px;
+	width: 60px;	
+}
+.centrado_full{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
 }

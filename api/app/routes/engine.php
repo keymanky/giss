@@ -96,6 +96,7 @@
 					'descripcion' => $pregunta_a_mostrar->descripcion,	
 					'id_seccion'     => $secciones->id_seccion,
 					'nombre_seccion' => $secciones->nombre,
+					'descripcion_seccion' => $secciones->descripcion,
 					'ruta_imagen_seccion' => $secciones->ruta_imagen,
 					'ruta_video_seccion' => $secciones->ruta_video,	
 					'secuencia_seccion' => $secciones->secuencia,										
