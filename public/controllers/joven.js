@@ -26,10 +26,12 @@ angular.module('joven_middle',['youtube-embed'])
 		$scope.iniciar = function (Folio){
 			giss_servicios.valida_folio(Folio).success(function (data) {
 				var pregunta = data.ultima_pregunta_contestada_id;
+				console.log(pregunta);
 				if(data.ultima_pregunta_contestada_id < 9999){
-					//window.localStorage.setItem("usuario",JSON.stringify(data));					
-					giss_servicios.info_sig_pregunta($scope.usuario.ultima_pregunta_contestada_id).success(function (data2) {					
-						//console.log(data2);
+					window.localStorage.setItem("usuario",JSON.stringify(data));
+					console.log(data);					
+					giss_servicios.info_sig_pregunta(pregunta).success(function (data2) {					
+						console.log(data2);
 						window.localStorage.setItem("info",JSON.stringify(data2));													
 					});
 				}else{

@@ -110,9 +110,9 @@ input:focus{
 	background-color: rgb(255,0,0);
 }
 .texto_mostrar{
-	height: 80px;
+	height: 100px;
 	text-align: center;
-/*	padding: 10px;*/
+	padding: 20px;
 	font-size: 28px;
 	background-color: #FAFAFA
 }
@@ -138,4 +138,11 @@ input:focus{
     top: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
+}
+.opcion_respuesta{
+	font-size: 24px;
+}
+.border_inferior{
+	border: solid;
+	border-color: #216490;
 }

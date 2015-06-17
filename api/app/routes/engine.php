@@ -86,7 +86,14 @@
 					}
 				}
 
+				if(count($incisos_en_pregunta) > 0)
+					$pregunta_incisos = 1;
+				else
+					$pregunta_incisos = 0;
+
 				$response = array(
+					'pregunta' =>1,
+					'pregunta_incisos' => $pregunta_incisos,
 					'id_pregunta' =>$pregunta_a_mostrar->id_pregunta,
 					'nombre' =>$pregunta_a_mostrar->nombre,
 					'ruta_imagen' =>$pregunta_a_mostrar->ruta_imagen,

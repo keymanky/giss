@@ -1,30 +1,30 @@
 <div>
 	<div class="page-header">
 		<table class="titulo">
-			<tr>
+			<tr ng-if="informacion.cuestionario">
 <!-- 			Cuestionarios -->
 				<td>
 					<h1>{{cuestionarios[0].nombre}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir">Salir</button>
-					<button type="submit" class="btn guardar">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
 				</td>
 			</tr>
-<!-- 			Secciones -->
-			<tr>
+<!-- 			Pregunta o Seccion -->
+			<tr ng-if="informacion.pregunta">
 				<td>
 					<h1>{{informacion.nombre_seccion}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir">Salir</button>
-					<button type="submit" class="btn guardar">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.seccion">Continuar</button>	
 				</td>
 			</tr>
 			
 		</table>
-
-		<div class="texto_mostrar">
+<!-- 			Seccion -->
+		<div ng-if="informacion.seccion" class="texto_mostrar">
 			{{informacion.descripcion_seccion}}	
 		</div>
 
@@ -33,69 +33,71 @@
 			{{informacion.descripcion}}
 		</div>
 
+<!-- 			Pregunta sin inciso -->
 		<center>
-			<form class="introducir_texto">
+			<form class="introducir_texto" ng-if="!informacion.pregunta_incisos">
 				<div class="">
 					<input type="text">
 				</div>
 			</form>
 		</center>
 
-<!-- 			Videos -->
+<!-- 			Videos Seccion-->
 		<center>
-			<table>
+			<table ng-if="informacion.seccion">
 				<tr>
 					<td>
-						<div class="video">
+						<div class="video" ng-if="informacion.ruta_video_seccion">
 								<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
 						</div>					
 					</td>
-					<td>
+					<td ng-if="informacion.ruta_video_seccion">
 						<button type="submit" class="btn repetir">Repetir</button>					
 					</td>
 				</tr>
 			</table>	
-
-			<table>
+<!-- 			Videos Pregunta-->
+			<table ng-if="informacion.pregunta">
 				<tr>
 					<td>
-						<div class="video">
-								<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+						<div class="video" ng-if="informacion.ruta_video">
+								<youtube-video video-url="informacion.ruta_video" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
 						</div>					
 					</td>
-					<td>
+					<td ng-if="informacion.ruta_video">
 						<button type="submit" class="btn repetir">Repetir</button>					
 					</td>
 				</tr>
 			</table>	
-
-			<table>
+<!-- 			Imagen Seccion-->
+			<table ng-if="informacion.seccion">
 				<tr>
 					<td>
-						<div>
+						<div ng-if="informacion.ruta_imagen_seccion">
 								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
 						</div>					
 					</td>
 				</tr>
 			</table>
-
-			<table>
+<!-- 			Imagen Pregunta-->
+			<table ng-if="informacion.pregunta">
 				<tr>
 					<td>
-						<div>
+						<div ng-if="informacion.ruta_imagen">
 								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
 						</div>					
 					</td>
 				</tr>
 			</table>
-
+			<br/>
+			<br/>
+			<br/>						
 <!-- 		incisos -->
-			<table class="table">
-				<tr ng-repeat="inc in informacion.incisos">
-					<td class="seleccionable">{{inc.inciso_letra}}</td>					
-					<td class="seleccionable">{{inc.nombre}}</td>
-					<td class="seleccionable"><img width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" />
-					</td>									
+			<table ng-if="informacion.incisos" class="table opcion_respuesta">
+				<tr ng-repeat="inc in informacion.incisos" class="seleccionable border_inferior">
+					<td>{{inc.inciso_letra}}</td>					
+					<td>{{inc.nombre}}</td>
+					<td><img width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" /></td>									
 				</tr>
 			</table>
 

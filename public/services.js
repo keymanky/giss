@@ -5,7 +5,7 @@
 
 	angular.module('miservicio',[])
 	.factory('giss_servicios', function ($http) {
-		console.log($http);
+		//console.log($http);
 		return{
 			//0
 			consultar_todos_permisos:function (id) {
