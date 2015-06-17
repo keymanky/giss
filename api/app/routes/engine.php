@@ -3,59 +3,108 @@
  $app->group('/engine', function () use ($app)	{
 
  	/*
-	7)
- 		/Retorna la informacion de la secuencia, pregunta y los incisos 
- 		todo por el id pregunta
+ 		//Retorna toda la informacion (cuestionario, secccion, pregunta, incisos) a partir del id pregunta
+ 		  Si nunca se ha constestado el id pregunta es 9998
+
+ 		//las banderas enviadas para distinguir que tipo de informacion pintar son:
+ 		  CASO A
+ 		  Si la secuencia de la pregunta siguiente existe 
+ 		  		pregunta = 1
+ 		  		Si esa pregunta tiene mas de 1 inciso
+ 		  			pregunta_incisos = 1
+ 		  		No tiene incisos
+ 		  			pregunta_incisos = 0
+ 		  CASO B
+ 		  Si la pregunta es la ultima en la seccion
+ 		  		Si existe una seccion siguiente con preguntas
+ 		  			seccion = 1
+ 		  		No existe una seccion siguiente
+ 		  			message
+ 		//
  	*/
 
  		$app->get('/:id', function ($id) use ($app) {							
+			ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
 
-		ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
-
-		//Inicia por primera vez el cuestionario
-		if($id == 9998){
-
-			$secuencia = 1;
-
-		}else{
-
-			$pregunta_ultima = ORM ::for_table('pregunta')	
-				->select('pregunta.*')
-				->where('id_pregunta',$id)	
-				->find_one();
-
-			//(1) Si la pregunta no existe
-			if(!$pregunta_ultima){
-				$response = array(
-					"mensaje" => "La pregunta no existe"
+			//RECUPERAMOS LA SECUENCIA QUE SIGUE
+			if($id == 9998){
+				$secuencia = 0;
+			}else{
+				$pregunta_ultima = ORM ::for_table('pregunta')	
+					->select('pregunta.*')
+					->where('id_pregunta',$id)	
+					->find_one();
+				if(!$pregunta_ultima){
+					$response = array(
+						"mensaje" => "La pregunta no existe"
 					);
-				$app->response->setBody(json_encode($response));			
-				$app->response->setStatus(200);
-				$app->stop();
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}
+				$secuencia = $pregunta_ultima->secuencia+1;
 			}
 
-			$secuencia = $pregunta_ultima->secuencia+1;
-
-		}
 
 			$pregunta_a_mostrar = ORM ::for_table('pregunta')	
 				->select('pregunta.*')
 				->where('secuencia',$secuencia)	
 				->find_one();
 
-			//(2) Si la pregunta es la ultima en su seccion
+			//CASO B
 			if(!$pregunta_a_mostrar){
-				$response = array(
-					"mensaje" => "NOS VAMOS A SECCION"
+
+				//recuperamos la seccion siguiente
+				if($id == 9998){
+					$seccion = ORM ::for_table('seccion')	
+						->select('seccion.*')
+						->where('secuencia', 1)	
+						->find_one();
+					$secuencia = 0;
+				}else{
+					$id_seccion_actual = $pregunta_ultima->id_seccion;
+					$seccion = ORM ::for_table('seccion')	
+						->select('seccion.*')
+						->where('id_seccion', $id_seccion_actual)	
+						->find_one();
+					$secuencia = $seccion->secuencia;						
+				}
+
+				//
+				if($seccion->es_final){
+					$response = array(
+						"mensaje" => "Ha terminado de contestar el cuestionario"
 					);
-				$response[] = $permiso;
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();
+				}
+
+				$sig_seccion = $secuencia+1;
+				$seccion = ORM ::for_table('seccion')	
+					->select('seccion.*')
+					->where('secuencia', $sig_seccion)	
+					->find_one();
+
+				$response = array(
+					'seccion' => 1,
+					'pagina_seccion' =>0,
+					'id_seccion'     => $seccion->id_seccion,
+					'nombre_seccion' => $seccion->nombre,
+					'descripcion_seccion' => $seccion->descripcion,
+					'ruta_imagen_seccion' => $seccion->ruta_imagen,
+					'ruta_video_seccion' => $seccion->ruta_video,	
+					'secuencia_seccion' => $seccion->secuencia,										
+					'es_final_seccion' => $seccion->es_final,			
+					'estatus_seccion' => $seccion->estatus,	
+					'descripcion_seccion' => $seccion->descripcion,								
+				);
+
 				$app->response->setBody(json_encode($response));			
 				$app->response->setStatus(200);
 				$app->stop();
 
-
-
-			//(3) Muestre la siguiente pregunta
+			//CASO A
 			}else{
 				$secciones = ORM ::for_table('seccion')	
 				->select('seccion.*')

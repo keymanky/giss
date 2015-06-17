@@ -7,18 +7,19 @@
 					<h1>{{cuestionarios[0].nombre}}</h1>
 				</td>
 				<td>
-					<button type="submit" class="btn salir">Salir</button>
+					<button type="submit" class="btn salir" ng-click="salir()">Salir</button>
 					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
 				</td>
 			</tr>
 <!-- 			Pregunta o Seccion -->
-			<tr ng-if="informacion.pregunta">
+			<tr ng-if="informacion">
 				<td>
 					<h1>{{informacion.nombre_seccion}}</h1>
 				</td>
 				<td>
-					<button type="submit" class="btn salir">Salir</button>
+					<button type="submit" class="btn salir" ng-click="salir()">Salir</button>
 					<button type="submit" class="btn guardar" ng-if="informacion.seccion">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
 				</td>
 			</tr>
 			
@@ -35,8 +36,8 @@
 
 <!-- 			Pregunta sin inciso -->
 		<center>
-			<form class="introducir_texto" ng-if="!informacion.pregunta_incisos">
-				<div class="">
+			<form class="introducir_texto" ng-if="informacion.pregunta">
+				<div class="" ng-if="!informacion.pregunta_incisos">
 					<input type="text">
 				</div>
 			</form>
@@ -48,7 +49,7 @@
 				<tr>
 					<td>
 						<div class="video" ng-if="informacion.ruta_video_seccion">
-								<youtube-video video-url="anotherGoodOne" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+								<youtube-video video-url="informacion.ruta_video_seccion" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
 						</div>					
 					</td>
 					<td ng-if="informacion.ruta_video_seccion">
