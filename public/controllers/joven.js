@@ -6,7 +6,12 @@ angular.module('joven_middle',['youtube-embed'])
 		//Validacion de la sesion
 		if(window.localStorage.getItem("usuario")){
 			$scope.informacion = JSON.parse(localStorage.getItem("info"));
-			$scope.usuario = JSON.parse(localStorage.getItem("usuario"));		
+			$scope.usuario = JSON.parse(localStorage.getItem("usuario"));	
+			$scope.indice_seccion = window.localStorage.getItem("index_seccion_actual");
+			$scope.indice_seccion = window.localStorage.getItem("sec_seccion_actual");
+			//console.log($scope.informacion);
+			//console.log($scope.usuario);
+			//console.log($scope.indice_seccion);
 		}else{
 			window.location="http://localhost/giss/public/pages/joven/#/ingresar";
 		}
@@ -37,14 +42,15 @@ angular.module('joven_middle',['youtube-embed'])
 			giss_servicios.valida_folio(Folio).success(function (data) {
 
 				var pregunta = data.ultima_pregunta_contestada_id;
-				console.log(pregunta);
+				//console.log(pregunta);
 				//Si es la primera vez que se contesta el cuestionario
 				if(pregunta == 9998){
 					window.localStorage.setItem("usuario",JSON.stringify(data));
 					giss_servicios.consultar_id_cuestionario(1).success(function (cuestionarios) {					
 						//console.log(cuestionarios);
 						window.localStorage.setItem("info",JSON.stringify(cuestionarios));	
-						window.localStorage.setItem("sec_seccion_actual",0);										
+						window.localStorage.setItem("sec_seccion_actual",0);
+						window.localStorage.setItem("index_seccion_actual",0);																
 						window.location="http://localhost/giss/public/pages/joven/#/contestar";																								
 					});						
 				//Si ya termino de constestar todo el cuestionario						
@@ -55,13 +61,25 @@ angular.module('joven_middle',['youtube-embed'])
 				}else if (pregunta <= 9997){
 					window.localStorage.setItem("usuario",JSON.stringify(data));					
 					giss_servicios.info_sig_pregunta(pregunta).success(function (pregunta) {					
-						console.log(pregunta.mensaje);
 						if(pregunta.mensaje == "ok"){
 							window.localStorage.setItem("info",JSON.stringify(pregunta));	
-							window.localStorage.setItem("sec_seccion_actual",pregunta.id_seccion);										
+							window.localStorage.setItem("sec_seccion_actual",pregunta.secuencia_seccion);	
+							window.localStorage.setItem("index_seccion_actual",0);																	
 							window.location="http://localhost/giss/public/pages/joven/#/contestar";	
 						}else if (pregunta.mensaje == "ir a seccion"){
-							alert("Debemos ir a seccion");
+							giss_servicios.sig_seccion_valida(pregunta.secuencia).success(function (seccion_datos) {
+								//console.log(seccion_datos);
+								window.localStorage.setItem("info",JSON.stringify(seccion_datos));
+								window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
+								window.localStorage.setItem("index_seccion_actual",0);	
+								window.location="http://localhost/giss/public/pages/joven/#/contestar";															
+								if(seccion_datos.mensaje == "abortar"){
+									alert("No hay mas preguntas que contestar");
+									window.localStorage.clear();
+									window.location="http://localhost/giss/public/pages/joven/#/ingresar";										
+								}								
+							})
+
 						}else{
 							window.localStorage.clear();
 							window.location="http://localhost/giss/public/pages/joven/#/ingresar";								
@@ -83,8 +101,24 @@ angular.module('joven_middle',['youtube-embed'])
 				//Cargue los datos de la sig seccion de acuerdo a la secuencia
 			});
 		}
-	}])
 
+
+		$scope.cambiar_seccion = function(){
+			var i = $scope.informacion.pantallas.length-1
+			//console.log("Longitud: " + i + "Indice: " + $scope.indice_seccion);
+			$scope.indice_seccion++;	
+			if($scope.informacion.pantallas.length-1 >= $scope.indice_seccion){
+				window.localStorage.setItem("index_seccion_actual",$scope.indice_seccion);
+				window.location="http://localhost/giss/public/pages/joven/#/contestar";
+			}
+			else
+				alert("Servicio");
+			// AQUI ME QUEDE
+			// AQUI ME QUEDE
+						// AQUI ME QUEDE
+
+		}
+	}])
 
 		//Cuando el usuario selecciona el cuestionario que desea contestar, es decir el sistema recupera el punto donde se quedo el usuario
 		//Hay 3 posibles casos

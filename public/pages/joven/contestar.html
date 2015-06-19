@@ -14,14 +14,16 @@
 <!-- 			Pregunta o Seccion -->
 			<tr ng-if="!informacion.cuestionario">
 				<td>
-					<h1>{{informacion.nombre_seccion}}</h1>
+					<h1 ng-if="informacion.seccion">{{informacion.pantallas[indice_seccion].nombre}}</h1>
+					<h1 ng-if="informacion.pregunta">{{informacion.nombre_seccion}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir" ng-click="salir()">Salir</button>
-					<button type="submit" class="btn guardar" ng-if="informacion.seccion">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.seccion" ng-click="cambiar_seccion()">Continuar</button>	
 					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
 				</td>
 			</tr>
+
 			
 		</table>
 
@@ -31,7 +33,7 @@
 		</div>		
 <!-- 			Seccion -->
 		<div ng-if="informacion.seccion" class="texto_mostrar">
-			{{informacion.descripcion_seccion}}	
+			{{informacion.pantallas[index_seccion_actual].descripcion}}	
 		</div>
 
 <!-- 			Preguntas -->
@@ -66,11 +68,11 @@
 			<table ng-if="informacion.seccion">
 				<tr>
 					<td>
-						<div class="video" ng-if="informacion.ruta_video_seccion">
-								<youtube-video video-url="informacion.ruta_video_seccion" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+						<div class="video" ng-if="informacion.pantallas[indice_seccion].ruta_video">
+								<youtube-video video-url="informacion.pantallas[indice_seccion].ruta_video" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
 						</div>					
 					</td>
-					<td ng-if="informacion.ruta_video_seccion">
+					<td ng-if="informacion.pantallas[indice_seccion].ruta_video">
 						<button type="submit" class="btn repetir" ng-click="repetir()">Repetir</button>					
 					</td>
 				</tr>
@@ -92,8 +94,8 @@
 			<table ng-if="informacion.seccion">
 				<tr>
 					<td>
-						<div ng-if="informacion.ruta_imagen_seccion">
-								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
+						<div ng-if="informacion.pantallas[indice_seccion].ruta_imagen">
+								<img src="informacion.pantallas[indice_seccion].ruta_imagen" class="imagen_grande"/>
 						</div>					
 					</td>
 				</tr>
@@ -103,7 +105,7 @@
 				<tr>
 					<td>
 						<div ng-if="informacion.ruta_imagen">
-								<img src="http://cdn.morguefile.com/imageData/public/files/s/Sgarton/12/l/1417929771sfzt7.jpg" class="imagen_grande"/>
+								<img src="informacion.ruta_imagen" class="imagen_grande"/>
 						</div>					
 					</td>
 				</tr>
@@ -120,9 +122,7 @@
 				</tr>
 			</table>
 
-		</center>
-	
-
+		</center>	
 
 	</div>
 </div>
