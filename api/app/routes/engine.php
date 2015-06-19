@@ -199,10 +199,13 @@
 		});
 
 		/*Respuesta del get*/
-		$app->options('//seccion/:id', function ($id) use ($app){
+		$app->options('/seccion/:id', function ($id) use ($app){
 		 	$app->response->setStatus(200);
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
 		});
+
+
+
 
 
  	});
