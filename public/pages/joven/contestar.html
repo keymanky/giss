@@ -4,15 +4,15 @@
 			<tr ng-if="informacion.cuestionario">
 <!-- 			Cuestionarios -->
 				<td>
-					<h1>{{cuestionarios[0].nombre}}</h1>
+					<h1>{{informacion.nombre}}</h1>
 				</td>
 				<td>
 					<button type="submit" class="btn salir" ng-click="salir()">Salir</button>
-					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.cuestionario" ng-click="cargar_seccion()" >Continuar</button>	
 				</td>
 			</tr>
 <!-- 			Pregunta o Seccion -->
-			<tr ng-if="informacion">
+			<tr ng-if="!informacion.cuestionario">
 				<td>
 					<h1>{{informacion.nombre_seccion}}</h1>
 				</td>
@@ -24,6 +24,11 @@
 			</tr>
 			
 		</table>
+
+<!-- 			Cuestionario -->
+		<div ng-if="informacion.cuestionario" class="texto_mostrar">
+			{{informacion.descripcion}}	
+		</div>		
 <!-- 			Seccion -->
 		<div ng-if="informacion.seccion" class="texto_mostrar">
 			{{informacion.descripcion_seccion}}	
@@ -42,7 +47,20 @@
 				</div>
 			</form>
 		</center>
-
+<!-- 			Videos Cuestionario-->
+		<center>
+			<table ng-if="informacion.cuestionario">
+				<tr>
+					<td>
+						<div class="video" ng-if="informacion.cuestionario">
+								<youtube-video video-url="informacion.ruta_video" player-width="'600px'" player-height="'400px'" player-vars="playerVars"></youtube-video>	
+						</div>					
+					</td>
+					<td ng-if="informacion.cuestionario">
+						<button type="submit" class="btn repetir" ng-click="repetir()">Repetir</button>					
+					</td>
+				</tr>
+			</table>
 <!-- 			Videos Seccion-->
 		<center>
 			<table ng-if="informacion.seccion">
@@ -53,7 +71,7 @@
 						</div>					
 					</td>
 					<td ng-if="informacion.ruta_video_seccion">
-						<button type="submit" class="btn repetir">Repetir</button>					
+						<button type="submit" class="btn repetir" ng-click="repetir()">Repetir</button>					
 					</td>
 				</tr>
 			</table>	
@@ -66,7 +84,7 @@
 						</div>					
 					</td>
 					<td ng-if="informacion.ruta_video">
-						<button type="submit" class="btn repetir">Repetir</button>					
+						<button type="submit" class="btn repetir" ng-click="repetir()">Repetir</button>					
 					</td>
 				</tr>
 			</table>	

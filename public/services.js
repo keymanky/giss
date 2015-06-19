@@ -72,6 +72,9 @@
 				return $http.put('http://localhost/giss/api/seccion/',obj);			
 			},
 			//16 consultar la ultima seccion//17 de uso interno establecer como final una seccion
+			ultima_secuencia:function(){
+				return $http.get('http://localhost/giss/api/seccion/ultima/');
+			},
 			//18
 			reordenar_seccion:function (obj) {
 				return $http.put('http://localhost/giss/api/seccion/reordenar/',obj);			
@@ -143,12 +146,16 @@
 			valida_folio: function(id){
 				return $http.get("http://localhost/giss/api/usuario/valido/" + id);
 			},
+			//41
 			genera_folio: function(id){
 				return $http.get("http://localhost/giss/api/usuario/genera/" + id);
 			},
 			info_sig_pregunta: function(id){
 				return $http.get("http://localhost/giss/api/engine/" + id);
+			},
+			//42
+			cargar_info_seccion: function(id){
+				return $http.get("http://localhost/giss/api/engine/seccion/"+id);
 			}
-
 		}
 	});

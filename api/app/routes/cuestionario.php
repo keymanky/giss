@@ -45,6 +45,7 @@
 
 		/*Consulta a la base*/
 		$response = array(
+				'cuestionario' => 1,
 				'nombre' => "Cuestionario sobre salud sexual para jóvenes con discapacidad auditiva",
 				'activo' => "1",
 				'descripcion' => "",
