@@ -157,9 +157,13 @@
 			cargar_info_seccion: function(id){
 				return $http.get("http://localhost/giss/api/engine/seccion/"+id);
 			},
-			//42
+			//43
 			sig_seccion_valida: function(id){
 				return $http.get("http://localhost/giss/api/engine/seccion_sig/"+id);
+			},
+			//44
+			primera_pregunta_valida: function(id){
+				return $http.get("http://localhost/giss/api/engine/primera_pregunta_activa/"+id);
 			}
 		}
 	});

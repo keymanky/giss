@@ -8,7 +8,8 @@ angular.module('joven_middle',['youtube-embed'])
 			$scope.informacion = JSON.parse(localStorage.getItem("info"));
 			$scope.usuario = JSON.parse(localStorage.getItem("usuario"));	
 			$scope.indice_seccion = window.localStorage.getItem("index_seccion_actual");
-			$scope.indice_seccion = window.localStorage.getItem("sec_seccion_actual");
+			$scope.sec_seccion_actual = window.localStorage.getItem("sec_seccion_actual");
+			$scope.id_pregunta = window.localStorage.getItem("id_pregunta");			
 			//console.log($scope.informacion);
 			//console.log($scope.usuario);
 			//console.log($scope.indice_seccion);
@@ -50,7 +51,8 @@ angular.module('joven_middle',['youtube-embed'])
 						//console.log(cuestionarios);
 						window.localStorage.setItem("info",JSON.stringify(cuestionarios));	
 						window.localStorage.setItem("sec_seccion_actual",0);
-						window.localStorage.setItem("index_seccion_actual",0);																
+						window.localStorage.setItem("index_seccion_actual",0);
+						window.localStorage.setItem("id_pregunta",0);																						
 						window.location="http://localhost/giss/public/pages/joven/#/contestar";																								
 					});						
 				//Si ya termino de constestar todo el cuestionario						
@@ -64,7 +66,8 @@ angular.module('joven_middle',['youtube-embed'])
 						if(pregunta.mensaje == "ok"){
 							window.localStorage.setItem("info",JSON.stringify(pregunta));	
 							window.localStorage.setItem("sec_seccion_actual",pregunta.secuencia_seccion);	
-							window.localStorage.setItem("index_seccion_actual",0);																	
+							window.localStorage.setItem("index_seccion_actual",0);	
+							window.localStorage.setItem("id_pregunta",pregunta.id_pregunta);																							
 							window.location="http://localhost/giss/public/pages/joven/#/contestar";	
 						}else if (pregunta.mensaje == "ir a seccion"){
 							giss_servicios.sig_seccion_valida(pregunta.secuencia).success(function (seccion_datos) {
@@ -72,6 +75,7 @@ angular.module('joven_middle',['youtube-embed'])
 								window.localStorage.setItem("info",JSON.stringify(seccion_datos));
 								window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
 								window.localStorage.setItem("index_seccion_actual",0);	
+								window.localStorage.setItem("id_pregunta",0);
 								window.location="http://localhost/giss/public/pages/joven/#/contestar";															
 								if(seccion_datos.mensaje == "abortar"){
 									alert("No hay mas preguntas que contestar");
@@ -97,26 +101,72 @@ angular.module('joven_middle',['youtube-embed'])
 
 		$scope.cargar_seccion = function (){
 			$scope.sec_seccion_actual = JSON.parse(localStorage.getItem("sec_seccion_actual"));	
-			giss_servicios.ultima_secuencia().success(function (max_secuencia) {	
-				//Cargue los datos de la sig seccion de acuerdo a la secuencia
+			console.log($scope.sec_seccion_actual);
+			giss_servicios.sig_seccion_valida($scope.sec_seccion_actual).success(function (seccion_datos) {	
+				window.localStorage.setItem("info",JSON.stringify(seccion_datos));
+				window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
+				window.localStorage.setItem("index_seccion_actual",0);	
+				window.localStorage.setItem("id_pregunta",0);				
+				console.log(seccion_datos);		
+				location.reload(); 		
+				//window.location="http://localhost/giss/public/pages/joven/#/contestar";	
 			});
 		}
 
 
 		$scope.cambiar_seccion = function(){
 			var i = $scope.informacion.pantallas.length-1
-			//console.log("Longitud: " + i + "Indice: " + $scope.indice_seccion);
+			console.log("Longitud: " + i + " Indice: " + $scope.indice_seccion);
 			$scope.indice_seccion++;	
+
+			window.localStorage.setItem("index_seccion_actual",	$scope.indice_seccion);			
 			if($scope.informacion.pantallas.length-1 >= $scope.indice_seccion){
 				window.localStorage.setItem("index_seccion_actual",$scope.indice_seccion);
-				window.location="http://localhost/giss/public/pages/joven/#/contestar";
+				//alert("Siguiente indice");
+				location.reload(); 
 			}
-			else
-				alert("Servicio");
-			// AQUI ME QUEDE
-			// AQUI ME QUEDE
-						// AQUI ME QUEDE
+			else{
+				giss_servicios.primera_pregunta_valida().success(function (data) {	
+					if(data.mensaje = "ok"){
+						window.localStorage.setItem("info",JSON.stringify(data));	
+						window.localStorage.setItem("sec_seccion_actual",data.secuencia_seccion);	
+						window.localStorage.setItem("index_seccion_actual",0);	
+						window.localStorage.setItem("id_pregunta",data.id_pregunta);																	
+						location.reload(); 	
+					}else{
+						alert("No hay mas preguntas que contestar");
+						window.localStorage.clear();
+						window.location="http://localhost/giss/public/pages/joven/#/ingresar";
+					}
+				});
+			}
+		}
 
+		$scope.cambiar_pregunta = function(){
+			giss_servicios.info_sig_pregunta($scope.id_pregunta).success(function (data) {	
+				console.log(data);
+				if(data.mensaje = "ok"){
+					window.localStorage.setItem("info",JSON.stringify(data));	
+					window.localStorage.setItem("sec_seccion_actual",data.secuencia_seccion);	
+					window.localStorage.setItem("index_seccion_actual",0);	
+					window.localStorage.setItem("id_pregunta",data.id_pregunta);																					
+					location.reload(); 	
+				}else if(data.mensaje = "ir a seccion"){
+					giss_servicios.sig_seccion_valida(data.secuencia).success(function (seccion_datos) {
+						//console.log(seccion_datos);
+						window.localStorage.setItem("info",JSON.stringify(seccion_datos));
+						window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
+						window.localStorage.setItem("index_seccion_actual",0);
+						window.localStorage.setItem("id_pregunta",0);							
+						location.reload(); 														
+						if(seccion_datos.mensaje == "abortar"){
+							alert("No hay mas preguntas que contestar");
+							window.localStorage.clear();
+							window.location="http://localhost/giss/public/pages/joven/#/ingresar";										
+						}								
+					})
+				}
+			});			
 		}
 	}])
 

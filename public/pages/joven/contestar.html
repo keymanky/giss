@@ -19,8 +19,8 @@
 				</td>
 				<td>
 					<button type="submit" class="btn salir" ng-click="salir()">Salir</button>
-					<button type="submit" class="btn guardar" ng-if="informacion.seccion" ng-click="cambiar_seccion()">Continuar</button>	
-					<button type="submit" class="btn guardar" ng-if="informacion.pregunta_incisos">Continuar</button>	
+					<button type="submit" class="btn guardar" ng-if="informacion.seccion" ng-click="cambiar_seccion()">Continuar de seccion</button>	
+					<button type="submit" class="btn guardar" ng-if="!informacion.pregunta_incisos" ng-click="cambiar_pregunta()">Continuar</button>	
 				</td>
 			</tr>
 
@@ -115,7 +115,7 @@
 			<br/>						
 <!-- 		incisos -->
 			<table ng-if="informacion.incisos" class="table opcion_respuesta">
-				<tr ng-repeat="inc in informacion.incisos" class="seleccionable border_inferior">
+				<tr ng-repeat="inc in informacion.incisos" class="seleccionable border_inferior" ng-click="cambiar_pregunta()">
 					<td>{{inc.inciso_letra}}</td>					
 					<td>{{inc.nombre}}</td>
 					<td><img width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" /></td>									
