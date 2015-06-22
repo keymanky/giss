@@ -346,6 +346,14 @@
 					$app->stop();
 				}
 
+				if (count($pregunta_a_mostrar) < 1) {
+					$response = array(
+						"mensaje" => "abortar"
+						);
+					$app->response->setBody(json_encode($response));			
+					$app->response->setStatus(200);
+					$app->stop();					
+				}
 
 				$secciones = ORM ::for_table('seccion')	
 					->select('seccion.*')
@@ -415,6 +423,89 @@
 		 	$app->response->setStatus(200);
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
 		});
+
+		/* 45 */
+
+		 	/*
+		 		//Guardar respuesta usuario
+		 		El parametro "id" significa la secuencia de la seccion actual
+		 		Si 
+		 			No existen preguntas activas para la seccion inmediata siguiente -> mensaje = "abortar"
+		 			Exito ->mensaje = "ok" y la info de toda la seccion
+		 	*/
+
+		$app->post('/guardar/', function () use ($app) {
+
+			$rules=array(
+				'id_usuario' =>array(false, "string", 1, 99), 	 					 							 			 	
+				'id_pregunta' =>array(false, "string", 1, 99), 	
+				'id_inciso' =>array(false, "string", 1, 99), 	
+				'comentario' =>array(false, "string",1, 99),	
+			);
+
+			 $v = new Validator($app->request->getBody(), $rules);
+			 $params = $v->validate();
+
+			 if(count($v->getErrors()) > 0){
+			 	foreach ($v->getErrors() as $key => $value) {
+			 		$response = array("error" => array($key => "campo incorrecto"));
+			 		$app->response->setStatus($v->getCode());
+			 		$app->response->setBody(json_encode($response));
+			 		$app->stop();
+			 	}
+			 }
+
+			//ORM::configure('id_column_overrides', array('usuario_respuesta' => 'id_usuario_respuesta'));
+
+			$respuesta = ORM ::for_table('usuario_respuesta')->create();
+			$respuesta->id_usuario = $params['id_usuario'];
+			$respuesta->id_pregunta = $params['id_pregunta'];
+			if($params['id_inciso'] != 0)
+				$respuesta->id_inciso = $params['id_inciso'];
+			else
+				$respuesta->comentario = $params['comentario'];		
+			$respuesta->save();										
+
+
+			if($params['id_inciso'] != 0){
+				$inciso = ORM::for_table('inciso')
+					->select('inciso.*')
+					->where('id_inciso',$params['id_inciso'])			
+					->find_one();
+
+				ORM::configure('id_column_overrides', array('usuario' => 'id_usuario'));				
+				$updateu= ORM::for_table('usuario')->find_one($params['id_usuario']);				
+				$updateu->set('ultima_pregunta_contestada_id',$params['id_pregunta']);
+				$updateu->save();	
+
+				if($inciso->salta_a_la_seccion_id || $inciso->salta_a_la_seccion_id>0){
+				 	$response = array(
+				 		'mensaje' =>"ir a seccion"
+				 	);
+				}else{
+				 	$response = array(
+				 		'mensaje' =>"ok"
+				 	);
+				}
+			}else{
+				$response = array(
+			 		'mensaje' =>"ok"
+			 	);
+			}
+
+			/*Respuesta del servicio*/
+			$app->response->setBody(json_encode($response));			
+			$app->response->setStatus(200);
+			$app->stop();
+		});
+
+		/*Respuesta del get*/
+		$app->options('/guardar/', function () use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});
+
+
 
 
  	});

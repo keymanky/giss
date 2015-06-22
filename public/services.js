@@ -164,6 +164,10 @@
 			//44
 			primera_pregunta_valida: function(id){
 				return $http.get("http://localhost/giss/api/engine/primera_pregunta_activa/"+id);
+			},
+			//45
+			contestar: function(obj){
+				return $http.post("http://localhost/giss/api/engine/guardar/",obj);
 			}
 		}
 	});

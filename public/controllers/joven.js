@@ -3,6 +3,7 @@
 angular.module('joven_middle',['youtube-embed'])
 	.controller('joven', [ '$scope', 'giss_servicios' , function ($scope, giss_servicios){
 
+		$scope.json = {}
 		//Validacion de la sesion
 		if(window.localStorage.getItem("usuario")){
 			$scope.informacion = JSON.parse(localStorage.getItem("info"));
@@ -10,9 +11,12 @@ angular.module('joven_middle',['youtube-embed'])
 			$scope.indice_seccion = window.localStorage.getItem("index_seccion_actual");
 			$scope.sec_seccion_actual = window.localStorage.getItem("sec_seccion_actual");
 			$scope.id_pregunta = window.localStorage.getItem("id_pregunta");			
-			//console.log($scope.informacion);
-			//console.log($scope.usuario);
-			//console.log($scope.indice_seccion);
+			$scope.respuesta = 10;
+			console.log("info: " + $scope.informacion);
+			console.log("sec_seccion_actual: " + $scope.sec_seccion_actual);			
+			console.log("indice seccion: " + $scope.indice_seccion);
+			console.log("id pregunta: " + $scope.id_pregunta);
+
 		}else{
 			window.location="http://localhost/giss/public/pages/joven/#/ingresar";
 		}
@@ -101,7 +105,7 @@ angular.module('joven_middle',['youtube-embed'])
 
 		$scope.cargar_seccion = function (){
 			$scope.sec_seccion_actual = JSON.parse(localStorage.getItem("sec_seccion_actual"));	
-			console.log($scope.sec_seccion_actual);
+			//console.log($scope.sec_seccion_actual);
 			giss_servicios.sig_seccion_valida($scope.sec_seccion_actual).success(function (seccion_datos) {	
 				window.localStorage.setItem("info",JSON.stringify(seccion_datos));
 				window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
@@ -126,8 +130,8 @@ angular.module('joven_middle',['youtube-embed'])
 				location.reload(); 
 			}
 			else{
-				giss_servicios.primera_pregunta_valida().success(function (data) {	
-					if(data.mensaje = "ok"){
+				giss_servicios.primera_pregunta_valida($scope.sec_seccion_actual-1).success(function (data) {	
+					if(data.mensaje == "ok"){
 						window.localStorage.setItem("info",JSON.stringify(data));	
 						window.localStorage.setItem("sec_seccion_actual",data.secuencia_seccion);	
 						window.localStorage.setItem("index_seccion_actual",0);	
@@ -142,45 +146,65 @@ angular.module('joven_middle',['youtube-embed'])
 			}
 		}
 
-		$scope.cambiar_pregunta = function(){
-			giss_servicios.info_sig_pregunta($scope.id_pregunta).success(function (data) {	
-				console.log(data);
-				if(data.mensaje = "ok"){
-					window.localStorage.setItem("info",JSON.stringify(data));	
-					window.localStorage.setItem("sec_seccion_actual",data.secuencia_seccion);	
-					window.localStorage.setItem("index_seccion_actual",0);	
-					window.localStorage.setItem("id_pregunta",data.id_pregunta);																					
-					location.reload(); 	
-				}else if(data.mensaje = "ir a seccion"){
-					giss_servicios.sig_seccion_valida(data.secuencia).success(function (seccion_datos) {
-						//console.log(seccion_datos);
+		$scope.cambiar_pregunta = function(id_inciso){
+
+			$scope.json = {};
+			$scope.json.id_usuario = $scope.usuario.id;
+			$scope.json.id_pregunta = $scope.id_pregunta;
+			if(id_inciso){
+				$scope.json.id_inciso = id_inciso;
+			}
+			else{
+				$scope.json.id_inciso = 0;
+				$scope.json.comentario = $scope.respuesta;
+			}
+			console.log($scope.json);
+
+			giss_servicios.contestar($scope.json).success(function (insertar) {	
+				if(insertar.mensaje == "ok"){
+					giss_servicios.info_sig_pregunta($scope.id_pregunta).success(function (data) {	
+						console.log(data);
+						if(data.mensaje == "ok"){
+							window.localStorage.setItem("info",JSON.stringify(data));	
+							window.localStorage.setItem("sec_seccion_actual",data.secuencia_seccion);	
+							window.localStorage.setItem("index_seccion_actual",0);	
+							window.localStorage.setItem("id_pregunta",data.id_pregunta);																					
+							location.reload(); 	
+						}else if(data.mensaje == "ir a seccion"){
+							giss_servicios.sig_seccion_valida(data.secuencia).success(function (seccion_datos) {
+								console.log(seccion_datos);
+								if(seccion_datos.mensaje == "ok"){
+									window.localStorage.setItem("info",JSON.stringify(seccion_datos));
+									window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
+									window.localStorage.setItem("index_seccion_actual",0);
+									window.localStorage.setItem("id_pregunta",0);							
+									location.reload(); 	
+								}													
+								if(seccion_datos.mensaje == "abortar"){
+									alert("No hay mas preguntas que contestar");
+									window.localStorage.clear();
+									window.location="http://localhost/giss/public/pages/joven/#/ingresar";										
+								}								
+							});
+						}
+					});					
+				}else if(inserta.mensaje == "ir a seccion"){
+					$scope.sec_seccion_actual = JSON.parse(localStorage.getItem("sec_seccion_actual"));	
+					//console.log($scope.sec_seccion_actual);
+					giss_servicios.sig_seccion_valida($scope.sec_seccion_actual).success(function (seccion_datos) {	
 						window.localStorage.setItem("info",JSON.stringify(seccion_datos));
 						window.localStorage.setItem("sec_seccion_actual",seccion_datos.pantallas[0].secuencia);	
-						window.localStorage.setItem("index_seccion_actual",0);
-						window.localStorage.setItem("id_pregunta",0);							
-						location.reload(); 														
-						if(seccion_datos.mensaje == "abortar"){
-							alert("No hay mas preguntas que contestar");
-							window.localStorage.clear();
-							window.location="http://localhost/giss/public/pages/joven/#/ingresar";										
-						}								
-					})
-				}
-			});			
+						window.localStorage.setItem("index_seccion_actual",0);	
+						window.localStorage.setItem("id_pregunta",0);				
+						console.log(seccion_datos);		
+						location.reload(); 		
+						//window.location="http://localhost/giss/public/pages/joven/#/contestar";	
+					});
+				}	
+			});		
+		}
+
+		$scope.test = function(){
+			alert("hoola");
 		}
 	}])
-
-		//Cuando el usuario selecciona el cuestionario que desea contestar, es decir el sistema recupera el punto donde se quedo el usuario
-		//Hay 3 posibles casos
-		//1) Ya termino de constestar identificado por el ultima_pregunta_contestada_id = 9999
-		//2) El usuario es nuevo identificado por ultima_pregunta_contestada_id = 9998
-		//3) El usuario se quedo en una pregunta idenficada por el ultima_pregunta_contestada_id
-
-
-					//console.log(data);		
-					//CASO 2 Y 3  el servicio decide con las banderas que info debe de pintarse, pregunta, o pantallas de secciones			
-					// giss_servicios.info_sig_pregunta(pregunta).success(function (data2) {					
-					// 	console.log(data2);
-					// 	window.localStorage.setItem("info",JSON.stringify(data2));		
-					// 	window.location="http://localhost/giss/public/pages/joven/#/contestar";																		
-					// });
