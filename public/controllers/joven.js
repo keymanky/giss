@@ -1,9 +1,9 @@
 //Cerebro de angular donde controlaremos el el funcionamiento, es decir aqui ejecutarmeos las acciones importantes
 
-angular.module('joven_middle',['youtube-embed'])
+angular.module('joven_middle',['media'])
 	.controller('joven', [ '$scope', 'giss_servicios' , function ($scope, giss_servicios){
 
-		$scope.json = {}
+		$scope.json = {}	
 		//Validacion de la sesion
 		if(window.localStorage.getItem("usuario")){
 			$scope.informacion = JSON.parse(localStorage.getItem("info"));
@@ -11,7 +11,7 @@ angular.module('joven_middle',['youtube-embed'])
 			$scope.indice_seccion = window.localStorage.getItem("index_seccion_actual");
 			$scope.sec_seccion_actual = window.localStorage.getItem("sec_seccion_actual");
 			$scope.id_pregunta = window.localStorage.getItem("id_pregunta");			
-			$scope.respuesta = 10;
+			
 			console.log("info: " + $scope.informacion);
 			console.log("sec_seccion_actual: " + $scope.sec_seccion_actual);			
 			console.log("indice seccion: " + $scope.indice_seccion);
@@ -146,8 +146,10 @@ angular.module('joven_middle',['youtube-embed'])
 			}
 		}
 
-		$scope.cambiar_pregunta = function(id_inciso){
-
+		$scope.cambiar_pregunta = function(id_inciso,respuesta){
+			if(typeof(respuesta) != "number" && id_inciso){
+				return alert("Ingrese un numero");
+			}
 			$scope.json = {};
 			$scope.json.id_usuario = $scope.usuario.id;
 			$scope.json.id_pregunta = $scope.id_pregunta;
@@ -156,9 +158,9 @@ angular.module('joven_middle',['youtube-embed'])
 			}
 			else{
 				$scope.json.id_inciso = 0;
-				$scope.json.comentario = $scope.respuesta;
+				$scope.json.comentario = $scope.informacion.respuesta;
 			}
-			console.log($scope.json);
+			//console.log($scope.json);
 
 			giss_servicios.contestar($scope.json).success(function (insertar) {	
 				if(insertar.mensaje == "ok"){

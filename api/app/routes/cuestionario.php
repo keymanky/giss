@@ -50,7 +50,7 @@
 				'activo' => "1",
 				'descripcion' => "",
 				'ruta_imagen' => "",
-				'ruta_video' => "https://www.youtube.com/watch?v=8CRP0rqJyPM",
+				'ruta_video' => "./videos/cuestionario.mp4",
 			);
 
 		/*Respuesta del servicio*/
