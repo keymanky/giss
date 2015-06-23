@@ -168,6 +168,10 @@
 			//45
 			contestar: function(obj){
 				return $http.post("http://localhost/giss/api/engine/guardar/",obj);
+			},
+			//46
+			auto_contestar: function(obj){
+				return $http.post("http://localhost/giss/api/engine/auto/",obj);
 			}
 		}
 	});

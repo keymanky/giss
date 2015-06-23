@@ -479,6 +479,15 @@
 				$updateu->save();	
 
 				if($inciso->salta_a_la_seccion_id || $inciso->salta_a_la_seccion_id>0){
+
+					 $ch = curl_init();
+					 curl_setopt($ch, CURLOPT_URL, "http://localhost/giss/api/engine/auto/" . $params['id_usuario'] . "/" . $params['id_pregunta']);
+					 curl_setopt($ch, CURLOPT_HEADER, 0);
+					 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					 $raw_data = curl_exec($ch);
+					 curl_close($ch);
+					 $data = json_decode($raw_data);
+
 				 	$response = array(
 				 		'mensaje' =>"ir a seccion"
 				 	);
@@ -505,6 +514,55 @@
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
 		});
 
+
+		/* 46 */
+
+		 	/*
+		 		//Contesta todas las pregutas siguientes de esa seccion con 98
+
+		 	*/
+
+		$app->get('/auto/:id_usuario/:id_pregunta', function ($id_usuario, $id_pregunta) use ($app) {
+
+			ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
+			$pregunta = ORM ::for_table('pregunta')	
+				->select('pregunta.*')
+				->where('id_pregunta', $id_pregunta)	
+				->find_one();
+
+			ORM::configure('id_column_overrides', array('pregunta' => 'id_pregunta'));
+			$preguntas = ORM ::for_table('pregunta')				
+				->select('pregunta.*')
+				->where('id_seccion',$pregunta->id_seccion)
+				->where_gt('secuencia', $pregunta->secuencia)
+	      		->find_many();
+
+	
+			foreach ($preguntas as $key => $value) {
+
+				//ORM::configure('id_column_overrides', array('usuario_respuesta' => 'id_usuario_respuesta'));
+				$respuesta = ORM ::for_table('usuario_respuesta')->create();
+				$respuesta->id_usuario = $id_usuario;
+				$respuesta->id_pregunta = $value->id_pregunta;
+				$respuesta->comentario = 98;		
+				$respuesta->save();
+
+			}
+
+				$response = array(
+			 		'mensaje' =>"ok"
+			 	);
+
+				$app->response->setBody(json_encode($response));			
+				$app->response->setStatus(200);
+				$app->stop();
+		});
+
+		/*Respuesta del get*/
+		$app->options('/auto/:id_usuario/:id_pregunta', function ($id_usuario, $id_pregunta) use ($app){
+		 	$app->response->setStatus(200);
+		 	$app->response->setBody(json_encode(array('message' => 'ok')));
+		});
 
 
 

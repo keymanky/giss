@@ -132,7 +132,7 @@
 				<tr ng-repeat="inc in informacion.incisos" class="seleccionable border_inferior" ng-click="cambiar_pregunta(inc.id, 1)">
 					<td>{{inc.inciso_letra}}</td>					
 					<td>{{inc.nombre}}</td>
-					<td><img width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" /></td>									
+					<td><img ng-if="inc.ruta_imagen" width="100%" height="300" ng-src="{{inc.ruta_imagen}}" class="imagen_chica" /></td>									
 				</tr>
 			</table>
 

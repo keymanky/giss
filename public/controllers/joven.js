@@ -160,9 +160,10 @@ angular.module('joven_middle',['media'])
 				$scope.json.id_inciso = 0;
 				$scope.json.comentario = $scope.informacion.respuesta;
 			}
-			//console.log($scope.json);
+			console.log($scope.json);
 
 			giss_servicios.contestar($scope.json).success(function (insertar) {	
+				console.log(insertar);
 				if(insertar.mensaje == "ok"){
 					giss_servicios.info_sig_pregunta($scope.id_pregunta).success(function (data) {	
 						console.log(data);
@@ -190,7 +191,7 @@ angular.module('joven_middle',['media'])
 							});
 						}
 					});					
-				}else if(inserta.mensaje == "ir a seccion"){
+				}else if(insertar.mensaje == "ir a seccion"){
 					$scope.sec_seccion_actual = JSON.parse(localStorage.getItem("sec_seccion_actual"));	
 					//console.log($scope.sec_seccion_actual);
 					giss_servicios.sig_seccion_valida($scope.sec_seccion_actual).success(function (seccion_datos) {	
