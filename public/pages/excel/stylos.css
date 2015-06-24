@@ -1,0 +1,24 @@
+.todo{
+	background-color: #FAFAFA;
+	width: 100000px;
+}
+
+tr {
+	border: 1px solid black;
+	height: 30px;
+}
+
+th {
+	border: 1px solid gray;
+	height: 30px;
+}
+td {
+	border: 1px solid white;
+	height: 30px;
+}
+div{
+	display: inline-block;
+}
+table{
+	display: inline-block;
+}

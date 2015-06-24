@@ -172,6 +172,10 @@
 			//46
 			auto_contestar: function(obj){
 				return $http.post("http://localhost/giss/api/engine/auto/",obj);
+			},
+			//46
+			exportar: function(){
+				return $http.get("http://localhost/giss/api/exportar/");
 			}
 		}
 	});

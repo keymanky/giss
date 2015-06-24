@@ -7,3 +7,4 @@ angular.module('administrativo',['rutasadministrativo','administrativo_middle','
 angular.module('incisos',['rutasinciso','incisos_middle','miservicio']);
 angular.module('pantallas',['rutaspantallas','pantallas_middle','miservicio']);
 angular.module('joven',['rutasjoven','joven_middle','miservicio']);
+angular.module('excel',['rutasexcel','excel_middle','miservicio']);

@@ -1,86 +1,102 @@
 <?php
 
- $app->group('/exportar', function () use ($app)	{
+$app->group('/exportar', function () use ($app)	{
 
 
-		/* 47 */
+	/* 47 */
 
 		 	/*
 		 		//Genera un json para exportar
 
 		 	*/
 
-		$app->get('/', function () use ($app) {
+		 	$app->get('/', function () use ($app) {
 
-			ORM::configure('id_column_overrides', array('usuario_respuesta' => 'id_usuario_respuesta'));
-			$respuestas = ORM ::for_table('usuario_respuesta')	
-				->select('usuario_respuesta.*')
-				->select('usuario.password', 'nu')
-				->join('usuario',array('usuario.id_usuario','=','usuario_respuesta.id_usuario'))
-				->find_many();
-			
+			//Recuperamos todos los usuarios
+		 		ORM::configure('id_column_overrides', array('usuario_respuesta' => 'id_usuario_respuesta'));
+		 		$usuarios = ORM ::for_table('usuario_respuesta')	
+		 		->select('usuario_respuesta.*')
+		 		->group_by('id_usuario')
+		 		->order_by_asc('id_usuario')
+		 		->find_many();
 
-			$ri= array();
-			foreach ($respuestas as $key => $value) {
+		 		$us = array();
+		 		foreach ($usuarios as $key => $value) {
+		 			$parcial = array(
+		 				'id_usuario' => $value->id_usuario,
+		 				);
+		 			$us[] = $parcial;
+		 		}
 
-				$seccion = array(
-					'caso' => $value->nu,
-					'id_usuario_respuesta' => $value->id_usuario_respuesta,
-					'id_usuario' => $value->id_usuario,
-					'id_pregunta' => $value->id_pregunta,
-					'id_inciso' =>$value->id_inciso,
-					'comentario' =>$value->comentario,
-				);
-
-				$ri[] = $seccion;
-			}				
-
-
-			$preguntas = ORM ::for_table('pregunta')	
-				->select('pregunta.*')
-				->where('estatus',1)
-				->order_by_asc('pregunta.id_seccion')				
-				->order_by_asc('pregunta.secuencia')			
-				->find_many();
-			$rp = array();
-			$i = 0;
-			foreach ($preguntas as $key => $value) {
-				$rp[] = array('id_pregunta' => $value->id_pregunta, 'pregunta' => $value->nombre);
-				$i++;
-			}
+			//Recuperamos todas las preguntas
+		 		$preguntas = ORM ::for_table('pregunta')	
+		 		->select('pregunta.*')
+		 		->where('estatus',1)
+		 		->order_by_asc('pregunta.id_seccion')				
+		 		->order_by_asc('pregunta.secuencia')			
+		 		->find_many();
 
 
+			//Para cada preguntar recuperamos las respuestas de todos los usuarios				
+		 		$rp = array();
+		 		$parcial = array();
+		 		$i=0;
+		 		$j=0;
+		 		$res= array();
+
+		 		foreach ($preguntas as $keyy => $valuee) {
+		 			$res = array();
+		 			for ($z=0; $z < count($us) ; $z++) { 
+
+			 			$respuesta = ORM ::for_table('usuario_respuesta')	
+			 			->select('usuario_respuesta.*')
+			 			->select('usuario.password', 'nu')
+			 			->select('codificacion', 'codificacion')
+			 			->join('usuario',array('usuario.id_usuario','=','usuario_respuesta.id_usuario'))		 			
+			 			->left_outer_join('inciso',array('inciso.id_inciso','=','usuario_respuesta.id_inciso'))
+			 			->where('id_pregunta', $valuee->id_pregunta)
+			 			->where('id_usuario', $us[$z]['id_usuario'])
+			 			->order_by_asc('id_usuario')		 			
+			 			->find_one();		 				
+		 			
+			 			if(!$respuesta){
+			 				$respuesta_final = 99;
+			 			}else{
+			 				if($respuesta->id_inciso)
+			 					$respuesta_final= $respuesta->codificacion;
+			 				else
+			 					$respuesta_final= $respuesta->comentario;
+			 			}
+
+		 				$permiso = array(
+		 					'caso' => $value->nu,
+		 					'respuesta_final'=> $respuesta_final,
+		 					);
+
+			 			$res[] = $permiso; 
+		 			}
 
 
-			$gina = array();
-			$ginita = array();
-			//array_push($gina, $ginita)
-			foreach ($rp as $key => $value) {				
-				foreach ($ri as $keyy => $valuee) {
-					if ($value['id_pregunta'] == $keyy['id_pregunta']) {
-						$gina[] = array('usuario' => $valuee);
-					}
-				}
-				$ginita = array('pregunta' => $value, 'respuestas' => $gina);
-				//print_r(json_encode($value));
-				//$ginita[] = $gina;
-			}
-				print_r(json_encode($ginita));
-				$app->stop();
-			
-			//$app->stop();
-			// $app->response->setBody(json_encode($gina));			
-			// $app->response->setStatus(200);
-			// $app->stop();
-		});
-
-		/*Respuesta del get*/
-		$app->options('/', function () use ($app){
-		 	$app->response->setStatus(200);
-		 	$app->response->setBody(json_encode(array('message' => 'ok')));
-		});
+		 			$rp[] = array(
+		 				'pregunta'=> $valuee->nombre,
+		 				'respuesta' => $res,
+		 				);
 
 
-	});
+		 		}
+
+
+			 $app->response->setBody(json_encode($rp));			
+			 $app->response->setStatus(200);
+			 $app->stop();
+			});
+
+
+			$app->options('/', function () use ($app){
+				$app->response->setStatus(200);
+				$app->response->setBody(json_encode(array('message' => 'ok')));
+			});
+
+});
 
 ?>
