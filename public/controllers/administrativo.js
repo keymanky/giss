@@ -269,6 +269,15 @@ angular.module('administrativo_middle',['youtube-embed'])
 			window.location="http://localhost/giss/public/pages/pantallas/#/view";
 		}	
 
+		$scope.ir_a_excel = function (){
+			window.location="http://localhost/giss/public/pages/excel/#/exportar";
+		}
+
+		$scope.salir = function (){
+			window.localStorage.clear();
+			window.location="http://localhost/giss/public/pages/joven/#/ingresar";
+		}
+
 		$scope.ir_a_probar = function(){
 			//alert("Cargando ...");
 			var meses = new Array ("ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE");

@@ -5,10 +5,12 @@
 				<tr>
 					<td><h1>Configuraci&oacute;n de Cuestionarios</h1></td>
 					<td>
-						<img class="encabezados" src="../../imgs/exportar.PNG" title="Exportar el cuestionario seleccionado a Excel" />
+						<a  ng-click="salir()"><img class="encabezados" src="../../imgs/exit.png" title="Salir" /></a>						
+						<a  ng-click="ir_a_excel()"><img class="encabezados" src="../../imgs/exportar.PNG" title="Exportar el cuestionario seleccionado a Excel" /></a>
 						<a ng-click="ir_a_probar() "href="http://localhost/giss/public/pages/joven/#/ingresar" target="_blank"><img class="encabezados" src="../../imgs/web.PNG" title="Exportar el cuestionario en la web"/></a>
 						<a ng-click="ir_a_probar() "href="http://localhost/giss/public/pages/joven/#/ingresar" target="_blank"><img class="encabezados" src="../../imgs/probar.PNG" title="Probar esta versión"/></a>
-						<a ng-click="ir_a_probar() "href="http://localhost/giss/public/pages/administrador/#/usuarios/#/view" target="_blank"><img class="encabezados" src="../../imgs/usuarios.PNG" title="Configurar usuarios para el cuestionario seleccionado"/></a>						
+						<a ng-click="ir_a_probar() "href="http://localhost/giss/public/pages/administrador/#/usuarios/#/view" target="_blank">
+						<img class="encabezados" src="../../imgs/usuarios.PNG" title="Configurar usuarios para el cuestionario seleccionado"/></a>						
 					</td>
 				</tr>
 			</table>
