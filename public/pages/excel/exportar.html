@@ -5,22 +5,8 @@
 
 <div class="todo">
 	<!-- 	Pintar los casos -->
-	<table>
-		<thead>
-			<tr>
-				<th>Caso</th>
-			</tr>
-		</thead>
-
-		<tr ng-repeat="res in excel[0].respuesta" >	
-			<td>
-				{{res.caso}}
-			</td>
-		</tr>
-	</table>
-
 	<div ng-repeat="preg in excel">
-		<table id="dvData">
+		<table id="table2excel">
 			<thead>
 				<tr>
 					<th>{{preg.pregunta}}</th>

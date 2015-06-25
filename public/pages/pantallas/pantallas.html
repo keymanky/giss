@@ -34,12 +34,12 @@
 					<tbody>
 						<tr ng-repeat="inc in pantallas">
 							<td>{{inc.secuencia}}</td>
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.nombre}}" ng-model="inc.nombre"></td>		
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.ruta_imagen}}" ng-model="inc.ruta_imagen"></td>
-							<td><img src="{{inc.ruta_imagen}}"/></td>	
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.ruta_video}}" ng-model="inc.ruta_video"></td>
-							<td><img src="{{inc.ruta_video}}"/></td>							
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.descripcion}}" ng-model="inc.descripcion"></td>	
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.nombre}}" ng-model="inc.nombre"></td>		
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.ruta_imagen}}" ng-model="inc.ruta_imagen"></td>
+							<td><img class="img-grande"src="{{inc.ruta_imagen}}"/></td>	
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.ruta_video}}" ng-model="inc.ruta_video"></td>
+							<td><img class="img-grande"src="{{inc.ruta_video}}"/></td>							
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.descripcion}}" ng-model="inc.descripcion"></td>	
 							<td><img src="../../imgs/save.png" ng-click="guardar_pantalla(inc.id,inc.nombre, inc.ruta_imagen, inc.ruta_video, inc.descripcion)"/></td></td>				
 						</tr>
 					</tbody>

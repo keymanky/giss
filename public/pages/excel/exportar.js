@@ -1,6 +1,11 @@
 $( document ).ready(function() {
-	$("button").click(function(){
-		alert("Exportando ...");
 
+	$("button").click(function(){
+	  $("#table2excel").table2excel({
+	    // exclude CSS class
+	    exclude: ".noExl",
+	    name: "Excel Document Name"
+	  }); 
 	});
+
 });

@@ -7,7 +7,7 @@
 					<h1>Incisos de la Pregunta</h1>
 				</td>
 				<td>
-					<img width="10%" ng-src="../../imgs/back.png" ng-click="ir_a_preguntas()" />
+					<img class="img-chica" width="10%" ng-src="../../imgs/back.png" ng-click="ir_a_preguntas()" />
 				</td>
 			</tr>
 		</table>
@@ -37,12 +37,12 @@
 					<tbody>
 						<tr ng-repeat="inc in incisos">
 							<td>{{inc.inciso_letra}}</td>
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.nombre}}" ng-model="inc.nombre"></td>		
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.ruta_imagen}}" ng-model="inc.ruta_imagen"></td>
-							<td><img src="{{inc.ruta_imagen}}"/></td>	
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.codificacion}}" ng-model="inc.codificacion"></td>	
-							<td><input type="text" class="form-control descripcionpregunta" value="{{inc.salta_a_la_seccion_id}}" ng-model="inc.salta_a_la_seccion_id"></td>		
-							<td><img src="../../imgs/save.png" ng-click="guardar_inciso(inc.id,inc.nombre, inc.ruta_imagen, inc.codificacion, inc.salta_a_la_seccion_id)"/></td></td>				
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.nombre}}" ng-model="inc.nombre"></td>		
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.ruta_imagen}}" ng-model="inc.ruta_imagen"></td>
+							<td><img class="img-grande" src="{{inc.ruta_imagen}}"/></td>	
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.codificacion}}" ng-model="inc.codificacion"></td>	
+							<td><input type="text" class="fc descripcionpregunta" value="{{inc.salta_a_la_seccion_id}}" ng-model="inc.salta_a_la_seccion_id"></td>		
+							<td><img class="img-chica" src="../../imgs/save.png" ng-click="guardar_inciso(inc.id,inc.nombre, inc.ruta_imagen, inc.codificacion, inc.salta_a_la_seccion_id)"/></td></td>				
 						</tr>
 					</tbody>
 				</table>
