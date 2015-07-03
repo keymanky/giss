@@ -4,32 +4,26 @@
 
  	/*
  		1)
- 		/rol/ GET ALL
+ 		Retorna el id, y el nombre de todos los registros en la tabla roles
  	*/
 		$app->get('/', function () use ($app) {
-
-			/*Consulta a la base*/
-			$rol = ORM::for_table('rol')
-				->select('rol.*')			
+			$roles = ORM::for_table('rol')
+				->select('rol.*')
 				->find_many();
 
 			$response = array();	
-			foreach ($rol as $key => $value) {
-				$rol = array(
+			foreach ($roles as $key => $value) {
+				$tmp = array(
 					'id'     => $value->id_rol,
 					'nombre' => $value->nombre,
-					'descripcion' => $value->descripcion
 				);
-				$response[] = $rol;
+				$response[] = $tmp;
 			}
-
-			/*Respuesta del servicio*/
 			$app->response->setBody(json_encode($response));			
 			$app->response->setStatus(200);
 			$app->stop();
 		});
 
-		/*Respuesta del get*/
 		$app->options('/', function () use ($app){
 		 	$app->response->setStatus(200);
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
@@ -38,17 +32,15 @@
 
  	/*
  		2)
- 		/rol/id GET
+ 		Retorna todos los campos del rol con el id especificado
  	*/
 		$app->get('/:id', function ($id) use ($app) {
 
-			/*Consulta a la base*/
 			$rol = ORM::for_table('rol')
 				->select('rol.*')
 				->where('id_rol',$id)			
 				->find_one();
-
-			$response = array();	
+	
 			$response = array(
 				'id'     => $rol->id_rol,
 				'nombre' => $rol->nombre,
@@ -68,7 +60,7 @@
 		});
 
 		/*Respuesta del get id*/
-		$app->options('/:id', function () use ($app){
+		$app->options('/:id', function ($id) use ($app){
 		 	$app->response->setStatus(200);
 		 	$app->response->setBody(json_encode(array('message' => 'ok')));
 		});
