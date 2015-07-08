@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html ng-app="login">
+  <head>
+    <meta charset="utf-8"></meta>
+    <title>.:. GISS .:.</title>
+
+    <script src="libs/angular.js"></script> 
+    <script src="app.js"></script>    
+    <script src="controllers/login.js"></script>  
+    <script src="services.js"></script> 
+
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="pragma" content="nocache" />        
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap-3.3.4-dist/css/bootstrap.min.css">  
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css">      
+    <script src="libs/bootstrap-3.3.4-dist/js/bootstrap.js"></script> 
+    <!-- Jquery -->
+    <script src="libs/jquery-2.1.4.min.js"></script>
+    <script src="libs/jquery-ui.min.js"></script> 
+    <!--estilos personalizados-->
+    <link rel="stylesheet" type="text/css" href="stylo.css">
+  </head>
+
+  <body ng-view ng-controller="login"> 
+
+    <!--Logo INICIO-->
+    <header id="logo">
+
+      <table>
+        <tr style="vertical-align:middle; text-align:center">
+          <td width="200px" height="140px" rowspan="4"><img src="imgs/unam.png" height="110"/></td>
+          <td width="100%" height="70px" class="titulo_tabla">
+            Grupo de investigaci&oacute;n en Psicolog&iacute;a y Salud Sexual
+          </td>
+          <td width="200px" height="140px" rowspan="4"><img src="imgs/iztacala.png" height="110"/></td>
+        </tr>
+        
+        <tr>
+          <td>Unidad de Investigación Interdisciplinaria en Ciencias de la Salud y la Educación (UIICSE)</td>
+        <tr/>
+
+        <tr>
+          <td class="nombre_sistema">Sistema de evaluación de factores de riesgo sobre la salud sexual de los jóvenes con discapacidad auditiva</td>
+        </tr>
+        
+        </table>
+
+      </header>
+      <!--Logo FIN-->
+
+      
+      <!-- Contenido -->
+
+      <div class="site_content">
+        <div class="panel panel-primary">
+
+          <div class="panel-heading">
+            <h3 class="panel-title">Acceso al Sistema</h3>
+          </div>
+
+
+          <form>
+            <div class="panel-body">
+              <label >Nombre Usuario</label>
+              <input ng-model="user_name" type="text" class="form-control">
+            </div>  
+            <div class="panel-body">
+              <label >Contraseña</label>
+              <input ng-model="password" type="password" class="form-control">
+            </div> 
+
+            <center>
+              <button type="submit" class="btn btn-success" ng-click="entrar()">Entrar</button>
+            </center>
+
+          </form> 
+        </div>  
+      </div>    
+
+
+
+    </body>
+</html>

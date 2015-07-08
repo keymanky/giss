@@ -40,6 +40,7 @@ require 'app/routes/inciso.php';
 require 'app/routes/pantalla.php';
 require 'app/routes/engine.php';
 require 'app/routes/exportar.php';
+require 'app/routes/login.php';
 
 $app->contentType('application/json');
 

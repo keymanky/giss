@@ -88,13 +88,10 @@ $app->group('/inciso', function () use ($app)	{
 				->order_by_desc('inciso.secuencia')			
 				->find_many();
 
-				$response = [];	
 				$response = array(
 					'ultimo_inciso'=>$permiso[0]->secuencia,
 				);
 		}catch (Exception $e){
-
-				$response = [];	
 				$response = array(
 					'ultimo_inciso'=>0,
 				);			

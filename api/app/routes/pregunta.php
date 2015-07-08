@@ -206,12 +206,10 @@
 				->order_by_desc('pregunta.secuencia')			
 				->find_many();
 
-			$response = [];
 			$response = array(
 				'ultima_pregunta' => $secciones[0]->secuencia,
 			);			
 		}catch (Exception $e){
-			$response = [];
 			$response = array(
 				'ultima_pregunta' => 0,
 			);

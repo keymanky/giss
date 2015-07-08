@@ -593,3 +593,6 @@ update inciso set ruta_imagen = concat('./imagen/Inciso',id_inciso,'.jpg') where
 
 
 select i.codificacion from usuario_respuesta ur, inciso i where ur.id_inciso = i.id_inciso and id_usuario =9
+
+
+7!23+3#jok

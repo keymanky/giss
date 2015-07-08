@@ -55,14 +55,10 @@
 				->where('id_seccion',$id)
 				->order_by_desc('pantalla_de_instruccion.secuencia')			
 				->find_many();
-
-				$response = [];	
 				$response = array(
 					'ultima_pantalla'=>$permiso[0]->secuencia,
 				);
 		}catch (Exception $e){
-
-				$response = [];	
 				$response = array(
 					'ultima_pantalla'=>0,
 				);			

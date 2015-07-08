@@ -4,7 +4,11 @@
 */
 angular.module("rutasjoven", ['ngRoute']).
 	config(function ($routeProvider) {
-		$routeProvider
+		$routeProvider	
+		.when('/', {
+				templateUrl : "ingresar_folio.html",
+				controller : 'joven'
+		})			
 		.when('/ingresar', {
 				templateUrl : "ingresar_folio.html",
 				controller : 'joven'
