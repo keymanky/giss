@@ -6,7 +6,7 @@ angular.module("rutasjoven", ['ngRoute']).
 	config(function ($routeProvider) {
 		$routeProvider	
 		.when('/', {
-				templateUrl : "ingresar_folio.html",
+				templateUrl : "ingresar_contra.html",
 				controller : 'joven'
 		})			
 		.when('/ingresar', {
@@ -15,6 +15,14 @@ angular.module("rutasjoven", ['ngRoute']).
 		})
 		.when('/contestar', {
 				templateUrl : "contestar.html",
+				controller : 'joven'
+		})			
+		.when('/contra', {
+				templateUrl : "ingresar_contra.html",
+				controller : 'joven'
+		})			
+		.when('/ubicacion', {
+				templateUrl : "ingresar_ubicacion.html",
 				controller : 'joven'
 		})		
 	})

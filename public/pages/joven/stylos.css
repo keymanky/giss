@@ -67,6 +67,7 @@ input:focus{
 	background-color: #DFF0D8;
 }
 .guardar{
+	padding: 5px;
 	background-color: rgb(163,217,121);
 	border-color: rgb(33,100,144);
 	color: #000;
@@ -145,4 +146,12 @@ input:focus{
 .border_inferior{
 	border: solid;
 	border-color: #216490;
+}
+.centrado{
+	position: absolute;
+	left: 50%;
+}
+.ubicacion{
+	display:block;
+	width:75%;
 }

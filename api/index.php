@@ -11,7 +11,7 @@ $config = require 'config.php';
 $app = new \Slim\Slim($config["slim"]);
 
 ORM::configure('mysql:host=localhost;dbname=giss;charset=utf8');
-ORM::configure('username', 'giss');
+ORM::configure('username', 'root');
 ORM::configure('password', '12345');
 
 ORM::configure('return_result_sets', true);

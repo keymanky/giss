@@ -7,7 +7,8 @@ angular.module('joven_middle',['media'])
 
 		//Validacion de la sesion
 			$scope.json = {}		
-			if(window.localStorage.getItem("usuario")){
+			if(window.localStorage.getItem("contra")){
+			//if(window.localStorage.getItem("usuario")){				
 				$scope.informacion = JSON.parse(localStorage.getItem("info"));
 				$scope.usuario = JSON.parse(localStorage.getItem("usuario"));	
 				$scope.indice_seccion = window.localStorage.getItem("index_seccion_actual");
@@ -20,7 +21,7 @@ angular.module('joven_middle',['media'])
 				console.log("id pregunta: " + $scope.id_pregunta);
 
 			}else{
-				window.location=host + "pages/joven/#/ingresar";
+				window.location=host + "pages/joven/#/contra";
 			}
 
 			$scope.folio =  localStorage.getItem("folio");
@@ -35,9 +36,27 @@ angular.module('joven_middle',['media'])
 			});
 
 		//Eventos a controlar
+
+			$scope.valida_contra = function(valor){
+				window.localStorage.setItem("contra", valor);
+				window.location=host+ "pages/joven/#/ingresar"
+			}			
+			$scope.valida_folio = function(valor){
+				window.localStorage.setItem("folio", valor);
+				alert(valor);
+				window.location=host+ "pages/joven/#/ubicacion"
+			}			
+			$scope.nuevo_folio = function(){
+				//window.localStorage.setItem("contra", valor);
+				window.location=host+ "pages/joven/#/ubicacion"
+			}			
+			$scope.ingresar_ubicacion = function(estado, poblacion, institucion){
+				//window.localStorage.setItem("contra", valor);
+				alert(estado + " - " + poblacion + " - " + institucion)
+			}
 			$scope.salir = function(){
 				window.localStorage.clear();
-				window.location=host + "pages/joven/#/ingresar";			
+				window.location=host + "pages/joven/#/ingresar_folio.html";			
 			}
 
 			$scope.repetir = function(){
@@ -86,13 +105,13 @@ angular.module('joven_middle',['media'])
 									if(seccion_datos.mensaje == "abortar"){
 										alert("No hay mas preguntas que contestar");
 										window.localStorage.clear();
-										window.location=host + "pages/joven/#/ingresar";										
+										window.location=host + "pages/joven/#/contra";										
 									}								
 								})
 
 							}else{
 								window.localStorage.clear();
-								window.location=host + "pages/joven/#/ingresar";								
+								window.location=host + "pages/joven/#/contra";								
 							}																							
 						});
 					}
@@ -140,7 +159,7 @@ angular.module('joven_middle',['media'])
 						}else{
 							alert("No hay mas preguntas que contestar");
 							window.localStorage.clear();
-							window.location=host + "pages/joven/#/ingresar";
+							window.location=host + "pages/joven/#/contra";
 						}
 					});
 				}
@@ -186,7 +205,7 @@ angular.module('joven_middle',['media'])
 									if(seccion_datos.mensaje == "abortar"){
 										alert("No hay mas preguntas que contestar");
 										window.localStorage.clear();
-										window.location=host + "pages/joven/#/ingresar";										
+										window.location=host + "pages/joven/#/contra";										
 									}								
 								});
 							}
