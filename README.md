@@ -21,15 +21,15 @@ public: Contiene los elementos html
 other: Respaldo de colecciones en postman de la api y respaldo de la base de datos
 
 # Configuración del entorno
-Intalar los módulos de php y mysql 'apt-get install libapache2-mod-php5 php5-mcrypt' y 'apt-get install php5-mysql'.
-Activar el rewrite de apache 'a2enmod rewrite' 
-Permitir el listado de archivos en el archivo 'apache2.conf'
+Intalar los módulos de php y mysql `apt-get install libapache2-mod-php5 php5-mcrypt` y `apt-get install php5-mysql`.
+Activar el rewrite de apache `a2enmod rewrite` 
+Permitir el listado de archivos en el archivo `apache2.conf`
 
-'<Directory /var/www/>
+`<Directory /var/www/>
         Options Indexes FollowSymLinks
         AllowOverride All
         Require all granted
-</Directory>'
+</Directory>`
 
-En caso de ser necesario especificar el socket en el archivo php.ini, el socket que se puede localizar con el comando desde consola de mysql 'show variables like %socket%' 
+En caso de ser necesario especificar el socket en el archivo php.ini, el socket que se puede localizar con el comando desde consola de mysql `show variables like %socket%` 
 Reiniciar el servidor apache
