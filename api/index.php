@@ -28,7 +28,7 @@ ORM::configure('id_column_overrides', array('usuario'                 => 'id_usu
 ORM::configure('id_column_overrides', array('usuario_respuesta'       => 'id_usuario_respuesta'));
 ORM::configure('id_column_overrides', array('seccion'                 => 'id_seccion'));
 
-// routes
+// routes //
 require 'app/routes/permiso.php';
 require 'app/routes/rol.php';
 require 'app/routes/entidadfederativa.php';
