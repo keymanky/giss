@@ -3,9 +3,9 @@
 Sistema de cuestionarios con el cual los usuarios pueden contestar de acuerdo a la configuración del cuestionario. 
 
 ## Características del sistema
-1) CRUD del cuestionario, secciones, pantallas de instrucciones,  preguntas y opciones de respuesta, reacomodo y reasignación.
-2) Engine del cuestionario (paginación por pregunta) que muestra el elemento siguiente de acuerdo a la configuración y las respuestas del usuario.
-3) Administración de usuarios, contraseñas y folios.
+1. CRUD del cuestionario, secciones, pantallas de instrucciones,  preguntas y opciones de respuesta, reacomodo y reasignación.
+2. Engine del cuestionario (paginación por pregunta) que muestra el elemento siguiente de acuerdo a la configuración y las respuestas del usuario.
+3. Administración de usuarios, contraseñas y folios.
 
 
 ## Algunos aspectos de la configuración incluyen:

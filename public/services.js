@@ -6,7 +6,7 @@
 	angular.module('miservicio',[])
 	.factory('giss_servicios', function ($http) {
 		//console.log($http);
-		var host = 'http://localhost/';
+		var host = 'http://keymanky.hol.es/';
 		return{
 			//0
 			consultar_todos_permisos:function (id) {
