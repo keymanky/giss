@@ -27,6 +27,7 @@ ORM::configure('id_column_overrides', array('rol_permiso'             => 'id_rol
 ORM::configure('id_column_overrides', array('usuario'                 => 'id_usuario'));
 ORM::configure('id_column_overrides', array('usuario_respuesta'       => 'id_usuario_respuesta'));
 ORM::configure('id_column_overrides', array('seccion'                 => 'id_seccion'));
+ORM::configure('id_column_overrides', array('contrasena'              => 'id_contrasena'));
 
 // routes //
 require 'app/routes/permiso.php';
@@ -41,6 +42,7 @@ require 'app/routes/pantalla.php';
 require 'app/routes/engine.php';
 require 'app/routes/exportar.php';
 require 'app/routes/login.php';
+require 'app/routes/contrasena.php';
 
 $app->contentType('application/json');
 
