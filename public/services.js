@@ -181,6 +181,14 @@
 			//48
 			acceso: function(obj){
 				return $http.post(host + 'giss/api/login/', obj);
+			},
+			//49
+			nueva_contra: function(obj){
+				return $http.post(host + 'giss/api/contrasena/', obj);
+			},
+			//50
+			valida_contra: function(obj){
+				return $http.post(host + 'giss/api/contrasena/valida/', obj);
 			}
 		}
 	});

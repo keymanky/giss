@@ -3,8 +3,9 @@ angular.module('login_middle', [])
 
 		var host = "http://localhost/giss/public/";
 
-		$scope.user_name = "";
+		$scope.z = "";
 		$scope.password = "";
+		$scope.contra = "";
 
 		$scope.entrar = function(){
 			var json = {};
@@ -22,4 +23,7 @@ angular.module('login_middle', [])
 				});
 			}
 		}
+
+
+
 	}])

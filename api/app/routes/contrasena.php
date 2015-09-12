@@ -62,12 +62,52 @@
 		 $app->response->setStatus(200);
 		 $app->response->setBody(json_encode($response));	
 	});
-
 	 /*Respuesta del post*/
 	$app->options('/', function () use ($app){
 	 	$app->response->setStatus(200);
 	 	$app->response->setBody(json_encode(array('message' => 'ok')));
 	});
+
+
+	$app->post('/valida/', function () use ($app) {
+
+		$rules=array(
+			'contrasena' =>array(true, "string", 1, 99)	 			 		
+		);
+
+
+		 $v = new Validator($app->request->getBody(), $rules);
+		 $params = $v->validate();
+
+ 		$valida = ORM::for_table('contrasenas')
+ 		->select('contrasenas.*')	
+ 		->where('contrasena',$params['contrasena']) 		
+ 		->find_one();
+
+ 		if($valida){
+ 				$mensaje = "ok";
+ 		}else
+ 			$mensaje = "Contraseña incorrecta";
+
+ 		$response = array(
+ 				'mensaje'=> $mensaje
+ 		);
+
+ 		/*Respuesta del servicio*/
+ 		$app->response->setBody(json_encode($response));			
+ 		$app->response->setStatus(200);
+ 		$app->stop();
+
+		$app->response->setStatus(200);
+		$app->response->setBody(json_encode($response));	
+	});
+	 /*Respuesta del post*/
+	$app->options('/valida/', function () use ($app){
+	 	$app->response->setStatus(200);
+	 	$app->response->setBody(json_encode(array('message' => 'ok')));
+	});
+
+
 
 });
 

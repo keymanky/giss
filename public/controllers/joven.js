@@ -6,7 +6,9 @@ angular.module('joven_middle',['media'])
 		var host = "http://localhost/giss/public/";
 
 		//Validacion de la sesion
-			$scope.json = {}		
+			$scope.json = {};
+			$scope.contra = "";
+
 			if(window.localStorage.getItem("contra")){
 			//if(window.localStorage.getItem("usuario")){				
 				$scope.informacion = JSON.parse(localStorage.getItem("info"));
@@ -37,10 +39,25 @@ angular.module('joven_middle',['media'])
 
 		//Eventos a controlar
 
-			$scope.valida_contra = function(valor){
-				window.localStorage.setItem("contra", valor);
-				window.location=host+ "pages/joven/#/ingresar"
-			}			
+			$scope.valida_contra = function(){
+
+				//alert($scope.contra);
+				// var json = {};
+				// json.contra = $scope.contra;
+
+				// if(json.contra){
+				// 	giss_servicios.valida_contra(json).success( function(result){
+				// 		if(result.mensaje == "ok"){
+				// 			//console.log(result.usuario)	
+				// 			window.localStorage.setItem("contra",JSON.stringify(result.usuario));												
+				// 			window.location= host + "pages/joven/#/ingresar";						
+				// 		}else
+				// 			alert(result.mensaje)
+				// 	});
+				// }else
+				// 	alert("Ingrese su contraseña");
+			}
+
 			$scope.valida_folio = function(valor){
 				window.localStorage.setItem("folio", valor);
 				alert(valor);
