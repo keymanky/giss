@@ -8,8 +8,13 @@ angular.module('joven_middle',['media'])
 		//Validacion de la sesion
 			$scope.json = {};
 			$scope.contra = "";
+			$scope.folio =  localStorage.getItem("folio");
+			$scope.playerVars = {
+			    controls: 0,
+			    autoplay: 1
+			};
 
-			if(window.localStorage.getItem("contra")){
+			if(window.localStorage.getItem("contra") == "ok" ){
 			//if(window.localStorage.getItem("usuario")){				
 				$scope.informacion = JSON.parse(localStorage.getItem("info"));
 				$scope.usuario = JSON.parse(localStorage.getItem("usuario"));	
@@ -26,11 +31,6 @@ angular.module('joven_middle',['media'])
 				window.location=host + "pages/joven/#/contra";
 			}
 
-			$scope.folio =  localStorage.getItem("folio");
-			$scope.playerVars = {
-			    controls: 0,
-			    autoplay: 1
-			};
 
 		//Al init de la pagina
 			giss_servicios.consultar_todos_cuestionarios().success( function(data){
@@ -40,29 +40,38 @@ angular.module('joven_middle',['media'])
 		//Eventos a controlar
 
 			$scope.valida_contra = function(){
+				var json = {};
+				json.contrasena = $scope.contra;
 
-				//alert($scope.contra);
-				// var json = {};
-				// json.contra = $scope.contra;
-
-				// if(json.contra){
-				// 	giss_servicios.valida_contra(json).success( function(result){
-				// 		if(result.mensaje == "ok"){
-				// 			//console.log(result.usuario)	
-				// 			window.localStorage.setItem("contra",JSON.stringify(result.usuario));												
-				// 			window.location= host + "pages/joven/#/ingresar";						
-				// 		}else
-				// 			alert(result.mensaje)
-				// 	});
-				// }else
-				// 	alert("Ingrese su contraseña");
+				if(json.contrasena){
+					giss_servicios.valida_contra(json).success( function(result){
+						if(result.mensaje == "ok"){
+							window.localStorage.setItem("contra","ok");												
+							window.location= host + "pages/joven/#/ingresar";						
+						}else
+							alert(result.mensaje)
+					});
+				}else
+					alert("Ingrese su contraseña");
 			}
+		
+			$scope.valida_folio = function(){
 
-			$scope.valida_folio = function(valor){
-				window.localStorage.setItem("folio", valor);
-				alert(valor);
-				window.location=host+ "pages/joven/#/ubicacion"
+				if($scope.contra){
+					giss_servicios.valida_folio($scope.contra).success( function(result){
+						if(result.mensaje){
+							alert(result.mensaje)
+						}else{
+							window.localStorage.setItem("folio",result);												
+							window.location= host + "pages/joven/#/ubicacion";						
+						}
+					});
+				}else
+					alert("Ingrese su folio");
 			}			
+
+
+		
 			$scope.nuevo_folio = function(){
 				//window.localStorage.setItem("contra", valor);
 				window.location=host+ "pages/joven/#/ubicacion"
@@ -240,9 +249,5 @@ angular.module('joven_middle',['media'])
 						});
 					}	
 				});		
-			}
-
-			$scope.test = function(){
-				alert("hoola");
 			}
 	}])

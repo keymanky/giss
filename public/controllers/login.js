@@ -6,6 +6,7 @@ angular.module('login_middle', [])
 		$scope.z = "";
 		$scope.password = "";
 		$scope.contra = "";
+		$scope.folio = "";
 
 		$scope.entrar = function(){
 			var json = {};
@@ -23,7 +24,5 @@ angular.module('login_middle', [])
 				});
 			}
 		}
-
-
 
 	}])
